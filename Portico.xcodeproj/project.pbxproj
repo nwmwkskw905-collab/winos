@@ -1,0 +1,733 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CD93DAC8104828492727025D /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAD037C3DD3AA2F20C33801 /* AppModel.swift */; };
+		199916C2A1988153D1EB0B20 /* AVAudioEngineBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD46AECE5E55393DAA53A376 /* AVAudioEngineBackend.swift */; };
+		33D6682768D6F35074C566B2 /* GameControllerBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFFA1746869E6DC1620BF07 /* GameControllerBridge.swift */; };
+		EB491F0BCB362EC61A62CB86 /* VirtualControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A07358188C2465E1E40A03C5 /* VirtualControlsView.swift */; };
+		BCFD031D389F16B580D49FE3 /* MTKGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D5431D040CF61AF782570B /* MTKGameView.swift */; };
+		E2B00E79F8895815DFE0E7CD /* MetalGameRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DD48AC96FA9F67ED729C4E /* MetalGameRenderer.swift */; };
+		BB4564DB7DE721BC304790BA /* PorticoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396985C66686FE7C05565B71 /* PorticoApp.swift */; };
+		FF3F37C93A529CE1B7096DAB /* CapabilitiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD1806A43F747E635447776 /* CapabilitiesView.swift */; };
+		BCC3326DF7024F4E14F5BC77 /* ControlEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CB50AEDBB4A5DFCADFCA8D /* ControlEditorView.swift */; };
+		CC23B510065908BDBAC3506D /* EnvironmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9128E434B58808121DC38347 /* EnvironmentView.swift */; };
+		15B63C3D5D2F2E893C71972B /* GameDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3636E97F7E9C254BFE4B58D9 /* GameDetailView.swift */; };
+		44DF83092BBB9B6D4C473ADC /* GameEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB5E14773AAED5BDA36112D /* GameEditorView.swift */; };
+		4FC4B68A59EFDB941419B84E /* GameSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273ACCD7A0D2A4CE62256807 /* GameSettingsView.swift */; };
+		26CA2C507838B6E17461825C /* GlobalSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4882B14CAA17625FF698D10 /* GlobalSettingsView.swift */; };
+		2C3DB4064782A707BCA9CEBB /* ImportFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C2205592991D7E20905D34 /* ImportFlowView.swift */; };
+		FC7C0F1D484F4C54FC2E5422 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AFD3194FF8D2DEBD2E1E815 /* LibraryView.swift */; };
+		A84F84AD8914F997BF18F3D7 /* LogsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6B4E9E8BB7F909699227FE /* LogsView.swift */; };
+		971F89AC316C8D21ED2A069D /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847088E87217A565172AB1C6 /* OverlayView.swift */; };
+		7C0D9842D88BD5E709DCE822 /* RuntimeSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0D357BC96ABD39F71CBF166 /* RuntimeSessionView.swift */; };
+		35ADCD4E23EC2288A6BAA41E /* AudioCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A879E54FC5AD8424879929 /* AudioCore.swift */; };
+		DF7155748E3A26E6DF879A4E /* CompatibilityLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B201E2264E8E24894E0E5930 /* CompatibilityLayer.swift */; };
+		546EEA4C0D0CC7894E8295EE /* DiagnosticsReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262934608449C213F6DE6DF6 /* DiagnosticsReport.swift */; };
+		FB12EAFD0F76A8148AFC6A5D /* EnvironmentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62708F7476BC718054B73CC5 /* EnvironmentManager.swift */; };
+		9E964F1096BC4280E0DA8D16 /* GraphicsBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB9E782C2CF58CD30DA5777 /* GraphicsBackend.swift */; };
+		52CB0139BD60A31A32BB2C91 /* SurfaceBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0135C47A7D3497F4A59E22 /* SurfaceBridge.swift */; };
+		12A5293FF1BD5CAB34F72493 /* ImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3870F8A1A0552A3B2096DB13 /* ImportService.swift */; };
+		F34F37AE78AAE4728B70FF11 /* PEInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0848F8708C63089F301499D6 /* PEInspector.swift */; };
+		B86F759A7939ABB955E0BA54 /* PELoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D72929FA5D0FF1876D4433 /* PELoader.swift */; };
+		B5D3561F1A6FCA7309FCA9B5 /* ZipReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15696B206F66E8896FAB7A78 /* ZipReader.swift */; };
+		72C5D7F32AC10DF467A6C5D3 /* InputCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF73D23421A1D72774B39CB /* InputCore.swift */; };
+		52EEE8BC06DCC0561CF56944 /* LogCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240AB51204825C547D57F7DE /* LogCenter.swift */; };
+		85433CDAFCA5FE9F1CE447EF /* ControlLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0475CE6E62FE22704F8ACD0C /* ControlLayout.swift */; };
+		5DCB1209DF0AF60D20BB33BB /* EnvironmentModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D305C8FE7584CD9F7E6222F /* EnvironmentModels.swift */; };
+		19566012DCF3164AB777F91C /* GameModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D6FC9EBA0FBCBC9AE59705 /* GameModels.swift */; };
+		8A182D608B1CC988AD4C11EA /* GlobalSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF830027368356D50DEB2C /* GlobalSettings.swift */; };
+		436E2CD503D9ABC0D651ABDF /* ExecutionBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 482AA6348D19A4E059C2D888 /* ExecutionBackend.swift */; };
+		5B16423A23048166FDC98AA2 /* ProcessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A912A187632F622C2663CB /* ProcessManager.swift */; };
+		B37FE3247C2D137503852F49 /* RuntimeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23B609CEC9DE9137BCDBE67 /* RuntimeManager.swift */; };
+		6DED811667F16DA4A9E2488D /* RuntimeModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB8FF03D1C3FE8D3DDE93EF /* RuntimeModels.swift */; };
+		0F6EE5C1264446C45EE00656 /* Win32Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A8DC53CF7FC09C35C71BAA0 /* Win32Layer.swift */; };
+		D30C0FA3A7B16123D29E6888 /* AppSandbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECF21BBC6679292B66822EA /* AppSandbox.swift */; };
+		CE211D59E268B04CFFA08F37 /* ConfigurationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3831B0B409ACFEED388773 /* ConfigurationManager.swift */; };
+		37F79058A63A88C0C5EE0E8C /* LibraryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C510A12AC2FE936BA27E10C9 /* LibraryStore.swift */; };
+		73B73944A501076D7DFD94D2 /* SupportLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1851983F5D84FC875DA7DB9 /* SupportLevel.swift */; };
+		8AB105B5E090BD41E0B735C8 /* pr_asm.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F7C3B3BED6C00E96BBE04B9 /* pr_asm.c */; };
+		A6B53146B584EB2BE8B9D2B7 /* pr_audio.c in Sources */ = {isa = PBXBuildFile; fileRef = C120B02BF38291034BB89E9A /* pr_audio.c */; };
+		38FD5FEED4CB03789696C5C3 /* pr_cap.c in Sources */ = {isa = PBXBuildFile; fileRef = 29CA4B8FC15B0C1FE65A5FA8 /* pr_cap.c */; };
+		8EC8BB99487C6A49707753A9 /* pr_cpu.c in Sources */ = {isa = PBXBuildFile; fileRef = 3D6A9CE14B3DF8DC1D12BCE9 /* pr_cpu.c */; };
+		099202E4AFFE5E2FCE7CCB42 /* pr_cpu64.c in Sources */ = {isa = PBXBuildFile; fileRef = 25D4DA263DAFB7C79EFBCF6E /* pr_cpu64.c */; };
+		439472EF6B75E6FF907A0070 /* pr_gfx.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DF2E041EAFA99AFFFA4D94E /* pr_gfx.c */; };
+		A8820C8589D124D832454A16 /* pr_host.c in Sources */ = {isa = PBXBuildFile; fileRef = E9C4B8C6521BEF258E870E4D /* pr_host.c */; };
+		9A3576349C5835103DF05605 /* pr_input.c in Sources */ = {isa = PBXBuildFile; fileRef = 594A837838B6E9FBBB146635 /* pr_input.c */; };
+		2DF6B4B14667C47E04903C40 /* pr_log.c in Sources */ = {isa = PBXBuildFile; fileRef = 9AD18E0D2837F36C0B783DF8 /* pr_log.c */; };
+		5A47C2D3B7E4A0C12B0B143D /* pr_pe.c in Sources */ = {isa = PBXBuildFile; fileRef = 9638E3D40BF9DE098A95202D /* pr_pe.c */; };
+		3204ECC128D88D49B3F9D53B /* pr_peproc.c in Sources */ = {isa = PBXBuildFile; fileRef = 0AA945091CD4B6229701B0D9 /* pr_peproc.c */; };
+		75B9030D91DD26222F5F4AEE /* pr_selftest.c in Sources */ = {isa = PBXBuildFile; fileRef = 207E41BE1C791C814C035DC7 /* pr_selftest.c */; };
+		D8F4A46DC015EEBDF8CF8653 /* pr_surf.c in Sources */ = {isa = PBXBuildFile; fileRef = B1BAFFAF02A11E5B836488E6 /* pr_surf.c */; };
+		0BA88F74F7C77BE010E06CBF /* pr_types.c in Sources */ = {isa = PBXBuildFile; fileRef = 313ECAC82D14C8DE75F614FB /* pr_types.c */; };
+		57BDEF1AAF276EC0371FC041 /* pr_vm.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A53672A321D794C2E36460 /* pr_vm.c */; };
+		7FF592F35C6CB5AD9D213E91 /* pr_win32.c in Sources */ = {isa = PBXBuildFile; fileRef = BA71D34C8983D4B3F9A3CC2F /* pr_win32.c */; };
+		B77A85E2A1C3E9A407B1B637 /* pr_winhello.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FAD3756E3342FC51677A6FF /* pr_winhello.c */; };
+		CDA1A4F355AAE091E64ADC75 /* pr_zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 30E9BB9D04C4BB5C7DB1E092 /* pr_zip.c */; };
+		7376A3BBCA8D47EA252655BA /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845175776DA9B77AB4CAFC16 /* Metal.framework */; };
+		477139FC775BE436301C8F71 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FAB3EFC261338FCDA442B95 /* MetalKit.framework */; };
+		7F19A6F848475EECBA7D1DF4 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B58392B0683CF37E493DE0B2 /* AVFoundation.framework */; };
+		0F86F62BF6C330CE0CAD2C43 /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76E6407D70BFAF7376E20110 /* GameController.framework */; };
+		F2AF91C4F2666882609C8C9B /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 92DB7A71D3B15A69A5A049CD /* libz.tbd */; };
+		A422286625684FEB912F6D34 /* WinOSBrand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B82DC66FF1847C0A8ECF53F /* WinOSBrand.swift */; };
+		2E1B86446CD249DD8CCE8C1D /* WinOSHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D8620CA03C43798720BD18 /* WinOSHomeView.swift */; };
+		A4BFB7219689441594AA7A17 /* WinOSCreatePCView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36893DF8B194472B7793C41 /* WinOSCreatePCView.swift */; };
+		BBD0A8D3163740BDB75BEB14 /* WinOSLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701A9D0D1D6B44B58691E906 /* WinOSLoadingView.swift */; };
+		FBBA7C1E804545DD95B65985 /* WinOSDesktopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA848EA62FA4DC682EDE23A /* WinOSDesktopView.swift */; };
+		D3BBC8AA4474482FAA98E264 /* WinOSOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F303DE74D44F77A29F4C07 /* WinOSOverlayView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		2FAD037C3DD3AA2F20C33801 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
+		CD46AECE5E55393DAA53A376 /* AVAudioEngineBackend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVAudioEngineBackend.swift; sourceTree = "<group>"; };
+		ADFFA1746869E6DC1620BF07 /* GameControllerBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameControllerBridge.swift; sourceTree = "<group>"; };
+		A07358188C2465E1E40A03C5 /* VirtualControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualControlsView.swift; sourceTree = "<group>"; };
+		27D5431D040CF61AF782570B /* MTKGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTKGameView.swift; sourceTree = "<group>"; };
+		D1DD48AC96FA9F67ED729C4E /* MetalGameRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalGameRenderer.swift; sourceTree = "<group>"; };
+		396985C66686FE7C05565B71 /* PorticoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PorticoApp.swift; sourceTree = "<group>"; };
+		2CD1806A43F747E635447776 /* CapabilitiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilitiesView.swift; sourceTree = "<group>"; };
+		68CB50AEDBB4A5DFCADFCA8D /* ControlEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlEditorView.swift; sourceTree = "<group>"; };
+		9128E434B58808121DC38347 /* EnvironmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentView.swift; sourceTree = "<group>"; };
+		3636E97F7E9C254BFE4B58D9 /* GameDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetailView.swift; sourceTree = "<group>"; };
+		3CB5E14773AAED5BDA36112D /* GameEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEditorView.swift; sourceTree = "<group>"; };
+		273ACCD7A0D2A4CE62256807 /* GameSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettingsView.swift; sourceTree = "<group>"; };
+		B4882B14CAA17625FF698D10 /* GlobalSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalSettingsView.swift; sourceTree = "<group>"; };
+		37C2205592991D7E20905D34 /* ImportFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportFlowView.swift; sourceTree = "<group>"; };
+		4AFD3194FF8D2DEBD2E1E815 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
+		BD6B4E9E8BB7F909699227FE /* LogsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsView.swift; sourceTree = "<group>"; };
+		847088E87217A565172AB1C6 /* OverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
+		E0D357BC96ABD39F71CBF166 /* RuntimeSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeSessionView.swift; sourceTree = "<group>"; };
+		A8A879E54FC5AD8424879929 /* AudioCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCore.swift; sourceTree = "<group>"; };
+		B201E2264E8E24894E0E5930 /* CompatibilityLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompatibilityLayer.swift; sourceTree = "<group>"; };
+		262934608449C213F6DE6DF6 /* DiagnosticsReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticsReport.swift; sourceTree = "<group>"; };
+		62708F7476BC718054B73CC5 /* EnvironmentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentManager.swift; sourceTree = "<group>"; };
+		BAB9E782C2CF58CD30DA5777 /* GraphicsBackend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphicsBackend.swift; sourceTree = "<group>"; };
+		FC0135C47A7D3497F4A59E22 /* SurfaceBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurfaceBridge.swift; sourceTree = "<group>"; };
+		3870F8A1A0552A3B2096DB13 /* ImportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportService.swift; sourceTree = "<group>"; };
+		0848F8708C63089F301499D6 /* PEInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PEInspector.swift; sourceTree = "<group>"; };
+		99D72929FA5D0FF1876D4433 /* PELoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PELoader.swift; sourceTree = "<group>"; };
+		15696B206F66E8896FAB7A78 /* ZipReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZipReader.swift; sourceTree = "<group>"; };
+		EAF73D23421A1D72774B39CB /* InputCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputCore.swift; sourceTree = "<group>"; };
+		240AB51204825C547D57F7DE /* LogCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogCenter.swift; sourceTree = "<group>"; };
+		0475CE6E62FE22704F8ACD0C /* ControlLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlLayout.swift; sourceTree = "<group>"; };
+		1D305C8FE7584CD9F7E6222F /* EnvironmentModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentModels.swift; sourceTree = "<group>"; };
+		E6D6FC9EBA0FBCBC9AE59705 /* GameModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModels.swift; sourceTree = "<group>"; };
+		66DF830027368356D50DEB2C /* GlobalSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalSettings.swift; sourceTree = "<group>"; };
+		482AA6348D19A4E059C2D888 /* ExecutionBackend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExecutionBackend.swift; sourceTree = "<group>"; };
+		12A912A187632F622C2663CB /* ProcessManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessManager.swift; sourceTree = "<group>"; };
+		D23B609CEC9DE9137BCDBE67 /* RuntimeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeManager.swift; sourceTree = "<group>"; };
+		BFB8FF03D1C3FE8D3DDE93EF /* RuntimeModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeModels.swift; sourceTree = "<group>"; };
+		6A8DC53CF7FC09C35C71BAA0 /* Win32Layer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Win32Layer.swift; sourceTree = "<group>"; };
+		5ECF21BBC6679292B66822EA /* AppSandbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSandbox.swift; sourceTree = "<group>"; };
+		AF3831B0B409ACFEED388773 /* ConfigurationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationManager.swift; sourceTree = "<group>"; };
+		C510A12AC2FE936BA27E10C9 /* LibraryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryStore.swift; sourceTree = "<group>"; };
+		C1851983F5D84FC875DA7DB9 /* SupportLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportLevel.swift; sourceTree = "<group>"; };
+		3F7C3B3BED6C00E96BBE04B9 /* pr_asm.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_asm.c; sourceTree = "<group>"; };
+		C120B02BF38291034BB89E9A /* pr_audio.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_audio.c; sourceTree = "<group>"; };
+		29CA4B8FC15B0C1FE65A5FA8 /* pr_cap.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_cap.c; sourceTree = "<group>"; };
+		3D6A9CE14B3DF8DC1D12BCE9 /* pr_cpu.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_cpu.c; sourceTree = "<group>"; };
+		25D4DA263DAFB7C79EFBCF6E /* pr_cpu64.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_cpu64.c; sourceTree = "<group>"; };
+		9DF2E041EAFA99AFFFA4D94E /* pr_gfx.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_gfx.c; sourceTree = "<group>"; };
+		E9C4B8C6521BEF258E870E4D /* pr_host.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_host.c; sourceTree = "<group>"; };
+		594A837838B6E9FBBB146635 /* pr_input.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_input.c; sourceTree = "<group>"; };
+		9AD18E0D2837F36C0B783DF8 /* pr_log.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_log.c; sourceTree = "<group>"; };
+		9638E3D40BF9DE098A95202D /* pr_pe.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_pe.c; sourceTree = "<group>"; };
+		0AA945091CD4B6229701B0D9 /* pr_peproc.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_peproc.c; sourceTree = "<group>"; };
+		207E41BE1C791C814C035DC7 /* pr_selftest.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_selftest.c; sourceTree = "<group>"; };
+		B1BAFFAF02A11E5B836488E6 /* pr_surf.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_surf.c; sourceTree = "<group>"; };
+		313ECAC82D14C8DE75F614FB /* pr_types.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_types.c; sourceTree = "<group>"; };
+		B0A53672A321D794C2E36460 /* pr_vm.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_vm.c; sourceTree = "<group>"; };
+		BA71D34C8983D4B3F9A3CC2F /* pr_win32.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_win32.c; sourceTree = "<group>"; };
+		3FAD3756E3342FC51677A6FF /* pr_winhello.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_winhello.c; sourceTree = "<group>"; };
+		30E9BB9D04C4BB5C7DB1E092 /* pr_zip.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_zip.c; sourceTree = "<group>"; };
+		C5861D9AAE251CD428C2FE7E /* pr_asm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_asm.h; sourceTree = "<group>"; };
+		EC4189457BE7AEDE728B8673 /* pr_audio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_audio.h; sourceTree = "<group>"; };
+		E03ECF965746C9420A1B56F0 /* pr_cap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_cap.h; sourceTree = "<group>"; };
+		70F27042365E1E65719FEB04 /* pr_cpu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_cpu.h; sourceTree = "<group>"; };
+		B2B7D752E0547481DB6B4F27 /* pr_cpu64.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_cpu64.h; sourceTree = "<group>"; };
+		2FBB2978FBD868C9E0F5F726 /* pr_gfx.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_gfx.h; sourceTree = "<group>"; };
+		DD8B4632E276206C65E09477 /* pr_host.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_host.h; sourceTree = "<group>"; };
+		493B2FA7976C2545A1B779BF /* pr_input.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_input.h; sourceTree = "<group>"; };
+		219B7D528CFE8A063D282B38 /* pr_log.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_log.h; sourceTree = "<group>"; };
+		1FABD96CD907641F93D0B5B1 /* pr_pe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_pe.h; sourceTree = "<group>"; };
+		B50094914151944F354E1D6E /* pr_peproc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_peproc.h; sourceTree = "<group>"; };
+		BC8BA5886FE131AAD53A6675 /* pr_surf.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_surf.h; sourceTree = "<group>"; };
+		89103E831804636517C2AB10 /* pr_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_types.h; sourceTree = "<group>"; };
+		2F2B47924DD178CB9A119D01 /* pr_vm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_vm.h; sourceTree = "<group>"; };
+		8D487B81E5B7828DB6CC6BBD /* pr_win32.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_win32.h; sourceTree = "<group>"; };
+		D94B0CEC4FC0EB2699F30A11 /* pr_winhello.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_winhello.h; sourceTree = "<group>"; };
+		D24A9A10CCAA48D24967739C /* pr_zip.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_zip.h; sourceTree = "<group>"; };
+		693762FCF2DA9B5841452535 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		845175776DA9B77AB4CAFC16 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
+		2FAB3EFC261338FCDA442B95 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
+		B58392B0683CF37E493DE0B2 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		76E6407D70BFAF7376E20110 /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
+		92DB7A71D3B15A69A5A049CD /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		C2F21D19759A81DAF56E042F /* Portico.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Portico.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B82DC66FF1847C0A8ECF53F /* WinOSBrand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSBrand.swift; sourceTree = "<group>"; };
+		09D8620CA03C43798720BD18 /* WinOSHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSHomeView.swift; sourceTree = "<group>"; };
+		B36893DF8B194472B7793C41 /* WinOSCreatePCView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSCreatePCView.swift; sourceTree = "<group>"; };
+		701A9D0D1D6B44B58691E906 /* WinOSLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSLoadingView.swift; sourceTree = "<group>"; };
+		2EA848EA62FA4DC682EDE23A /* WinOSDesktopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSDesktopView.swift; sourceTree = "<group>"; };
+		64F303DE74D44F77A29F4C07 /* WinOSOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSOverlayView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		804DB52E2955449D2F091C7E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7376A3BBCA8D47EA252655BA /* fw */,
+				477139FC775BE436301C8F71 /* fw */,
+				7F19A6F848475EECBA7D1DF4 /* fw */,
+				0F86F62BF6C330CE0CAD2C43 /* fw */,
+				F2AF91C4F2666882609C8C9B /* fw */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0C3FEB8A801641067AE4C9AA /* PorticoCore */ = {
+			isa = PBXGroup;
+			children = (
+				171CE60A03C6BDB447511500 /* * */,
+				32B8B3AB0BE77833C1824330 /* * */,
+				644E1A49BD95875D5A0DBF63 /* * */,
+				7B7E7B7CDAF7E8CD2040F052 /* * */,
+				8B6B36D97D015C3ED4B08466 /* * */,
+				8BB646A767F9782E4AFE9A80 /* * */,
+				A0A815E534E9B4518B19FC51 /* * */,
+				A9F1726F4089629653FB690A /* * */,
+				C408E1C1B347612F17AB8F5D /* * */,
+				C87B64D0524BA67768F0D98F /* * */,
+				CAC3D4442B41D82159EFB461 /* * */,
+				ECCA96BE540C4CE8C1D14A94 /* * */,
+			);
+			path = PorticoCore;
+			sourceTree = "<group>";
+		};
+		0EAE018493E7F3B8272D64ED /* src */ = {
+			isa = PBXGroup;
+			children = (
+				0AA945091CD4B6229701B0D9 /* * */,
+				207E41BE1C791C814C035DC7 /* * */,
+				25D4DA263DAFB7C79EFBCF6E /* * */,
+				29CA4B8FC15B0C1FE65A5FA8 /* * */,
+				30E9BB9D04C4BB5C7DB1E092 /* * */,
+				313ECAC82D14C8DE75F614FB /* * */,
+				3D6A9CE14B3DF8DC1D12BCE9 /* * */,
+				3F7C3B3BED6C00E96BBE04B9 /* * */,
+				3FAD3756E3342FC51677A6FF /* * */,
+				594A837838B6E9FBBB146635 /* * */,
+				9638E3D40BF9DE098A95202D /* * */,
+				9AD18E0D2837F36C0B783DF8 /* * */,
+				9DF2E041EAFA99AFFFA4D94E /* * */,
+				B0A53672A321D794C2E36460 /* * */,
+				B1BAFFAF02A11E5B836488E6 /* * */,
+				BA71D34C8983D4B3F9A3CC2F /* * */,
+				C120B02BF38291034BB89E9A /* * */,
+				E9C4B8C6521BEF258E870E4D /* * */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		171CE60A03C6BDB447511500 /* Import */ = {
+			isa = PBXGroup;
+			children = (
+				0848F8708C63089F301499D6 /* * */,
+				15696B206F66E8896FAB7A78 /* * */,
+				3870F8A1A0552A3B2096DB13 /* * */,
+				99D72929FA5D0FF1876D4433 /* * */,
+			);
+			path = Import;
+			sourceTree = "<group>";
+		};
+		2DFEB98B4C9F5E02691FC2C8 /* Metal */ = {
+			isa = PBXGroup;
+			children = (
+				27D5431D040CF61AF782570B /* * */,
+				D1DD48AC96FA9F67ED729C4E /* * */,
+			);
+			path = Metal;
+			sourceTree = "<group>";
+		};
+		32B8B3AB0BE77833C1824330 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				0475CE6E62FE22704F8ACD0C /* * */,
+				1D305C8FE7584CD9F7E6222F /* * */,
+				66DF830027368356D50DEB2C /* * */,
+				E6D6FC9EBA0FBCBC9AE59705 /* * */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		420CFB359C2A33DC60BFB328 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				0C3FEB8A801641067AE4C9AA /* * */,
+				AD480CD4E27C0ABDB5E40C77 /* * */,
+				C53C1B5576460F7F9698D3C8 /* * */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		499D4CCF9EAFEE67D6AA38FF /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				CD46AECE5E55393DAA53A376 /* * */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
+		5AC99B9EF7C04A2A5AC290C2 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				273ACCD7A0D2A4CE62256807 /* * */,
+				2CD1806A43F747E635447776 /* * */,
+				3636E97F7E9C254BFE4B58D9 /* * */,
+				37C2205592991D7E20905D34 /* * */,
+				3CB5E14773AAED5BDA36112D /* * */,
+				4AFD3194FF8D2DEBD2E1E815 /* * */,
+				68CB50AEDBB4A5DFCADFCA8D /* * */,
+				847088E87217A565172AB1C6 /* * */,
+				9128E434B58808121DC38347 /* * */,
+				B4882B14CAA17625FF698D10 /* * */,
+				BD6B4E9E8BB7F909699227FE /* * */,
+				E0D357BC96ABD39F71CBF166 /* * */,
+				2B82DC66FF1847C0A8ECF53F /* WinOSBrand.swift */,
+				09D8620CA03C43798720BD18 /* WinOSHomeView.swift */,
+				B36893DF8B194472B7793C41 /* WinOSCreatePCView.swift */,
+				701A9D0D1D6B44B58691E906 /* WinOSLoadingView.swift */,
+				2EA848EA62FA4DC682EDE23A /* WinOSDesktopView.swift */,
+				64F303DE74D44F77A29F4C07 /* WinOSOverlayView.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		644E1A49BD95875D5A0DBF63 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				5ECF21BBC6679292B66822EA /* * */,
+				AF3831B0B409ACFEED388773 /* * */,
+				C510A12AC2FE936BA27E10C9 /* * */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
+		67D301BDF361D1C10D19F5B9 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				7F129F6449E99C9418B25BFC /* * */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		7B7E7B7CDAF7E8CD2040F052 /* Graphics */ = {
+			isa = PBXGroup;
+			children = (
+				BAB9E782C2CF58CD30DA5777 /* * */,
+				FC0135C47A7D3497F4A59E22 /* * */,
+			);
+			path = Graphics;
+			sourceTree = "<group>";
+		};
+		7F129F6449E99C9418B25BFC /* portico */ = {
+			isa = PBXGroup;
+			children = (
+				1FABD96CD907641F93D0B5B1 /* * */,
+				219B7D528CFE8A063D282B38 /* * */,
+				2F2B47924DD178CB9A119D01 /* * */,
+				2FBB2978FBD868C9E0F5F726 /* * */,
+				493B2FA7976C2545A1B779BF /* * */,
+				70F27042365E1E65719FEB04 /* * */,
+				89103E831804636517C2AB10 /* * */,
+				8D487B81E5B7828DB6CC6BBD /* * */,
+				B2B7D752E0547481DB6B4F27 /* * */,
+				B50094914151944F354E1D6E /* * */,
+				BC8BA5886FE131AAD53A6675 /* * */,
+				C5861D9AAE251CD428C2FE7E /* * */,
+				D24A9A10CCAA48D24967739C /* * */,
+				D94B0CEC4FC0EB2699F30A11 /* * */,
+				DD8B4632E276206C65E09477 /* * */,
+				E03ECF965746C9420A1B56F0 /* * */,
+				EC4189457BE7AEDE728B8673 /* * */,
+			);
+			path = portico;
+			sourceTree = "<group>";
+		};
+		8B6B36D97D015C3ED4B08466 /* Compatibility */ = {
+			isa = PBXGroup;
+			children = (
+				B201E2264E8E24894E0E5930 /* * */,
+			);
+			path = Compatibility;
+			sourceTree = "<group>";
+		};
+		8BB646A767F9782E4AFE9A80 /* Logging */ = {
+			isa = PBXGroup;
+			children = (
+				240AB51204825C547D57F7DE /* * */,
+			);
+			path = Logging;
+			sourceTree = "<group>";
+		};
+		A0A815E534E9B4518B19FC51 /* Environment */ = {
+			isa = PBXGroup;
+			children = (
+				62708F7476BC718054B73CC5 /* * */,
+			);
+			path = Environment;
+			sourceTree = "<group>";
+		};
+		A9F1726F4089629653FB690A /* Diagnostics */ = {
+			isa = PBXGroup;
+			children = (
+				262934608449C213F6DE6DF6 /* * */,
+			);
+			path = Diagnostics;
+			sourceTree = "<group>";
+		};
+		AD480CD4E27C0ABDB5E40C77 /* PorticoRuntime */ = {
+			isa = PBXGroup;
+			children = (
+				0EAE018493E7F3B8272D64ED /* * */,
+				67D301BDF361D1C10D19F5B9 /* * */,
+			);
+			path = PorticoRuntime;
+			sourceTree = "<group>";
+		};
+		AE30FF9AECD046A8C628416F /* Input */ = {
+			isa = PBXGroup;
+			children = (
+				A07358188C2465E1E40A03C5 /* * */,
+				ADFFA1746869E6DC1620BF07 /* * */,
+			);
+			path = Input;
+			sourceTree = "<group>";
+		};
+		C408E1C1B347612F17AB8F5D /* Input */ = {
+			isa = PBXGroup;
+			children = (
+				EAF73D23421A1D72774B39CB /* * */,
+			);
+			path = Input;
+			sourceTree = "<group>";
+		};
+		C53C1B5576460F7F9698D3C8 /* PorticoApp */ = {
+			isa = PBXGroup;
+			children = (
+				2DFEB98B4C9F5E02691FC2C8 /* * */,
+				2FAD037C3DD3AA2F20C33801 /* * */,
+				396985C66686FE7C05565B71 /* * */,
+				499D4CCF9EAFEE67D6AA38FF /* * */,
+				5AC99B9EF7C04A2A5AC290C2 /* * */,
+				693762FCF2DA9B5841452535 /* * */,
+				AE30FF9AECD046A8C628416F /* * */,
+			);
+			path = PorticoApp;
+			sourceTree = "<group>";
+		};
+		C87B64D0524BA67768F0D98F /* Runtime */ = {
+			isa = PBXGroup;
+			children = (
+				12A912A187632F622C2663CB /* * */,
+				482AA6348D19A4E059C2D888 /* * */,
+				6A8DC53CF7FC09C35C71BAA0 /* * */,
+				BFB8FF03D1C3FE8D3DDE93EF /* * */,
+				D23B609CEC9DE9137BCDBE67 /* * */,
+			);
+			path = Runtime;
+			sourceTree = "<group>";
+		};
+		CAC3D4442B41D82159EFB461 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				A8A879E54FC5AD8424879929 /* * */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
+		ECCA96BE540C4CE8C1D14A94 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				C1851983F5D84FC875DA7DB9 /* * */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		B687106895D06AA330DAFED5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				845175776DA9B77AB4CAFC16 /* * */,
+				2FAB3EFC261338FCDA442B95 /* * */,
+				B58392B0683CF37E493DE0B2 /* * */,
+				76E6407D70BFAF7376E20110 /* * */,
+				92DB7A71D3B15A69A5A049CD /* * */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2F3A6B1E78F896718625FF06 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C2F21D19759A81DAF56E042F /* Portico.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B9340614599AB78F485950C7 = {
+			isa = PBXGroup;
+			children = (
+				420CFB359C2A33DC60BFB328 /* * */,
+				74C0354F987B4FC0FDE2C044 /* * */,
+				B687106895D06AA330DAFED5 /* * */,
+				2F3A6B1E78F896718625FF06 /* * */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		641004946ADDF49A07272EF5 /* Portico */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8CF598ACC897FE8648893EB5 /* Build configuration list for PBXNativeTarget "Portico" */;
+			buildPhases = (
+				D8E2B34C6803A5DAEDA2CB7E /* Sources */,
+				804DB52E2955449D2F091C7E /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Portico;
+			productName = Portico;
+			productReference = C2F21D19759A81DAF56E042F /* Portico.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4DC844ABCCFC0D132D087C1C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+			};
+			buildConfigurationList = AD8DC1A475C1871509FE9877 /* Build configuration list for PBXProject "Portico" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = "pt-BR";
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B9340614599AB78F485950C7;
+			productRefGroup = 2F3A6B1E78F896718625FF06 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				641004946ADDF49A07272EF5 /* Portico */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D8E2B34C6803A5DAEDA2CB7E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD93DAC8104828492727025D /* src */,
+				199916C2A1988153D1EB0B20 /* src */,
+				33D6682768D6F35074C566B2 /* src */,
+				EB491F0BCB362EC61A62CB86 /* src */,
+				BCFD031D389F16B580D49FE3 /* src */,
+				E2B00E79F8895815DFE0E7CD /* src */,
+				BB4564DB7DE721BC304790BA /* src */,
+				FF3F37C93A529CE1B7096DAB /* src */,
+				BCC3326DF7024F4E14F5BC77 /* src */,
+				CC23B510065908BDBAC3506D /* src */,
+				15B63C3D5D2F2E893C71972B /* src */,
+				44DF83092BBB9B6D4C473ADC /* src */,
+				4FC4B68A59EFDB941419B84E /* src */,
+				26CA2C507838B6E17461825C /* src */,
+				2C3DB4064782A707BCA9CEBB /* src */,
+				FC7C0F1D484F4C54FC2E5422 /* src */,
+				A84F84AD8914F997BF18F3D7 /* src */,
+				971F89AC316C8D21ED2A069D /* src */,
+				7C0D9842D88BD5E709DCE822 /* src */,
+				35ADCD4E23EC2288A6BAA41E /* src */,
+				DF7155748E3A26E6DF879A4E /* src */,
+				546EEA4C0D0CC7894E8295EE /* src */,
+				FB12EAFD0F76A8148AFC6A5D /* src */,
+				9E964F1096BC4280E0DA8D16 /* src */,
+				52CB0139BD60A31A32BB2C91 /* src */,
+				12A5293FF1BD5CAB34F72493 /* src */,
+				F34F37AE78AAE4728B70FF11 /* src */,
+				B86F759A7939ABB955E0BA54 /* src */,
+				B5D3561F1A6FCA7309FCA9B5 /* src */,
+				72C5D7F32AC10DF467A6C5D3 /* src */,
+				52EEE8BC06DCC0561CF56944 /* src */,
+				85433CDAFCA5FE9F1CE447EF /* src */,
+				5DCB1209DF0AF60D20BB33BB /* src */,
+				19566012DCF3164AB777F91C /* src */,
+				8A182D608B1CC988AD4C11EA /* src */,
+				436E2CD503D9ABC0D651ABDF /* src */,
+				5B16423A23048166FDC98AA2 /* src */,
+				B37FE3247C2D137503852F49 /* src */,
+				6DED811667F16DA4A9E2488D /* src */,
+				0F6EE5C1264446C45EE00656 /* src */,
+				D30C0FA3A7B16123D29E6888 /* src */,
+				CE211D59E268B04CFFA08F37 /* src */,
+				37F79058A63A88C0C5EE0E8C /* src */,
+				73B73944A501076D7DFD94D2 /* src */,
+				8AB105B5E090BD41E0B735C8 /* src */,
+				A6B53146B584EB2BE8B9D2B7 /* src */,
+				38FD5FEED4CB03789696C5C3 /* src */,
+				8EC8BB99487C6A49707753A9 /* src */,
+				099202E4AFFE5E2FCE7CCB42 /* src */,
+				439472EF6B75E6FF907A0070 /* src */,
+				A8820C8589D124D832454A16 /* src */,
+				9A3576349C5835103DF05605 /* src */,
+				2DF6B4B14667C47E04903C40 /* src */,
+				5A47C2D3B7E4A0C12B0B143D /* src */,
+				3204ECC128D88D49B3F9D53B /* src */,
+				75B9030D91DD26222F5F4AEE /* src */,
+				D8F4A46DC015EEBDF8CF8653 /* src */,
+				0BA88F74F7C77BE010E06CBF /* src */,
+				57BDEF1AAF276EC0371FC041 /* src */,
+				7FF592F35C6CB5AD9D213E91 /* src */,
+				B77A85E2A1C3E9A407B1B637 /* src */,
+				CDA1A4F355AAE091E64ADC75 /* src */,
+				A422286625684FEB912F6D34 /* WinOSBrand.swift in Sources */,
+				2E1B86446CD249DD8CCE8C1D /* WinOSHomeView.swift in Sources */,
+				A4BFB7219689441594AA7A17 /* WinOSCreatePCView.swift in Sources */,
+				BBD0A8D3163740BDB75BEB14 /* WinOSLoadingView.swift in Sources */,
+				FBBA7C1E804545DD95B65985 /* WinOSDesktopView.swift in Sources */,
+				D3BBC8AA4474482FAA98E264 /* WinOSOverlayView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		06125DCB1954C4F7EEE69894 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+				);
+			};
+			name = Debug;
+		};
+		AACF5BDB2BC481EB947517D5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				GCC_OPTIMIZATION_LEVEL = s;
+			};
+			name = Release;
+		};
+		E07B8131BAB0D598AD460C2C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Sources/PorticoApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				OTHER_CFLAGS = (
+					"-DPR_ENABLE_ZLIB=1",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = io.portico.Portico;
+				PRODUCT_NAME = Portico;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/Sources/PorticoRuntime/include",
+				);
+
+			};
+			name = Debug;
+		};
+		AB3F0C1C96C3F4D3D4AB9249 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Sources/PorticoApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				OTHER_CFLAGS = (
+					"-DPR_ENABLE_ZLIB=1",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = io.portico.Portico;
+				PRODUCT_NAME = Portico;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/Sources/PorticoRuntime/include",
+				);
+
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AD8DC1A475C1871509FE9877 /* Build configuration list for PBXProject "Portico" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				06125DCB1954C4F7EEE69894 /* Debug */,
+				AACF5BDB2BC481EB947517D5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8CF598ACC897FE8648893EB5 /* Build configuration list for PBXNativeTarget "Portico" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E07B8131BAB0D598AD460C2C /* Debug */,
+				AB3F0C1C96C3F4D3D4AB9249 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4DC844ABCCFC0D132D087C1C /* Project object */;
+}
