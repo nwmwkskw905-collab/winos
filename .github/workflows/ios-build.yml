@@ -1,0 +1,31 @@
+name: WinOS iOS Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-ios:
+    runs-on: macos-latest
+
+    steps:
+      - name: Baixar projeto
+        uses: actions/checkout@v4
+
+      - name: Verificar Xcode
+        run: |
+          xcodebuild -version
+          xcodebuild -showsdks
+
+      - name: Compilar WinOS
+        run: |
+          xcodebuild \
+            -project Portico.xcodeproj \
+            -scheme Portico \
+            -configuration Debug \
+            -sdk iphoneos \
+            -destination 'generic/platform=iOS' \
+            CODE_SIGNING_ALLOWED=NO \
+            build
