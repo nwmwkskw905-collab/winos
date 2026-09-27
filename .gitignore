@@ -7,3 +7,9 @@ xcuserdata/
 *.xcuserstate
 .DS_Store
 __pycache__/
+
+# Generated analyzer files
+pr_*.plist
+pr_*.o
+analyzer*.err
+build_setup.log
