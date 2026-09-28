@@ -1001,6 +1001,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.portico.PorticoRuntime;
 				PRODUCT_NAME = PorticoRuntime;
 				PRODUCT_MODULE_NAME = PorticoRuntime;
+                                MODULEMAP_FILE = "$(SRCROOT)/Sources/PorticoRuntime/include/module.modulemap";
 				CLANG_ENABLE_MODULES = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				HEADER_SEARCH_PATHS = (
@@ -1035,6 +1036,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.portico.PorticoRuntime;
 				PRODUCT_NAME = PorticoRuntime;
 				PRODUCT_MODULE_NAME = PorticoRuntime;
+                                MODULEMAP_FILE = "$(SRCROOT)/Sources/PorticoRuntime/include/module.modulemap";
 				CLANG_ENABLE_MODULES = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				HEADER_SEARCH_PATHS = (
