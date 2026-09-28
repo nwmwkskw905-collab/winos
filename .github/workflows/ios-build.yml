@@ -1,4 +1,4 @@
-name: iOS Build
+name: WinOS iOS Build
 
 on:
   push:
@@ -23,44 +23,48 @@ jobs:
           swift --version
           clang --version
 
+      - name: Show SDKs
+        run: |
+          xcodebuild -showsdks
+
       - name: List targets and schemes
         run: |
           xcodebuild -list -project Portico.xcodeproj
 
-      - name: Build PorticoRuntime (framework)
+      - name: Build PorticoRuntime
         run: |
           xcodebuild \
             -project Portico.xcodeproj \
             -target PorticoRuntime \
             -configuration Debug \
             -sdk iphoneos \
-            -destination generic/platform=iOS \
+            -destination 'generic/platform=iOS' \
             CODE_SIGNING_ALLOWED=NO \
             clean build
 
-      - name: Build PorticoCore (framework)
+      - name: Build PorticoCore
         run: |
           xcodebuild \
             -project Portico.xcodeproj \
             -target PorticoCore \
             -configuration Debug \
             -sdk iphoneos \
-            -destination generic/platform=iOS \
+            -destination 'generic/platform=iOS' \
             CODE_SIGNING_ALLOWED=NO \
             clean build
 
-      - name: Build Portico App (iOS device)
+      - name: Build Portico App - iOS device
         run: |
           xcodebuild \
             -project Portico.xcodeproj \
             -scheme Portico \
             -configuration Debug \
             -sdk iphoneos \
-            -destination generic/platform=iOS \
+            -destination 'generic/platform=iOS' \
             CODE_SIGNING_ALLOWED=NO \
-            clean build
+            build
 
-      - name: Build Portico App (iOS Simulator)
+      - name: Build Portico App - iOS simulator
         run: |
           xcodebuild \
             -project Portico.xcodeproj \
@@ -69,25 +73,22 @@ jobs:
             -sdk iphonesimulator \
             -destination 'generic/platform=iOS Simulator' \
             CODE_SIGNING_ALLOWED=NO \
-            clean build
+            build
 
-      - name: Archive (optional, no signing)
+      - name: Archive WinOS
         run: |
           xcodebuild \
             -project Portico.xcodeproj \
             -scheme Portico \
             -configuration Release \
             -sdk iphoneos \
-            -destination generic/platform=iOS \
+            -destination 'generic/platform=iOS' \
+            -archivePath "$RUNNER_TEMP/WinOS.xcarchive" \
             CODE_SIGNING_ALLOWED=NO \
-            archive -archivePath build/Portico.xcarchive || echo "Archive may require signing, but build succeeded"
+            archive
 
-      - name: Upload build logs
-        if: always()
+      - name: Upload archive
         uses: actions/upload-artifact@v4
         with:
-          name: build-logs
-          path: |
-            build/
-            *.log
-          if-no-files-found: ignore
+          name: WinOS-iOS-archive
+          path: ${{ runner.temp }}/WinOS.xcarchive
