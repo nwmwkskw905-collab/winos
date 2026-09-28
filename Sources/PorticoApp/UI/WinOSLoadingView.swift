@@ -1,4 +1,5 @@
 import SwiftUI
+import PorticoCore
 
 /// Tela de carregamento WinOS — logo, animação, progresso real quando disponível,
 /// mensagens de estado (runtime, ambiente, PE). Sem progresso falso.
