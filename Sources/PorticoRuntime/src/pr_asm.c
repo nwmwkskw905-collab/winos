@@ -1,6 +1,7 @@
 /* Feature-test macros: expõe POSIX/BSD nos headers do sistema com -std=c11. */
 #if defined(__APPLE__)
 #define _DARWIN_C_SOURCE 1
+#define _POSIX_C_SOURCE 200809L
 #else
 #define _POSIX_C_SOURCE 200809L
 #define _DEFAULT_SOURCE 1

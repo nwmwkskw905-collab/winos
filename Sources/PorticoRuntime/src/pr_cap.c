@@ -1,6 +1,7 @@
 /* Feature-test macros: expõe POSIX/BSD nos headers do sistema com -std=c11. */
 #if defined(__APPLE__)
 #define _DARWIN_C_SOURCE 1
+#define _POSIX_C_SOURCE 200809L
 #else
 #define _POSIX_C_SOURCE 200809L
 #define _DEFAULT_SOURCE 1
@@ -15,8 +16,12 @@
 #include <sys/mman.h>
 
 #if defined(__APPLE__)
+#if __has_include(<TargetConditionals.h>)
 #include <TargetConditionals.h>
+#endif
+#if __has_include(<sys/sysctl.h>)
 #include <sys/sysctl.h>
+#endif
 #endif
 
 #ifndef TARGET_OS_IPHONE
@@ -36,12 +41,16 @@ void pr_cap_probe(pr_cap_info* out) {
     if (pages > 0) out->total_ram = (uint64_t)pages * (uint64_t)out->page_size;
 #endif
 
-#if defined(__APPLE__)
+#if defined(__APPLE__) && defined(__MACH__) && !defined(__linux__)
     {
         size_t n = sizeof(out->cpu_brand) - 1;
+#if __has_include(<sys/sysctl.h>)
         if (sysctlbyname("machdep.cpu.brand_string", out->cpu_brand, &n, NULL, 0) != 0) {
             strncpy(out->cpu_brand, "Apple", sizeof(out->cpu_brand) - 1);
         }
+#else
+        strncpy(out->cpu_brand, "Apple", sizeof(out->cpu_brand) - 1);
+#endif
     }
 #if TARGET_OS_IPHONE
     out->is_ios = 1;
@@ -50,7 +59,7 @@ void pr_cap_probe(pr_cap_info* out) {
 #endif
 #endif
 #else
-    /* Linux: /proc/cpuinfo */
+    /* Linux: /proc/cpuinfo (também usado quando simulando Apple no Linux) */
     FILE* f = fopen("/proc/cpuinfo", "r");
     if (f) {
         char line[256];

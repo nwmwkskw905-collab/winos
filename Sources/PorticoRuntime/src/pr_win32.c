@@ -1,8 +1,10 @@
-#define _GNU_SOURCE   /* G46: pthread_timedjoin_np (join com prazo) */
+#define _GNU_SOURCE   /* G46: pthread_timedjoin_np (join com prazo) Linux */
 
 /* Feature-test macros: expõe POSIX/BSD nos headers do sistema com -std=c11. */
 #if defined(__APPLE__)
 #define _DARWIN_C_SOURCE 1
+/* Darwin também precisa POSIX para clock_gettime */
+#define _POSIX_C_SOURCE 200809L
 #else
 #define _POSIX_C_SOURCE 200809L
 #define _DEFAULT_SOURCE 1
@@ -18,12 +20,114 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdarg.h>
-#include <stdarg.h>
 #include <time.h>
 #include <unistd.h>
 #include <sys/stat.h>
 #include <pthread.h>
 #include <errno.h>
+
+#if defined(__APPLE__)
+#if __has_include(<TargetConditionals.h>)
+#include <TargetConditionals.h>
+#endif
+#endif
+
+/* ============================================================
+ * Compatibilidade Darwin/iOS — Apple Clang não possui
+ * pthread_mutex_timedlock e pthread_timedjoin_np (GNU extensions).
+ * Implementação preserva timeout, códigos de retorno, EINTR/ETIMEDOUT,
+ * evita busy-loop e deadlock, mantém Linux intacto.
+ * ============================================================ */
+#if defined(__APPLE__)
+/* Darwin/iOS: fallback para pthread_mutex_timedlock
+ * Semântica: tenta trylock em loop com sleep 1ms, respeita abs_timeout (CLOCK_REALTIME),
+ * retorna 0 em sucesso, ETIMEDOUT em timeout, preserva errno.
+ * Evita busy-loop: sleep adaptativo 1ms (cap 5ms) + nanosleep com EINTR handling.
+ */
+static int pr_darwin_pthread_mutex_timedlock(pthread_mutex_t *mutex, const struct timespec *abs_timeout) {
+    struct timespec now;
+    if (clock_gettime(CLOCK_REALTIME, &now) != 0) {
+        /* fallback: try once */
+        if (pthread_mutex_trylock(mutex) == 0) return 0;
+        return ETIMEDOUT;
+    }
+    /* já expirou? */
+    if (now.tv_sec > abs_timeout->tv_sec ||
+        (now.tv_sec == abs_timeout->tv_sec && now.tv_nsec >= abs_timeout->tv_nsec)) {
+        if (pthread_mutex_trylock(mutex) == 0) return 0;
+        return ETIMEDOUT;
+    }
+    while (1) {
+        if (pthread_mutex_trylock(mutex) == 0) return 0;
+        if (clock_gettime(CLOCK_REALTIME, &now) != 0) {
+            /* erro clock: tenta mais uma vez sem bloqueio */
+            return ETIMEDOUT;
+        }
+        if (now.tv_sec > abs_timeout->tv_sec ||
+            (now.tv_sec == abs_timeout->tv_sec && now.tv_nsec >= abs_timeout->tv_nsec)) {
+            return ETIMEDOUT;
+        }
+        /* calcula remaining para sleep adaptativo, evita busy-loop */
+        struct timespec rem;
+        rem.tv_sec = abs_timeout->tv_sec - now.tv_sec;
+        rem.tv_nsec = abs_timeout->tv_nsec - now.tv_nsec;
+        if (rem.tv_nsec < 0) {
+            rem.tv_sec--;
+            rem.tv_nsec += 1000000000L;
+        }
+        struct timespec sleep_ts;
+        if (rem.tv_sec > 0 || rem.tv_nsec > 5000000L) {
+            sleep_ts.tv_sec = 0;
+            sleep_ts.tv_nsec = 1000000L; /* 1ms — responsivo sem busy-loop */
+        } else {
+            /* remaining <5ms: dorme remaining (cap 1ms para evitar oversleep) */
+            sleep_ts.tv_sec = 0;
+            sleep_ts.tv_nsec = rem.tv_nsec > 1000000L ? 1000000L : rem.tv_nsec;
+            if (sleep_ts.tv_nsec <= 0) {
+                return ETIMEDOUT;
+            }
+        }
+        struct timespec rem_sleep;
+        while (nanosleep(&sleep_ts, &rem_sleep) == -1 && errno == EINTR) {
+            sleep_ts = rem_sleep;
+        }
+    }
+}
+
+/* Darwin/iOS: fallback para pthread_timedjoin_np
+ * Semântica original Linux:
+ *   - espera thread terminar até abs_timeout (CLOCK_REALTIME)
+ *   - retorna 0 se thread terminou dentro do prazo (join real)
+ *   - retorna ETIMEDOUT se prazo expirou com thread ainda executando
+ *   - preserva códigos de retorno
+ * Estratégia Darwin:
+ *   - usa flag volatile done (w32_thread.done) setada por w32_thread_main antes de retornar
+ *   - polling done com sleep 1ms + timeout check (evita busy-loop)
+ *   - quando done==1, chama pthread_join para liberar recursos (join real, sem timeout)
+ *   - mantém caminho Linux intacto fora de __APPLE__
+ */
+static int pr_darwin_pthread_timedjoin_np(pthread_t tid, void **retval, const struct timespec *abs_timeout, volatile int *done_flag) {
+    (void)tid; /* tid usado apenas no join final; polling via done_flag */
+    (void)retval;
+    struct timespec now;
+    while (done_flag && !*done_flag) {
+        if (clock_gettime(CLOCK_REALTIME, &now) != 0) {
+            return ETIMEDOUT;
+        }
+        if (now.tv_sec > abs_timeout->tv_sec ||
+            (now.tv_sec == abs_timeout->tv_sec && now.tv_nsec >= abs_timeout->tv_nsec)) {
+            return ETIMEDOUT;
+        }
+        struct timespec sleep_ts = {0, 1000000L}; /* 1ms */
+        struct timespec rem_sleep;
+        while (nanosleep(&sleep_ts, &rem_sleep) == -1 && errno == EINTR) {
+            sleep_ts = rem_sleep;
+        }
+    }
+    /* thread terminou dentro do prazo (ou done_flag NULL): join real */
+    return 0; /* caller fará pthread_join */
+}
+#endif /* __APPLE__ */
 
 /* ============================================================
  * Catálogo de APIs por subsistema.
@@ -4133,13 +4237,25 @@ static uint64_t f_WaitForSingleObject(pr_win32_ctx* ctx, const uint64_t* a, size
                 return 0x102u;                      /* WAIT_TIMEOUT */
             }
             /* G45: timeout finito — bloqueio REAL limitado no tempo (mesma base
-             * de tempo de Sleep/QPC: nanossegundos reais monotônicos de parede) */
+             * de tempo de Sleep/QPC: nanossegundos reais monotônicos de parede)
+             * Darwin/iOS: pthread_mutex_timedlock não existe no SDK iOS (Apple Clang).
+             * Fallback preserva timeout via trylock + nanosleep 1ms, sem busy-loop,
+             * com EINTR handling e códigos de retorno compatíveis. */
             {
                 struct timespec ts;
                 clock_gettime(CLOCK_REALTIME, &ts);
                 ts.tv_sec += (time_t)(ms / 1000u);
                 ts.tv_nsec += (long)(ms % 1000u) * 1000000L;
                 if (ts.tv_nsec >= 1000000000L) { ts.tv_sec += 1; ts.tv_nsec -= 1000000000L; }
+#if defined(__APPLE__)
+                if (pr_darwin_pthread_mutex_timedlock(&mt->m, &ts) == 0) {
+                    mt->owner = pthread_self();
+                    mt->owned = 1;
+                    mt->rec = 1;
+                    return 0;                       /* WAIT_OBJECT_0 */
+                }
+                return 0x102u;                      /* WAIT_TIMEOUT */
+#else
                 if (pthread_mutex_timedlock(&mt->m, &ts) == 0) {
                     mt->owner = pthread_self();
                     mt->owned = 1;
@@ -4147,6 +4263,7 @@ static uint64_t f_WaitForSingleObject(pr_win32_ctx* ctx, const uint64_t* a, size
                     return 0;                       /* WAIT_OBJECT_0 */
                 }
                 return 0x102u;                      /* WAIT_TIMEOUT */
+#endif
             }
         }
     }
@@ -4205,7 +4322,8 @@ static uint64_t f_WaitForSingleObject(pr_win32_ctx* ctx, const uint64_t* a, size
         } else {
             /* G46: timeout finito em handle de thread — bloqueio REAL limitado ao
              * prazo. Reusa a infraestrutura de join já existente na variante com
-             * prazo (pthread_timedjoin_np); a lógica de mutex não é duplicada.
+             * prazo (pthread_timedjoin_np Linux); no Darwin/iOS usa polling de
+             * t->done com timeout preservado (sem busy-loop, 1ms sleep, EINTR handling).
              * Thread termina dentro do prazo => WAIT_OBJECT_0; prazo expira com a
              * thread ainda executando => WAIT_TIMEOUT. */
             struct timespec ts;
@@ -4213,10 +4331,20 @@ static uint64_t f_WaitForSingleObject(pr_win32_ctx* ctx, const uint64_t* a, size
             ts.tv_sec += (time_t)(ms / 1000u);
             ts.tv_nsec += (long)(ms % 1000u) * 1000000L;
             if (ts.tv_nsec >= 1000000000L) { ts.tv_sec += 1; ts.tv_nsec -= 1000000000L; }
+#if defined(__APPLE__)
+            /* Darwin/iOS: pthread_timedjoin_np não existe no SDK iOS (Apple Clang).
+             * Fallback: pr_darwin_pthread_timedjoin_np polling t->done, depois join real. */
+            if (pr_darwin_pthread_timedjoin_np(t->tid, NULL, &ts, &t->done) != 0) {
+                return 0x102u;              /* WAIT_TIMEOUT: thread ainda executando */
+            }
+            pthread_join(t->tid, NULL);
+            t->joined = 1;
+#else
             if (pthread_timedjoin_np(t->tid, NULL, &ts) != 0) {
                 return 0x102u;              /* WAIT_TIMEOUT: thread ainda executando */
             }
             t->joined = 1;
+#endif
         }
     }
     return 0;                               /* WAIT_OBJECT_0 */
