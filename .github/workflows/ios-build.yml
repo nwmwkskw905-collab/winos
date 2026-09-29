@@ -82,6 +82,22 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             archive -archivePath build/Portico.xcarchive || echo "Archive may require signing, but build succeeded"
 
+      - name: Locate Portico.app (iOS device)
+        run: |
+          set -e
+          APP_PATH=$(find "$HOME/Library/Developer/Xcode/DerivedData" -path "*/Build/Products/Debug-iphoneos/Portico.app" -type d -print -quit)
+          if [ -z "$APP_PATH" ]; then echo "ERROR: Portico.app not found"; exit 1; fi
+          mkdir -p build/app-artifact
+          rm -rf build/app-artifact/Portico.app
+          cp -R "$APP_PATH" build/app-artifact/Portico.app
+
+      - name: Upload WinOS App
+        uses: actions/upload-artifact@v4
+        with:
+          name: winos-app
+          path: build/app-artifact/Portico.app
+          if-no-files-found: error
+
       - name: Upload build logs
         if: always()
         uses: actions/upload-artifact@v4
