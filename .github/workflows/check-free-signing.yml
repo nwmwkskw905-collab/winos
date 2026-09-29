@@ -1,0 +1,48 @@
+name: Check Free Apple Signing
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check-signing:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Xcode information
+        run: |
+          echo "=== macOS ==="
+          sw_vers
+
+          echo "=== Xcode ==="
+          xcodebuild -version
+
+          echo "=== SDK ==="
+          xcrun --sdk iphoneos --show-sdk-version
+
+      - name: Signing identities
+        run: |
+          echo "=== Available code-signing identities ==="
+          security find-identity -v -p codesigning || true
+
+      - name: Project signing configuration
+        run: |
+          echo "=== Bundle identifier ==="
+          xcodebuild \
+            -project Portico.xcodeproj \
+            -scheme Portico \
+            -showBuildSettings \
+            2>/dev/null | grep -E \
+            'PRODUCT_BUNDLE_IDENTIFIER|DEVELOPMENT_TEAM|CODE_SIGN_STYLE|CODE_SIGN_IDENTITY|PROVISIONING_PROFILE_SPECIFIER' \
+            || true
+
+      - name: Check project
+        run: |
+          echo "=== Xcode project ==="
+          test -f Portico.xcodeproj/project.pbxproj
+          echo "Portico.xcodeproj OK"
+
+          echo "=== Schemes ==="
+          xcodebuild -list -project Portico.xcodeproj
