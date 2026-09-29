@@ -60,6 +60,28 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             clean build
 
+      - name: Capture Portico.app (iOS device)
+        run: |
+          set -e
+          APP_PATH=$(find "$HOME/Library/Developer/Xcode/DerivedData" -type d -name "Portico.app" -path "*/Debug-iphoneos/Portico.app" -print -quit)
+          if [ -z "$APP_PATH" ]; then
+            echo "ERROR: Device Portico.app not found immediately after device build"
+            find "$HOME/Library/Developer/Xcode/DerivedData" -type d -name "Portico.app" -print || true
+            exit 1
+          fi
+          echo "FOUND DEVICE APP: $APP_PATH"
+          mkdir -p build/app-artifact
+          rm -rf build/app-artifact/Portico.app
+          cp -R "$APP_PATH" build/app-artifact/Portico.app
+          echo "DEVICE APP CAPTURED SUCCESSFULLY"
+
+      - name: Upload WinOS App (iOS device)
+        uses: actions/upload-artifact@v4
+        with:
+          name: winos-app
+          path: build/app-artifact/Portico.app
+          if-no-files-found: error
+
       - name: Build Portico App (iOS Simulator)
         run: |
           xcodebuild \
@@ -81,22 +103,6 @@ jobs:
             -destination generic/platform=iOS \
             CODE_SIGNING_ALLOWED=NO \
             archive -archivePath build/Portico.xcarchive || echo "Archive may require signing, but build succeeded"
-
-      - name: Locate Portico.app (iOS device)
-        run: |
-          set -e
-          APP_PATH=$(find "$HOME/Library/Developer/Xcode/DerivedData" -type d -name "Portico.app" -path "*/Debug-iphoneos/Portico.app" -print -quit)
-          if [ -z "$APP_PATH" ]; then echo "ERROR: Portico.app not found"; find "$HOME/Library/Developer/Xcode/DerivedData" -type d -name "Portico.app" -print || true; exit 1; fi
-          mkdir -p build/app-artifact
-          rm -rf build/app-artifact/Portico.app
-          cp -R "$APP_PATH" build/app-artifact/Portico.app
-
-      - name: Upload WinOS App
-        uses: actions/upload-artifact@v4
-        with:
-          name: winos-app
-          path: build/app-artifact/Portico.app
-          if-no-files-found: error
 
       - name: Upload build logs
         if: always()
