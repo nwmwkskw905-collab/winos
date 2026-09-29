@@ -232,6 +232,7 @@
 		C2F21D19759A81DAF56E042F /* Portico.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Portico.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6D79295F1764110985D75BB /* PorticoCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PorticoCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		866A9E14934942B7AC191584 /* PorticoRuntime.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PorticoRuntime.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D5CAFA3FA9D843DA8D3EAACD /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = text; path = module.modulemap; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -511,6 +512,7 @@
 			children = (
 				A61F992BA4734E1C8B5A30C2 /* portico */,
 				90B1B2ACB9724A92A384EFA2 /* PorticoRuntime.h */,
+				D5CAFA3FA9D843DA8D3EAACD /* module.modulemap */,
 			);
 			path = include;
 			sourceTree = "<group>";

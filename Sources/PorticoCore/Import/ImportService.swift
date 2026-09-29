@@ -60,7 +60,7 @@ public final class ImportService {
     }
 
     /// Copia um item (arquivo .zip ou diretório) para uma área de stage e analisa.
-    public func scanImport(from externalURL: URL) throws -> ImportScanResult {
+    public func scanImport(from externalURL: URL) async throws -> ImportScanResult {
         try sandbox.ensureDirectories()
         let staging = sandbox.importsDir
             .appendingPathComponent("stage-\(UUID().uuidString)", isDirectory: true)

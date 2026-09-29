@@ -1,8 +1,8 @@
 # WINOS — Relatório Final de Build iOS
 
-**Data:** 2026-09-28
-**Modo:** Autônomo de Auditoria, Correção e Build
-**Repositório:** Portico / WinOS (workspace local, sem git remoto disponível no Arena)
+**Data:** 2026-09-28  
+**Modo:** Autônomo de Auditoria, Correção e Build  
+**Repositório:** Portico / WinOS (workspace local, sem git remoto disponível no Arena)  
 **SDK alvo:** iPhoneOS 26.5 arm64, Xcode 26.6, macos-latest (GitHub Actions)
 
 ---

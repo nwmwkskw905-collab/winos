@@ -1,7 +1,7 @@
 import Foundation
 
 /// Resolução interna do jogo (largura × altura).
-public struct Resolution: Equatable, Sendable, Codable {
+public struct Resolution: Equatable, Hashable, Sendable, Codable {
     public var width: Int
     public var height: Int
 
@@ -95,7 +95,7 @@ public enum GameKind: String, Sendable, Codable {
 }
 
 /// Referência a um ambiente/prefixo (EnvironmentManager).
-public struct EnvironmentRef: Equatable, Sendable, Codable {
+public struct EnvironmentRef: Equatable, Hashable, Sendable, Codable {
     public var id: UUID
     public var name: String
 

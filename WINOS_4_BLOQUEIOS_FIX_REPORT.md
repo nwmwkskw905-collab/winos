@@ -1,7 +1,7 @@
 # WINOS — Correção dos 4 Bloqueios Swift
 
-**Data:** 2026-09-28
-**Build:** GitHub Actions macOS, Xcode 26.6, iPhoneOS SDK 26.x, arm64-apple-ios17.0, Swift 5, CODE_SIGNING_ALLOWED=NO
+**Data:** 2026-09-28  
+**Build:** GitHub Actions macOS, Xcode 26.6, iPhoneOS SDK 26.x, arm64-apple-ios17.0, Swift 5, CODE_SIGNING_ALLOWED=NO  
 **Objetivo:** Corrigir 4 erros Swift sem alterar arquitetura funcional
 
 ---

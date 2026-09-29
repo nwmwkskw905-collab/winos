@@ -1,7 +1,7 @@
 # WINOS — Auditoria Pré-Build Xcode / GitHub Actions
 
-**Data:** 2026-09-28
-**Objetivo:** Eliminar antecipadamente erros Swift/iOS antes do próximo Run Workflow
+**Data:** 2026-09-28  
+**Objetivo:** Eliminar antecipadamente erros Swift/iOS antes do próximo Run Workflow  
 **Runner observado:** macOS, Xcode 26.6, iPhoneOS SDK 26.5, arm64-apple-ios17.0, Swift 5, deployment iOS 17.0
 
 ---

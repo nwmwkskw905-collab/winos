@@ -98,11 +98,11 @@ struct ImportFlowView: View {
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
                             if let pe = exe.pe {
-                                Text("PE\(pe.is64Bit ? "32+" : "32") · \(pe.arch) · "
-                                     + "\(pe.subsystem == 2 ? "GUI" : "console") · "
-                                     + "\(pe.sections.count) seções · "
-                                     + "\(pe.imports.count) DLLs importadas · "
-                                     + (pe.isDLL ? "DLL" : "executável"))
+                                let peType = pe.is64Bit ? "PE32+" : "PE32"
+                                let peSub = pe.subsystem == 2 ? "GUI" : "console"
+                                let peKind = pe.isDLL ? "DLL" : "executável"
+                                let peInfo = "\(peType) · \(pe.arch) · \(peSub) · \(pe.sections.count) seções · \(pe.imports.count) DLLs importadas · \(peKind)"
+                                Text(peInfo)
                                     .font(.caption2)
                                     .foregroundStyle(.secondary)
                                 Text(pe.executionVerdict)
@@ -177,11 +177,14 @@ struct ImportFlowView: View {
         .padding()
     }
 
+    @MainActor
     private func analyze(_ url: URL) async {
         stage = .analyze
         do {
+            // Captura importer fora do detached para evitar capturar MainActor model em background
+            let importer = model.importer
             let result = try await Task.detached(priority: .userInitiated) {
-                try model.importer.scanImport(from: url)
+                try await importer.scanImport(from: url)
             }.value
             self.scan = result
             if result.executables.isEmpty {
