@@ -1,0 +1,59 @@
+name: Check Apple Authentication
+
+on:
+  workflow_dispatch:
+
+jobs:
+  apple-auth:
+    runs-on: macos-latest
+
+    steps:
+      - name: Xcode environment
+        run: |
+          set -e
+
+          echo "=== XCODE ==="
+          xcodebuild -version
+
+          echo "=== DEVELOPER DIRECTORY ==="
+          xcode-select -p
+
+          echo "=== SDK ==="
+          xcrun --sdk iphoneos --show-sdk-version
+
+      - name: Signing identities
+        run: |
+          echo "=== SIGNING IDENTITIES ==="
+          security find-identity -v -p codesigning || true
+
+      - name: Provisioning profiles
+        run: |
+          echo "=== PROVISIONING PROFILES ==="
+
+          PROFILE_DIR="$HOME/Library/MobileDevice/Provisioning Profiles"
+
+          if [ -d "$PROFILE_DIR" ]; then
+            find "$PROFILE_DIR" -maxdepth 1 -type f -print
+          else
+            echo "No provisioning profile directory."
+          fi
+
+      - name: Xcode accounts
+        run: |
+          echo "=== XCODE ACCOUNT CONFIGURATION ==="
+
+          defaults read com.apple.dt.Xcode IDEProvisioningAccounts 2>/dev/null || \
+            echo "No Xcode provisioning accounts configured."
+
+      - name: Project settings
+        run: |
+          echo "=== PROJECT ==="
+
+          xcodebuild \
+            -project Portico.xcodeproj \
+            -scheme Portico \
+            -showBuildSettings \
+            2>/dev/null |
+            grep -E \
+            'PRODUCT_BUNDLE_IDENTIFIER|DEVELOPMENT_TEAM|CODE_SIGN_STYLE|CODE_SIGN_IDENTITY|PROVISIONING_PROFILE_SPECIFIER' \
+            || true
