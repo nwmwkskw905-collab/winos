@@ -169,8 +169,19 @@ struct WinOSCreatePCView: View {
     }
     
     private var createButton: some View {
-        WinOSPrimaryButton(title: "Criar PC", systemImage: "plus.circle.fill") {
-            createPC()
+        VStack(spacing: 12) {
+            if let err = creationError {
+                Text(err)
+                    .font(.caption)
+                    .foregroundStyle(.red)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal)
+            }
+            WinOSPrimaryButton(title: isCreating ? "Criando..." : "Criar PC", systemImage: "plus.circle.fill") {
+                createPC()
+            }
+            .disabled(isCreating)
+            .opacity(isCreating ? 0.6 : 1.0)
         }
     }
     
@@ -189,7 +200,13 @@ struct WinOSCreatePCView: View {
         }
     }
     
+    @State private var isCreating = false
+    @State private var creationError: String?
+
     private func createPC() {
+        guard !isCreating else { return }
+        isCreating = true
+        creationError = nil
         let env = PCEnvironment(
             nome: nome,
             arquitetura: arquitetura,
@@ -200,11 +217,24 @@ struct WinOSCreatePCView: View {
             audioEnabled: audioEnabled,
             touchControls: touchControls
         )
+        NSLog("[WINOS-PC-CREATE] UI solicitando criação: nome=%@ arch=%@ ram=%d backend=%@ res=%@ fps=%d", env.nome, env.arquitetura, env.ramMB, env.backend, env.resolucao, env.fps)
         do {
             try model.environments.create(environment: env)
+            NSLog("[WINOS-PC-PERSIST] UI persistência OK, atualizando lista")
             model.log.info("winos", "PC criado: \(nome) \(arquitetura) \(Int(ramMB))MB \(backend)")
+            // Seleciona automaticamente o PC recém-criado se possível
+            if let created = model.environments.environments.last {
+                NSLog("[WINOS-PC-OPEN] Auto-selecionando PC criado: id=%@ name=%@", created.id.uuidString, created.nome)
+                // Força refresh da lista
+                model.objectWillChange.send()
+            }
+            isCreating = false
             dismiss()
         } catch {
+            NSLog("[WINOS-PC-CREATE] ERROR: %@", "\(error)")
+            NSLog("[WINOS-RUNTIME-ERROR] Falha criação PC: %@", "\(error)")
+            creationError = "\(error)"
+            isCreating = false
             model.present(title: "Falha ao criar PC", message: "\(error)")
         }
     }

@@ -59,7 +59,7 @@ public final class ImportService {
         self.log = log
     }
 
-    /// Copia um item (arquivo .zip ou diretório) para uma área de stage e analisa.
+    /// Copia um item (.exe, .7z, .zip ou diretório) para área de stage e analisa.
     public func scanImport(from externalURL: URL) async throws -> ImportScanResult {
         try sandbox.ensureDirectories()
         let staging = sandbox.importsDir
@@ -67,26 +67,71 @@ public final class ImportService {
         try FileManager.default.createDirectory(at: staging, withIntermediateDirectories: true)
 
         let lower = externalURL.lastPathComponent.lowercased()
+        NSLog("[WINOS-IMPORT-START] scanImport: %@", externalURL.path)
+        NSLog("[WINOS-IMPORT-TYPE] lower=%@ isDir check", lower)
+
         if lower.hasSuffix(".zip") {
+            NSLog("[WINOS-IMPORT-TYPE] Detectado ZIP: %@", lower)
             let zipDest = staging.appendingPathComponent(externalURL.lastPathComponent)
-            _ = try sandbox.importFrom(external: externalURL,
+            let imported = try sandbox.importFrom(external: externalURL,
                                        toRelative: relativeToRoot(zipDest))
+            NSLog("[WINOS-IMPORT-COPY] ZIP copiado para: %@", imported.path)
             let reader = try ZipReader(url: zipDest)
             log.info("import", "ZIP com \(reader.entries.count) entrada(s)")
+            NSLog("[WINOS-IMPORT-COPY] ZIP entries: %d", reader.entries.count)
             try reader.extract(to: staging, log: log)
             try? FileManager.default.removeItem(at: zipDest)
+            NSLog("[WINOS-IMPORT-SUCCESS] ZIP extraído para staging: %@", staging.path)
+        } else if lower.hasSuffix(".exe") {
+            NSLog("[WINOS-IMPORT-TYPE] Detectado EXE: %@", lower)
+            // Copia .exe direto para staging como executável principal
+            let dest = staging.appendingPathComponent(externalURL.lastPathComponent)
+            let imported = try sandbox.importFrom(external: externalURL,
+                                       toRelative: relativeToRoot(dest))
+            NSLog("[WINOS-IMPORT-COPY] EXE copiado: %@ -> %@", externalURL.path, imported.path)
+        } else if lower.hasSuffix(".7z") {
+            NSLog("[WINOS-IMPORT-TYPE] Detectado 7Z: %@ - copiando como está (extração futura)", lower)
+            // Por enquanto, copia .7z para staging; se tiver lib de extração, extrairia aqui
+            // Como não temos descompressão 7z nativa no runtime atual, copiamos e tentamos analisar como arquivo
+            // Se contiver PE dentro, usuário precisará extrair externamente ou usaremos ZipReader se for ZIP disfarçado
+            let dest = staging.appendingPathComponent(externalURL.lastPathComponent)
+            let imported = try sandbox.importFrom(external: externalURL,
+                                       toRelative: relativeToRoot(dest))
+            NSLog("[WINOS-IMPORT-COPY] 7Z copiado: %@ (size check)", imported.path)
+            // Tenta extrair como ZIP se for compatível, senão mantém como arquivo
+            if let reader = try? ZipReader(url: imported) {
+                NSLog("[WINOS-IMPORT-COPY] 7Z é na verdade ZIP compatível, extraindo %d entries", reader.entries.count)
+                try reader.extract(to: staging, log: log)
+                try? FileManager.default.removeItem(at: imported)
+            } else {
+                NSLog("[WINOS-IMPORT-TYPE] 7Z mantido como arquivo único, será tratado como executável se for PE ou requer extração externa")
+                // Se o .7z em si for um PE (improvável), ainda será detectado; senão, usuário precisará extrair
+            }
         } else {
             let isDir = (try? externalURL.resourceValues(forKeys: [.isDirectoryKey]))?.isDirectory ?? false
-            guard isDir else {
-                throw ImportError.unsupportedFormat(externalURL.lastPathComponent)
+            NSLog("[WINOS-IMPORT-TYPE] isDirectory=%@ for %@", isDir ? "YES" : "NO", externalURL.path)
+            if isDir {
+                let dest = staging.appendingPathComponent("content")
+                let imported = try sandbox.importFrom(external: externalURL,
+                                           toRelative: relativeToRoot(dest))
+                NSLog("[WINOS-IMPORT-COPY] Diretório copiado: %@ -> %@", externalURL.path, imported.path)
+            } else {
+                // Arquivo genérico (pode ser .exe sem extensão, ou outro)
+                NSLog("[WINOS-IMPORT-TYPE] Arquivo genérico, copiando como está: %@", lower)
+                let dest = staging.appendingPathComponent(externalURL.lastPathComponent)
+                let imported = try sandbox.importFrom(external: externalURL,
+                                           toRelative: relativeToRoot(dest))
+                NSLog("[WINOS-IMPORT-COPY] Arquivo copiado: %@ -> %@", externalURL.path, imported.path)
+                // Se for PE, será detectado na análise
             }
-            _ = try sandbox.importFrom(external: externalURL,
-                                       toRelative: relativeToRoot(staging.appendingPathComponent("content")))
         }
 
         let result = try analyze(stagingDir: staging)
         if result.executables.isEmpty {
             log.warning("import", "nenhum executável encontrado na importação")
+            NSLog("[WINOS-IMPORT-ERROR] Nenhum executável após análise de %@", staging.path)
+        } else {
+            NSLog("[WINOS-IMPORT-SUCCESS] Encontrados %d executáveis", result.executables.count)
         }
         return result
     }

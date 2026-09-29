@@ -44,23 +44,39 @@ public final class RuntimeManager {
     public func start(profile: GameProfile, config: EffectiveConfig,
                       environments: EnvironmentManager,
                       clockNow: Double) throws {
+        NSLog("[WINOS-RUNTIME-START] start called profile=%@ tipo=%@ exe=%@ env=%@", profile.nome, "\(profile.tipo)", profile.executavel, profile.ambiente.id.uuidString)
         guard state == .idle || state == .stopped || state == .failed else {
+            NSLog("[WINOS-RUNTIME-ERROR] Já existe sessão ativa state=%@", "\(state)")
             throw RuntimeFailure.backendUnavailable(reason: "já existe sessão ativa")
         }
         setState(.preparing)
         log.info("runtime", "preparando sessão para '\(profile.nome)'")
+        NSLog("[WINOS-PC-OPEN] Preparando sessão para PC/game: %@", profile.nome)
 
         let env = environments.environment(id: profile.ambiente.id)
+        if let env = env {
+            NSLog("[WINOS-PC-OPEN] Ambiente encontrado: id=%@ name=%@ path=%@ state=%@", env.id.uuidString, env.nome, env.caminho, "\(env.state)")
+        } else {
+            NSLog("[WINOS-PC-OPEN] WARNING Ambiente não encontrado, usando default: %@", profile.ambiente.id.uuidString)
+        }
         environments.markInUse(id: profile.ambiente.id, inUse: true)
         let envVars = environments.mergedVariables(
             environmentID: profile.ambiente.id,
             gameOverrides: config.environmentVariables)
+        NSLog("[WINOS-RUNTIME-START] envVars count=%d", envVars.count)
 
         let exeURL: URL
         do {
             let dir = try sandbox.resolveInside(profile.caminho)
             exeURL = dir.appendingPathComponent(profile.executavel)
+            NSLog("[WINOS-RUNTIME-START] exeURL=%@ exists=%@", exeURL.path, FileManager.default.fileExists(atPath: exeURL.path) ? "YES" : "NO")
+            guard FileManager.default.fileExists(atPath: exeURL.path) else {
+                NSLog("[WINOS-RUNTIME-ERROR] Executável não existe: %@", exeURL.path)
+                setState(.failed)
+                throw RuntimeFailure.io(reason: "executável não encontrado: \(exeURL.path)")
+            }
         } catch {
+            NSLog("[WINOS-RUNTIME-ERROR] Caminho inválido: %@", "\(error)")
             setState(.failed)
             throw RuntimeFailure.io(reason: "caminho do jogo inválido: \(error)")
         }
@@ -77,26 +93,33 @@ public final class RuntimeManager {
         let image = Self.detectImage(kind: profile.tipo,
                                     arch: profile.arquiteturaExe,
                                     executableURL: exeURL)
+        NSLog("[WINOS-RUNTIME-START] DetectImage kind=%@ arch=%@ label=%@", "\(profile.tipo)", profile.arquiteturaExe, image.label)
         guard let (chosen, verdict) = backendRegistry.select(for: image), verdict.canRun else {
             let reason = backendRegistry.backends
                 .map { $0.canExecute(image).reason }
                 .first(where: { !$0.isEmpty })
                 ?? "nenhum backend disponível"
             log.error("runtime", "sem backend para \(image.label): \(reason)")
+            NSLog("[WINOS-RUNTIME-ERROR] Sem backend para %@: %@", image.label, reason)
             setState(.failed)
             events.onFailure?(.unsupported(reason: reason))
             throw RuntimeFailure.unsupported(reason: reason)
         }
 
         log.info("runtime", "backend selecionado: \(chosen.displayName) (\(verdict.reason))")
+        NSLog("[WINOS-RUNTIME-START] Backend selecionado: %@ reason=%@", chosen.displayName, verdict.reason)
 
         do {
+            NSLog("[WINOS-RUNTIME-START] Iniciando backend %@ com context exe=%@", chosen.displayName, ctx.executableURL.path)
             try chosen.start(context: ctx)
+            NSLog("[WINOS-RUNTIME-START] Backend start OK")
         } catch let failure as RuntimeFailure {
+            NSLog("[WINOS-RUNTIME-ERROR] Backend start RuntimeFailure: %@ - %@", failure.userMessage, failure.technicalDetail)
             setState(.failed)
             events.onFailure?(failure)
             throw failure
         } catch {
+            NSLog("[WINOS-RUNTIME-ERROR] Backend start error: %@", "\(error)")
             setState(.failed)
             let f = RuntimeFailure.backendUnavailable(reason: "\(error)")
             events.onFailure?(f)

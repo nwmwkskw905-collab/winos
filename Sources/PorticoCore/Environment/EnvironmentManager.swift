@@ -62,18 +62,33 @@ public final class EnvironmentManager {
 
     @discardableResult
     public func create(name: String, fixedID: UUID? = nil) throws -> EnvironmentProfile {
+        NSLog("[WINOS-PC-CREATE] Iniciando criação: name=%@ fixedID=%@", name, fixedID?.uuidString ?? "nil")
         let id = fixedID ?? UUID()
         let relPath = "Environments/env-\(id.uuidString.prefix(8))"
-        let root = try sandbox.resolveInside(relPath)
+        let root: URL
+        do {
+            root = try sandbox.resolveInside(relPath)
+            NSLog("[WINOS-PC-CREATE] Path resolvido: %@ -> %@", relPath, root.path)
+        } catch {
+            NSLog("[WINOS-PC-CREATE] ERROR resolvendo path: %@", "\(error)")
+            throw error
+        }
 
         // estrutura de prefixo preparada para camada compatível futura (classe Wine)
         let fm = FileManager.default
         for sub in ["drive_c/users/usuario/Documents",
                     "drive_c/users/usuario/AppData",
                     "drive_c/windows/temp",
-                    "logs"] {
-            try fm.createDirectory(at: root.appendingPathComponent(sub),
-                                   withIntermediateDirectories: true)
+                    "logs",
+                    "drive_c/Program Files",
+                    "drive_c/Windows"] {
+            do {
+                try fm.createDirectory(at: root.appendingPathComponent(sub),
+                                       withIntermediateDirectories: true)
+            } catch {
+                NSLog("[WINOS-PC-CREATE] ERROR criando subdir %@: %@", sub, "\(error)")
+                throw error
+            }
         }
 
         var env = EnvironmentProfile(
@@ -84,10 +99,33 @@ public final class EnvironmentManager {
             state: .ready,
             caminho: relPath
         )
+        // Validação
+        guard !env.nome.trimmingCharacters(in: .whitespaces).isEmpty else {
+            NSLog("[WINOS-PC-CREATE] ERROR nome vazio")
+            throw NSError(domain: "WinOS", code: 1, userInfo: [NSLocalizedDescriptionKey: "Nome do PC não pode ser vazio"])
+        }
+        guard FileManager.default.fileExists(atPath: root.path) else {
+            NSLog("[WINOS-PC-CREATE] ERROR diretório não criado: %@", root.path)
+            throw NSError(domain: "WinOS", code: 2, userInfo: [NSLocalizedDescriptionKey: "Falha ao criar diretório do PC"])
+        }
+
         environments.append(env)
-        try save()
-        try writeMarker(&env)
+        do {
+            try save()
+            NSLog("[WINOS-PC-PERSIST] Ambiente persistido: %@ id=%@ path=%@", name, id.uuidString, relPath)
+        } catch {
+            NSLog("[WINOS-PC-PERSIST] ERROR persistindo: %@", "\(error)")
+            throw error
+        }
+        do {
+            try writeMarker(&env)
+            NSLog("[WINOS-PC-PERSIST] Marker escrito: %@", root.appendingPathComponent("environment.json").path)
+        } catch {
+            NSLog("[WINOS-PC-PERSIST] ERROR marker: %@", "\(error)")
+            throw error
+        }
         log.info("env", "ambiente criado: \(name) em \(relPath)")
+        NSLog("[WINOS-PC-CREATE] SUCCESS id=%@ name=%@ path=%@", id.uuidString, name, relPath)
         return env
     }
 

@@ -9,6 +9,7 @@ struct WinOSHomeView: View {
     @State private var showingCreatePC = false
     @State private var showingSettings = false
     @State private var showingCapabilities = false
+    @State private var showingDiagnostics = false
     @State private var gameToDelete: GameProfile?
     @State private var selectedGame: GameProfile?
     
@@ -48,6 +49,12 @@ struct WinOSHomeView: View {
         .sheet(isPresented: $showingCapabilities) {
             NavigationStack {
                 CapabilitiesView()
+                    .environmentObject(model)
+            }
+        }
+        .sheet(isPresented: $showingDiagnostics) {
+            NavigationStack {
+                WinOSDiagnosticsView()
                     .environmentObject(model)
             }
         }
@@ -184,23 +191,48 @@ struct WinOSHomeView: View {
                         let arch = env.variables["WINOS_ARCH"] ?? "x64"
                         let ram = env.variables["WINOS_RAM_MB"] ?? "2048"
                         let backend = env.variables["WINOS_BACKEND"] ?? "Metal"
-                        WinOSCard {
-                            VStack(alignment: .leading, spacing: 8) {
-                                HStack {
-                                    Image(systemName: "desktopcomputer")
-                                        .foregroundStyle(WinOSBrand.accent)
-                                    Spacer()
-                                    WinOSStatusBadge(text: arch, color: WinOSBrand.success)
+                        Button {
+                            openPC(env)
+                        } label: {
+                            WinOSCard {
+                                VStack(alignment: .leading, spacing: 8) {
+                                    HStack {
+                                        Image(systemName: "desktopcomputer")
+                                            .foregroundStyle(WinOSBrand.accent)
+                                        Spacer()
+                                        WinOSStatusBadge(text: arch, color: WinOSBrand.success)
+                                    }
+                                    Text(env.nome)
+                                        .font(.system(.subheadline, design: .rounded).weight(.semibold))
+                                        .foregroundStyle(.white)
+                                        .lineLimit(1)
+                                    Text("\(ram) MB • \(backend)")
+                                        .font(.caption2)
+                                        .foregroundStyle(WinOSBrand.textSecondary)
+                                    HStack(spacing: 4) {
+                                        Image(systemName: "play.fill")
+                                            .font(.caption2)
+                                            .foregroundStyle(WinOSBrand.accent)
+                                        Text("Abrir")
+                                            .font(.caption2.weight(.bold))
+                                            .foregroundStyle(WinOSBrand.accent)
+                                    }
                                 }
-                                Text(env.nome)
-                                    .font(.system(.subheadline, design: .rounded).weight(.semibold))
-                                    .foregroundStyle(.white)
-                                    .lineLimit(1)
-                                Text("\(ram) MB • \(backend)")
-                                    .font(.caption2)
-                                    .foregroundStyle(WinOSBrand.textSecondary)
+                                .frame(width: 140)
                             }
-                            .frame(width: 140)
+                        }
+                        .buttonStyle(.plain)
+                        .contextMenu {
+                            Button {
+                                openPC(env)
+                            } label: {
+                                Label("Abrir PC", systemImage: "play.fill")
+                            }
+                            Button(role: .destructive) {
+                                deletePC(env)
+                            } label: {
+                                Label("Excluir PC", systemImage: "trash")
+                            }
                         }
                     }
                 }
@@ -276,9 +308,12 @@ struct WinOSHomeView: View {
                 }
             }
             
-            HStack(spacing: 12) {
-                WinOSPrimaryButton(title: "Diagnóstico", systemImage: "waveform.path.ecg", action: { showingCapabilities = true }, isProminent: false)
-                WinOSPrimaryButton(title: "Logs", systemImage: "doc.text", action: { showingSettings = true }, isProminent: false)
+            VStack(spacing: 12) {
+                HStack(spacing: 12) {
+                    WinOSPrimaryButton(title: "Diagnóstico", systemImage: "waveform.path.ecg", action: { showingCapabilities = true }, isProminent: false)
+                    WinOSPrimaryButton(title: "Logs", systemImage: "doc.text", action: { showingSettings = true }, isProminent: false)
+                }
+                WinOSPrimaryButton(title: "iPhone Runtime Diagnostics", systemImage: "iphone.gen3", action: { showingDiagnostics = true }, isProminent: true)
             }
         }
     }
@@ -297,6 +332,48 @@ struct WinOSHomeView: View {
                 .font(.system(.caption2, design: .monospaced))
                 .foregroundStyle(.white)
                 .multilineTextAlignment(.trailing)
+        }
+    }
+
+    private func openPC(_ env: EnvironmentProfile) {
+        NSLog("[WINOS-PC-OPEN] Solicitando abertura PC: id=%@ name=%@ path=%@", env.id.uuidString, env.nome, env.caminho)
+        do {
+            let root = try model.sandbox.resolveInside(env.caminho)
+            guard FileManager.default.fileExists(atPath: root.path) else {
+                NSLog("[WINOS-PC-OPEN] ERROR path não existe: %@", root.path)
+                model.present(title: "PC não encontrado", message: "O diretório do PC não existe: \(env.caminho)")
+                return
+            }
+            NSLog("[WINOS-PC-OPEN] Path validado: %@", root.path)
+            // Marca como em uso
+            model.environments.markInUse(id: env.id, inUse: true)
+            NSLog("[WINOS-RUNTIME-START] Iniciando runtime para PC: %@", env.nome)
+            // Por enquanto, abre o Self-Test dentro deste ambiente para validar pipeline
+            // Futuro: abrir desktop WinOS com este ambiente
+            if let selfTest = model.games.first(where: { $0.tipo == .selfTest }) {
+                var game = selfTest
+                game.ambiente = EnvironmentRef(id: env.id, name: env.nome)
+                NSLog("[WINOS-RUNTIME-START] Launch self-test no ambiente PC: %@", env.nome)
+                model.launch(game)
+            } else {
+                NSLog("[WINOS-PC-OPEN] Self-test não encontrado, apenas marcando PC como aberto")
+                model.log.info("winos", "PC aberto: \(env.nome)")
+            }
+        } catch {
+            NSLog("[WINOS-PC-OPEN] ERROR: %@", "\(error)")
+            NSLog("[WINOS-RUNTIME-ERROR] Falha ao abrir PC: %@", "\(error)")
+            model.present(title: "Falha ao abrir PC", message: "\(error)")
+        }
+    }
+
+    private func deletePC(_ env: EnvironmentProfile) {
+        NSLog("[WINOS-PC-OPEN] Solicitando exclusão PC: id=%@ name=%@", env.id.uuidString, env.nome)
+        do {
+            try model.environments.destroy(id: env.id, deleteFiles: true)
+            NSLog("[WINOS-PC-PERSIST] PC excluído: %@", env.nome)
+        } catch {
+            NSLog("[WINOS-PC-PERSIST] ERROR exclusão: %@", "\(error)")
+            model.present(title: "Falha ao excluir PC", message: "\(error)")
         }
     }
 }

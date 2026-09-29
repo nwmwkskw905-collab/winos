@@ -27,8 +27,30 @@ struct RuntimeSessionView: View {
             }
             .ignoresSafeArea()
 
+            // Estado de carregamento visível (START -> Starting -> Initializing runtime -> Initializing graphics -> Running)
+            if session.state != "Running" && session.lastFailure == nil {
+                VStack(spacing: 16) {
+                    ProgressView()
+                        .tint(.white)
+                        .scaleEffect(1.5)
+                    Text(session.state)
+                        .font(.headline)
+                        .foregroundStyle(.white)
+                    Text(session.detailedState)
+                        .font(.caption)
+                        .foregroundStyle(.white.opacity(0.7))
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal)
+                    Text("[WINOS-GFX-INIT] \(session.state)")
+                        .font(.system(size: 9, design: .monospaced))
+                        .foregroundStyle(.white.opacity(0.4))
+                }
+                .padding(24)
+                .background(RoundedRectangle(cornerRadius: 16).fill(Color.black.opacity(0.7)))
+            }
+
             // Controles virtuais
-            if session.showTouchControls {
+            if session.showTouchControls && session.state == "Running" {
                 VirtualControlsView(
                     layout: game.controles,
                     router: session.router,
@@ -39,6 +61,15 @@ struct RuntimeSessionView: View {
             // Botão do overlay
             VStack {
                 HStack {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("FPS: \(String(format: "%.1f", session.fps))")
+                            .font(.system(size: 10, design: .monospaced))
+                            .foregroundStyle(.white.opacity(0.6))
+                        Text(session.state)
+                            .font(.system(size: 9, design: .monospaced))
+                            .foregroundStyle(.white.opacity(0.4))
+                    }
+                    .padding(.leading, 12)
                     Spacer()
                     Button {
                         withAnimation(.easeInOut(duration: 0.2)) { showOverlay.toggle() }
@@ -140,61 +171,120 @@ final class SessionController: ObservableObject {
         self.renderer = renderer
     }
 
+    @Published var state: String = "START"
+    @Published var detailedState: String = "Inicializando..."
+
     func begin() {
         guard !started else { return }
         started = true
+        state = "Starting"
+        detailedState = "Inicializando runtime..."
+        NSLog("[WINOS-RUNTIME-START] begin game=%@ tipo=%@ exe=%@", game.nome, "\(game.tipo)", game.executavel)
 
         guard let model = AppModel.shared else {
+            NSLog("[WINOS-RUNTIME-ERROR] AppModel.shared nil")
             lastFailure = .backendUnavailable(reason: "AppModel.shared não inicializado")
+            state = "Error"
+            detailedState = "AppModel não inicializado"
             return
         }
         let config = model.effectiveConfig(for: game)
+        NSLog("[WINOS-RUNTIME-START] effectiveConfig res=%@ fps=%@ renderer=%@", "\(config.resolution)", "\(config.fps)", "\(config.renderer)")
 
         model.runtime.events.onFPS = { [weak self] v in
-            Task { @MainActor in self?.fps = v }
+            Task { @MainActor in
+                self?.fps = v
+                // NSLog("[WINOS-GFX-FRAME] FPS=%.1f", v)
+            }
         }
         model.runtime.events.onFailure = { [weak self] f in
-            Task { @MainActor in self?.lastFailure = f }
+            NSLog("[WINOS-RUNTIME-ERROR] onFailure: %@ - %@", f.userMessage, f.technicalDetail)
+            Task { @MainActor in
+                self?.lastFailure = f
+                self?.state = "Error"
+                self?.detailedState = f.userMessage
+            }
+        }
+        model.runtime.events.onStateChange = { [weak self] s in
+            NSLog("[WINOS-RUNTIME-START] stateChange: %@", "\(s)")
+            Task { @MainActor in
+                self?.state = "\(s)"
+            }
         }
         // Áudio: RuntimeManager expõe onAudioFrames diretamente, não em events
         model.runtime.onAudioFrames = { [weak self] pcm in
+            // NSLog("[WINOS-GFX-FRAME] audio frames=%d", pcm.count)
             self?.audio.enqueue(interleaved: pcm)
         }
 
         do {
+            state = "Initializing runtime"
+            detailedState = "Preparando ambiente..."
+            NSLog("[WINOS-RUNTIME-START] start profile=%@ config=%@", game.nome, "\(config)")
             try model.runtime.start(profile: game, config: config,
                                     environments: model.environments,
                                     clockNow: CACurrentMediaTime())
+            state = "Initializing graphics"
+            detailedState = "Inicializando Metal..."
+            NSLog("[WINOS-GFX-INIT] Runtime started, initializing audio")
             try audio.initialize(sampleRate: Double(game.audio.sampleRate),
                                  bufferFrames: game.audio.bufferFrames)
             try audio.start()
+            NSLog("[WINOS-GFX-INIT] Audio OK, attaching gamepads")
             gamePads.attach(router: router, enabled: config.physicalControllersEnabled)
+            state = "Running"
+            detailedState = "Executando - \(game.nome)"
+            NSLog("[WINOS-RUNTIME-START] Runtime running, starting display loop fps=%d", model.config.effectiveFPS(for: game))
             startDisplayLoop(fps: model.config.effectiveFPS(for: game))
         } catch let failure as RuntimeFailure {
+            NSLog("[WINOS-RUNTIME-ERROR] RuntimeFailure: %@ - %@", failure.userMessage, failure.technicalDetail)
             lastFailure = failure
+            state = "Error"
+            detailedState = failure.userMessage
         } catch {
+            NSLog("[WINOS-RUNTIME-ERROR] Unknown error: %@", "\(error)")
             lastFailure = .backendUnavailable(reason: "\(error)")
+            state = "Error"
+            detailedState = "\(error)"
         }
     }
 
     private func startDisplayLoop(fps: Int) {
+        NSLog("[WINOS-GFX-INIT] startDisplayLoop fps=%d", fps)
         renderer?.setVSyncLimit(fps)
         // O loop de frames é o draw(in:) do MTKView; aqui ligamos o tick do
         // runtime à taxa do CADisplayLink do MTKView via Timer de alta resolução
         // que apenas prepara o próximo GfxFrame.
+        // Usa background queue para não bloquear UI thread (evita GetMessage blocking)
         let interval = 1.0 / Double(max(fps, 30))
-        displayTimer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) {
-            [weak self] _ in
-            Task { @MainActor in self?.step() }
+        NSLog("[WINOS-GFX-FRAME] Timer interval=%.4f", interval)
+        displayTimer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { [weak self] _ in
+            // Executa tick em background para não bloquear UI, mas atualiza renderer na main
+            DispatchQueue.global(qos: .userInteractive).async {
+                guard let self = self else { return }
+                if self.isPaused { return }
+                guard let model = AppModel.shared else { return }
+                let frame = model.runtime.tick(now: CACurrentMediaTime(), input: self.router.state)
+                DispatchQueue.main.async {
+                    if let frame {
+                        self.renderer?.execute(frame)
+                        // NSLog("[WINOS-GFX-FRAME] frame executed")
+                    }
+                    self.framesPresented = model.runtime.framesPresented
+                }
+            }
         }
+        NSLog("[WINOS-GFX-FRAME] Display loop started")
     }
 
     private func step() {
         guard !isPaused else { return }
         guard let model = AppModel.shared else { return }
+        NSLog("[WINOS-GFX-FRAME] step called")
         let frame = model.runtime.tick(now: CACurrentMediaTime(), input: router.state)
         if let frame {
             renderer?.execute(frame)
+            NSLog("[WINOS-GFX-FRAME] frame executed via step")
         }
         framesPresented = model.runtime.framesPresented
     }

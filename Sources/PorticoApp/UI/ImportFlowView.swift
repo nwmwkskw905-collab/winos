@@ -2,7 +2,7 @@ import SwiftUI
 import UniformTypeIdentifiers
 import PorticoCore
 
-/// Importação via document picker oficial do iOS (arquivos ZIP ou pastas).
+/// Importação via document picker oficial do iOS com suporte a .exe, .7z, .zip
 /// Fluxo: escolher → analisar → escolher executável principal → nomear → salvar.
 struct ImportFlowView: View {
     @EnvironmentObject var model: AppModel
@@ -19,6 +19,25 @@ struct ImportFlowView: View {
         case pick, analyze, chooseExe, name, failed
     }
 
+    // UTTypes explícitos para iOS Files picker
+    static var supportedTypes: [UTType] {
+        var types: [UTType] = [.folder, .zip, .data, .item]
+        // Tenta UTType específicos, fallback para .data
+        if let exe = UTType("com.microsoft.windows-executable") ?? UTType(filenameExtension: "exe") {
+            types.append(exe)
+        }
+        if let sevenZip = UTType("org.7-zip.7-zip-archive") ?? UTType(filenameExtension: "7z") {
+            types.append(sevenZip)
+        }
+        if let zipArchive = UTType("public.zip-archive") ?? UTType(filenameExtension: "zip") {
+            types.append(zipArchive)
+        }
+        // Adiciona extensões manualmente via UTType
+        if let exeExt = UTType(filenameExtension: "exe") { types.append(exeExt) }
+        if let sevenExt = UTType(filenameExtension: "7z") { types.append(sevenExt) }
+        return Array(Set(types.map { $0.identifier }).compactMap { UTType($0) })
+    }
+
     var body: some View {
         NavigationStack {
             Group {
@@ -26,7 +45,12 @@ struct ImportFlowView: View {
                 case .pick:
                     pickStage
                 case .analyze:
-                    ProgressView("Analisando arquivos…")
+                    VStack(spacing: 16) {
+                        ProgressView("Analisando arquivos…")
+                        Text("[WINOS-IMPORT-START] Analisando...")
+                            .font(.caption2.monospaced())
+                            .foregroundStyle(.secondary)
+                    }
                 case .chooseExe:
                     exeStage
                 case .name:
@@ -45,15 +69,18 @@ struct ImportFlowView: View {
         }
         .fileImporter(
             isPresented: $pickingFolder,
-            allowedContentTypes: [.folder, .zip],
+            allowedContentTypes: Self.supportedTypes,
             allowsMultipleSelection: false
         ) { result in
             switch result {
             case .success(let urls):
                 if let url = urls.first {
+                    NSLog("[WINOS-IMPORT-START] File picker success: %@", url.path)
+                    NSLog("[WINOS-IMPORT-URL] URL: %@ ext=%@", url.absoluteString, url.pathExtension)
                     Task { await analyze(url) }
                 }
             case .failure(let err):
+                NSLog("[WINOS-IMPORT-ERROR] File picker failure: %@", "\(err)")
                 fail("Seleção cancelada ou inválida: \(err)")
             }
         }
@@ -66,17 +93,32 @@ struct ImportFlowView: View {
                 .foregroundStyle(.secondary)
             Text("Importar jogo ou aplicativo")
                 .font(.headline)
-            Text("Selecione um arquivo .zip ou uma pasta com os arquivos "
-                 + "do software. Tudo é copiado para o sandbox do app — "
-                 + "nada é acessado fora dele.")
+            Text("Selecione .exe, .7z, .zip ou pasta. Suporta:\n• Windows .exe (PE)\n• 7-Zip .7z (requer extração)\n• ZIP .zip\nTudo é copiado para sandbox do app via security-scoped URL.")
                 .font(.footnote)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal)
+            VStack(spacing: 8) {
+                Text("Tipos suportados:")
+                    .font(.caption2.bold())
+                    .foregroundStyle(.secondary)
+                HStack(spacing: 8) {
+                    Label(".exe", systemImage: "doc")
+                    Label(".7z", systemImage: "doc.zipper")
+                    Label(".zip", systemImage: "doc.zipper")
+                    Label("Pasta", systemImage: "folder")
+                }
+                .font(.caption2)
+                .foregroundStyle(.secondary)
+            }
             Button("Escolher arquivo ou pasta…") {
+                NSLog("[WINOS-IMPORT-START] Botão escolher arquivo pressionado")
                 pickingFolder = true
             }
             .buttonStyle(.borderedProminent)
+            Text("[WINOS-IMPORT] iOS Files picker com UTType public.data + exe + 7z + zip")
+                .font(.system(size: 9, design: .monospaced))
+                .foregroundStyle(.secondary.opacity(0.6))
         }
         .padding()
     }
@@ -180,25 +222,36 @@ struct ImportFlowView: View {
     @MainActor
     private func analyze(_ url: URL) async {
         stage = .analyze
+        NSLog("[WINOS-IMPORT-START] Iniciando análise URL: %@", url.path)
+        let ext = url.pathExtension.lowercased()
+        NSLog("[WINOS-IMPORT-TYPE] Extensão: %@, lastComponent: %@", ext, url.lastPathComponent)
         do {
             // Captura importer fora do detached para evitar capturar MainActor model em background
             let importer = model.importer
             let result = try await Task.detached(priority: .userInitiated) {
-                try await importer.scanImport(from: url)
+                NSLog("[WINOS-IMPORT-URL] Task detached scanImport: %@", url.path)
+                return try await importer.scanImport(from: url)
             }.value
             self.scan = result
+            NSLog("[WINOS-IMPORT-SUCCESS] Análise OK: %d arquivos, %d executáveis", result.allFiles.count, result.executables.count)
+            for exe in result.executables {
+                NSLog("[WINOS-IMPORT-TYPE] Executável: %@ kind=%@ size=%lld", exe.relativePath, "\(exe.kind)", exe.sizeBytes)
+            }
             if result.executables.isEmpty {
+                NSLog("[WINOS-IMPORT-ERROR] Nenhum executável encontrado")
                 fail(ImportError.noExecutables.localizedDescription)
             } else {
                 stage = .chooseExe
             }
         } catch {
+            NSLog("[WINOS-IMPORT-ERROR] Falha análise: %@", "\(error)")
             fail("\(error)")
         }
     }
 
     private func finalize() {
         guard let scan, let chosen else { return }
+        NSLog("[WINOS-IMPORT-COPY] Finalizando importação: chosen=%@ name=%@", chosen.relativePath, gameName)
         do {
             _ = try model.importer.finalize(
                 scan: scan,

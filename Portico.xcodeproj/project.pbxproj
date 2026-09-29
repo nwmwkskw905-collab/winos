@@ -110,6 +110,8 @@
 		F6B7346289884BD9A1DE165B /* PorticoRuntime.h in Headers */ = {isa = PBXBuildFile; fileRef = 90B1B2ACB9724A92A384EFA2 /* PorticoRuntime.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BD68A4343122432BA74EBD15 /* PorticoCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F6D79295F1764110985D75BB /* PorticoCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BDDC844D42B647DB9452CEB6 /* PorticoRuntime.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 866A9E14934942B7AC191584 /* PorticoRuntime.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C037BF1E87892E5B4003B219 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79C4344CDE739F111C433CB8 /* Assets.xcassets */; };
+		27D034CA8040CCA146C51A6F /* WinOSDiagnosticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE622EA507ADCA5C0EADDFE9 /* WinOSDiagnosticsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -232,7 +234,20 @@
 		C2F21D19759A81DAF56E042F /* Portico.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Portico.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6D79295F1764110985D75BB /* PorticoCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PorticoCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		866A9E14934942B7AC191584 /* PorticoRuntime.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PorticoRuntime.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		79C4344CDE739F111C433CB8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DE622EA507ADCA5C0EADDFE9 /* WinOSDiagnosticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSDiagnosticsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1A4D70BCDB0BF886810D55C3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C037BF1E87892E5B4003B219 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		804DB52E2955449D2F091C7E /* Frameworks */ = {
@@ -311,6 +326,7 @@
 				2FAD037C3DD3AA2F20C33801 /* AppModel.swift */,
 				693762FCF2DA9B5841452535 /* Info.plist */,
 				396985C66686FE7C05565B71 /* PorticoApp.swift */,
+				79C4344CDE739F111C433CB8 /* Assets.xcassets */,
 			);
 			path = PorticoApp;
 			sourceTree = "<group>";
@@ -363,6 +379,7 @@
 				09D8620CA03C43798720BD18 /* WinOSHomeView.swift */,
 				701A9D0D1D6B44B58691E906 /* WinOSLoadingView.swift */,
 				64F303DE74D44F77A29F4C07 /* WinOSOverlayView.swift */,
+				DE622EA507ADCA5C0EADDFE9 /* WinOSDiagnosticsView.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -629,6 +646,7 @@
 			buildPhases = (
 				D8E2B34C6803A5DAEDA2CB7E /* Sources */,
 				804DB52E2955449D2F091C7E /* Frameworks */,
+				1A4D70BCDB0BF886810D55C3 /* Resources */,
 				D84BD50BE1CF4E77A6E131BA /* Embed Frameworks */,
 			);
 			buildRules = (
@@ -735,6 +753,7 @@
 				7B6AF5B6E21C49BFBC8E626A /* WinOSHomeView.swift in Sources */,
 				D9205347360940FD96F1E022 /* WinOSLoadingView.swift in Sources */,
 				7D39C96C66C74916B6401B8A /* WinOSOverlayView.swift in Sources */,
+				27D034CA8040CCA146C51A6F /* WinOSDiagnosticsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -867,6 +886,10 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.portico.Portico;
 				PRODUCT_NAME = Portico;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				PRODUCT_MODULE_NAME = Portico;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";

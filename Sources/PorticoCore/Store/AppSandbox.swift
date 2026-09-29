@@ -11,12 +11,26 @@ public struct AppSandbox {
         self.root = root
     }
 
-    /// Sandbox padrão: Application Support/Portico.
+    /// Sandbox padrão: Application Support/Portico (compatibilidade) + estrutura WinOS expandida.
     public static func standard() -> AppSandbox {
         let base = FileManager.default.urls(for: .applicationSupportDirectory,
                                             in: .userDomainMask).first
             ?? FileManager.default.temporaryDirectory
         return AppSandbox(root: base.appendingPathComponent("Portico", isDirectory: true))
+    }
+
+    /// Estrutura Documents/WinOS para arquivos visíveis e compartilháveis
+    public static func documentsWinOS() -> URL {
+        let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+            ?? FileManager.default.temporaryDirectory
+        return docs.appendingPathComponent("WinOS", isDirectory: true)
+    }
+
+    /// Estrutura Caches/WinOS para cache temporário
+    public static func cachesWinOS() -> URL {
+        let caches = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first
+            ?? FileManager.default.temporaryDirectory
+        return caches.appendingPathComponent("WinOS", isDirectory: true)
     }
 
     public var gamesDir: URL { root.appendingPathComponent("Games", isDirectory: true) }
@@ -29,10 +43,35 @@ public struct AppSandbox {
     public var settingsFile: URL { root.appendingPathComponent("settings.json") }
     public var environmentsFile: URL { root.appendingPathComponent("environments.json") }
 
+    // MARK: - Nova estrutura WinOS (Documents/ + Application Support/ + Caches)
+    public var documentsPCsDir: URL { Self.documentsWinOS().appendingPathComponent("PCs", isDirectory: true) }
+    public var documentsLibraryDir: URL { Self.documentsWinOS().appendingPathComponent("Library", isDirectory: true) }
+    public var documentsImportsDir: URL { Self.documentsWinOS().appendingPathComponent("Imports", isDirectory: true) }
+    public var documentsLogsDir: URL { Self.documentsWinOS().appendingPathComponent("Logs", isDirectory: true) }
+
+    public var appSupportRuntimeDir: URL { root.appendingPathComponent("Runtime", isDirectory: true) }
+    public var appSupportVFSDir: URL { root.appendingPathComponent("VFS", isDirectory: true) }
+
+    public var cachesDir: URL { Self.cachesWinOS() }
+
     public func ensureDirectories() throws {
-        for dir in [root, gamesDir, environmentsDir, logsDir, importsDir, coversDir, tempDir] {
+        // Estrutura legada + nova
+        for dir in [root, gamesDir, environmentsDir, logsDir, importsDir, coversDir, tempDir,
+                    appSupportRuntimeDir, appSupportVFSDir] {
             try fm.createDirectory(at: dir, withIntermediateDirectories: true)
         }
+        // Documents/WinOS/*
+        for dir in [Self.documentsWinOS(), documentsPCsDir, documentsLibraryDir,
+                    documentsImportsDir, documentsLogsDir] {
+            try fm.createDirectory(at: dir, withIntermediateDirectories: true)
+        }
+        // Caches/WinOS
+        try fm.createDirectory(at: cachesDir, withIntermediateDirectories: true)
+
+        NSLog("[WINOS-SANDBOX] Directories ensured")
+        NSLog("[WINOS-SANDBOX] root: %@", root.path)
+        NSLog("[WINOS-SANDBOX] Documents/WinOS: %@", Self.documentsWinOS().path)
+        NSLog("[WINOS-SANDBOX] Caches/WinOS: %@", cachesDir.path)
     }
 
     /// Garante que `url` está dentro da raiz do sandbox (defesa contra path traversal).
