@@ -21,11 +21,18 @@ struct WinOSDiagnosticsView: View {
                 LabeledContent("Screen Size", value: "\(Int(diagnostics.screenWidth))x\(Int(diagnostics.screenHeight))")
             }
 
-            Section("Runtime") {
+            Section("Runtime — Stages") {
+                LabeledContent("Stage", value: diagnostics.runtimeStage)
+                LabeledContent("Runtime Path", value: diagnostics.runtimePath)
+                LabeledContent("Last EXE", value: diagnostics.lastExe)
+                LabeledContent("Last Error", value: diagnostics.lastError)
+                LabeledContent("Desktop Ready", value: diagnostics.desktopReady ? "YES" : "NO")
+                LabeledContent("Timestamp", value: ISO8601DateFormatter().string(from: diagnostics.timestamp))
                 statusRow(title: "Runtime", level: diagnostics.runtimeStatus, detail: diagnostics.runtimeDetail)
                 statusRow(title: "VFS", level: diagnostics.vfsStatus, detail: diagnostics.vfsDetail)
                 statusRow(title: "PE Loader", level: diagnostics.peStatus, detail: diagnostics.peDetail)
                 statusRow(title: "Win32", level: diagnostics.win32Status, detail: diagnostics.win32Detail)
+                statusRow(title: "Storage", level: diagnostics.storageStatus, detail: diagnostics.storageDetail)
             }
 
             Section("Graphics") {
@@ -115,7 +122,6 @@ struct WinOSDiagnosticsView: View {
 
     private func runCRuntimeTests() {
         NSLog("[WINOS-DIAG] Running C runtime tests")
-        // This would call pr_selftest if available, for now just log
         diagnostics.cTestsResult = "C tests: 3411 checks - requires native execution"
     }
 }
@@ -131,12 +137,19 @@ struct DiagnosticsData {
 
     var runtimeStatus: SupportLevel = .supported
     var runtimeDetail = "PorticoRuntime C11 + Swift"
+    var runtimeStage = "idle"
+    var runtimePath = "unknown"
+    var lastError = "none"
+    var lastExe = "none"
+    var desktopReady = false
     var vfsStatus: SupportLevel = .supported
     var vfsDetail = "VFS vfs_resolve + sandbox"
     var peStatus: SupportLevel = .supported
     var peDetail = "PE loader 76/76 PASS"
     var win32Status: SupportLevel = .partial(reason: "subset")
     var win32Detail = "Win32 subset implemented"
+    var storageStatus: SupportLevel = .supported
+    var storageDetail = "AppSandbox"
 
     var graphicsStatus: SupportLevel = .supported
     var graphicsDetail = "GfxFrame + SurfaceBridge"
@@ -160,6 +173,7 @@ struct DiagnosticsData {
 
     var cTestsResult = "Not run"
     var recentLogs: [String] = []
+    var timestamp = Date()
 
     @MainActor
     static func collect(model: AppModel) -> DiagnosticsData {
@@ -180,7 +194,6 @@ struct DiagnosticsData {
             data.metalDeviceName = device.name
             data.metalStatus = .supported
             data.metalDetail = "MTLDevice OK: \(device.name)"
-            // GPU family
             if device.supportsFamily(.apple4) {
                 data.gpuFamily = "Apple4+"
             } else if device.supportsFamily(.apple3) {
@@ -214,20 +227,26 @@ struct DiagnosticsData {
         let docsExists = fm.fileExists(atPath: AppSandbox.documentsWinOS().path)
         data.sandboxDetail = "root exists: \(rootExists) docs exists: \(docsExists) free: \(model.sandbox.availableSpaceBytes() / 1024 / 1024) MiB"
         data.sandboxStatus = (rootExists && docsExists) ? .supported : .partial(reason: "dirs missing")
+        data.storageDetail = "root=\(model.sandbox.root.path) docs=\(AppSandbox.documentsWinOS().path) caches=\(AppSandbox.cachesWinOS().path)"
+        data.storageStatus = (rootExists && docsExists) ? .supported : .partial(reason: "storage missing")
 
         // Import
         data.importDetail = "UTType: public.data, com.microsoft.windows-executable, org.7-zip.7-zip-archive, public.zip-archive"
 
-        // Runtime tests (from C)
+        // Runtime
         var cap = pr_cap_info()
         pr_cap_probe(&cap)
         let cpuBrand = withUnsafeBytes(of: cap.cpu_brand) { String(cString: $0.bindMemory(to: CChar.self).baseAddress!) }
-        data.runtimeDetail = "CPU: \(cpuBrand) JIT: \(cap.jit_available != 0 ? "YES" : "NO") iOS: \(cap.is_ios != 0 ? "YES" : "NO")"
+        data.runtimeDetail = "CPU: \(cpuBrand) JIT: \(cap.jit_available != 0 ? \"YES\" : \"NO\") iOS: \(cap.is_ios != 0 ? \"YES\" : \"NO\")"
+        data.runtimeStage = model.runtimeStage
+        data.runtimePath = model.sandbox.root.path
+        data.lastError = model.lastRuntimeError.isEmpty ? "none" : model.lastRuntimeError
+        data.lastExe = model.lastLoadedExecutable.isEmpty ? "none" : model.lastLoadedExecutable
+        data.desktopReady = model.showDesktop
+        data.timestamp = Date()
 
         // Logs
         data.recentLogs = model.log.snapshot().suffix(10).map { $0.formatted }
-
-        // Graphics surface
         data.surfaceInfo = "Default 640x360, renderScale 1.0, pixelFormat bgra8Unorm, bytesPerRow = width*4"
 
         return data

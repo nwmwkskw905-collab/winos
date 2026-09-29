@@ -28,6 +28,11 @@ final class AppModel: ObservableObject {
     @Published var alertMessage = ""
     @Published var sessionToRun: GameProfile?
     @Published var logBadge = 0
+    @Published var selectedPC: EnvironmentProfile?
+    @Published var showDesktop = false
+    @Published var runtimeStage: String = "idle"
+    @Published var lastRuntimeError: String = ""
+    @Published var lastLoadedExecutable: String = ""
 
     var colorScheme: ColorScheme? {
         switch config.global.tema {
@@ -105,8 +110,13 @@ final class AppModel: ObservableObject {
 
     /// Inicia a sessão de execução do jogo (chamado pelo botão Jogar).
     func launch(_ game: GameProfile) {
+        NSLog("[WINOS-RUNTIME] CREATE_PC launch game=%@ exe=%@ path=%@", game.nome, game.executavel, game.caminho)
+        NSLog("[WINOS-RUNTIME] SANDBOX_READY root=%@ gamePath=%@", sandbox.root.path, game.caminho)
         library.markLaunched(id: game.id)
         refreshGames()
+        lastLoadedExecutable = game.executavel
+        runtimeStage = "RUNTIME_START"
+        NSLog("[WINOS-RUNTIME] ENV_READY game=%@", game.nome)
         sessionToRun = game
     }
 

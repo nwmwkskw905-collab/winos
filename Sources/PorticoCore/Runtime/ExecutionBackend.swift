@@ -70,13 +70,16 @@ public final class PXPInterpreterBackend: ExecutionBackend {
     public func canExecute(_ image: SoftwareImage) -> BackendVerdict {
         switch image {
         case .pxpNative:
-            return BackendVerdict(canRun: true, reason: "payload PXP nativo (IA-32 interpretado)")
+            return BackendVerdict(canRun: true, reason: "payload PXP nativo (IA-32 interpretado) — PXP0 v1")
         case .windowsPE(let pe):
+            // Este backend NÃO executa PE — delega para WindowsPEBackend
+            // Mensagem honesta com instrução para usar backend correto
             return BackendVerdict(canRun: false, reason:
-                "PE Windows (\(pe.arch)) exige camada Win32 — não integrada neste build. "
-                + "Veja docs/BACKEND_INTEGRATION.md para o ponto de encaixe (pr_host_backend_v1).")
+                "PE Windows (\(pe.arch)) requer backend windows-pe (Win32 parcial). "
+                + "Este backend pxp-interpreter executa apenas PXP0. "
+                + "Stage: RUNTIME_START, selecione windows-pe.")
         case .unknown:
-            return BackendVerdict(canRun: false, reason: "formato de imagem desconhecido")
+            return BackendVerdict(canRun: false, reason: "formato de imagem desconhecido — Stage: PE_LOADER_INIT Error: INVALID_MZ")
         }
     }
 
@@ -420,20 +423,58 @@ public final class WindowsPEBackend: ExecutionBackend {
 
     public func load(executable: URL, image: SoftwareImage) throws {
         shutdown()
+        NSLog("[WINOS-RUNTIME] PE_LOADER_INIT file=%@ arch=%@", executable.path, executable.lastPathComponent)
+        NSLog("[WINOS-IMPORT] source=%@ sandbox=%@ runtime=%@ vfs=check exists=%@ readable=%@ size=%@ extension=%@ loadable=checking",
+              executable.path, executable.path, executable.path,
+              FileManager.default.fileExists(atPath: executable.path) ? "YES" : "NO",
+              FileManager.default.isReadableFile(atPath: executable.path) ? "YES" : "NO",
+              (try? FileManager.default.attributesOfItem(atPath: executable.path)[.size] as? Int64) != nil ? "\(try! FileManager.default.attributesOfItem(atPath: executable.path)[.size] as! Int64)" : "unknown",
+              executable.pathExtension, "checking")
         let data: Data
         do {
             data = try Data(contentsOf: executable)
+            NSLog("[WINOS-RUNTIME] PE_LOADER_INIT SUCCESS file read size=%d", data.count)
         } catch {
             phase = .failed
-            throw RuntimeFailure.io(reason: "leitura do PE: \(error)")
+            NSLog("[WINOS-RUNTIME] PE_LOADER_INIT FAIL io error: %@", "\(error)")
+            throw RuntimeFailure.storageAccessDenied(path: executable.path, underlying: "\(error)")
+        }
+        // Verifica MZ
+        guard data.count >= 2, data[0] == 0x4D, data[1] == 0x5A else {
+            phase = .failed
+            NSLog("[WINOS-RUNTIME] PE_LOADER_INIT FAIL INVALID_MZ file=%@", executable.path)
+            throw RuntimeFailure.invalidMZ(path: executable.path)
+        }
+        // Verifica PE signature
+        if data.count >= 0x40 {
+            let e_lfanew = Int(data.withUnsafeBytes { $0.load(fromByteOffset: 0x3C, as: UInt32.self) })
+            if e_lfanew + 6 > data.count || data[e_lfanew] != 0x50 || data[e_lfanew+1] != 0x45 {
+                phase = .failed
+                NSLog("[WINOS-RUNTIME] PE_LOADER_INIT FAIL INVALID_PE file=%@", executable.path)
+                throw RuntimeFailure.invalidPE(path: executable.path, detail: "Assinatura PE não encontrada em e_lfanew=0x\(String(e_lfanew, radix:16))")
+            }
         }
         // metadados/relatório via PELoader (análise PE existente)
         do {
             loadedImage = try PELoader.loadImage(
                 data, moduleName: executable.lastPathComponent)
+            NSLog("[WINOS-RUNTIME] PE_LOADER_INIT metadados OK arch=%@ machine=0x%x isPE32Plus=%@",
+                  loadedImage?.report.arch ?? "unknown", loadedImage?.report.machine ?? 0, loadedImage?.report.isPE32Plus ?? false ? "YES" : "NO")
         } catch {
             phase = .failed
-            throw RuntimeFailure.payloadInvalid(reason: "PE inválido: \(error)")
+            NSLog("[WINOS-RUNTIME] PE_LOADER_INIT FAIL payloadInvalid: %@", "\(error)")
+            throw RuntimeFailure.invalidPE(path: executable.path, detail: "\(error)")
+        }
+        // Verifica arquitetura
+        if let img = loadedImage {
+            let arch = img.report.arch.lowercased()
+            let machine = img.report.machine
+            // 0x014C = i386, 0x8664 = AMD64, 0xAA64 = ARM64
+            if machine == 0xAA64 || arch.contains("arm64") || arch.contains("aarch64") {
+                phase = .failed
+                NSLog("[WINOS-RUNTIME] PE_LOADER_INIT FAIL UNSUPPORTED_ARCH ARM64")
+                throw RuntimeFailure.unsupportedArch(path: executable.path, arch: "\(arch) (machine 0x\(String(machine, radix:16)))")
+            }
         }
         // processo real: memória virtual + CPU + Win32 (pr_peproc)
         if prLog == nil { prLog = pr_log_create(0) }
@@ -444,65 +485,108 @@ public final class WindowsPEBackend: ExecutionBackend {
         }
         guard let p else {
             phase = .failed
-            throw RuntimeFailure.payloadInvalid(reason: "falha interna de carga PE (pr_peproc_create)")
+            NSLog("[WINOS-RUNTIME] PE_LOADER_INIT FAIL pr_peproc_create returned nil")
+            throw RuntimeFailure.peLoadFailed(path: executable.path, code: -1, detail: "pr_peproc_create retornou nil — falha interna")
         }
         if st != PR_OK {
             let diag = String(cString: pr_peproc_diagnostic(p))
             pr_peproc_destroy(p)
             phase = .failed
-            throw RuntimeFailure.payloadInvalid(reason:
-                "PE não executável neste build.\n\n\(diag)")
+            NSLog("[WINOS-RUNTIME] PE_LOADER_INIT FAIL pr_peproc_create status=%d diag=%@", st.rawValue, diag)
+            // Mapeia código para tipo específico
+            if diag.contains("MZ") {
+                throw RuntimeFailure.invalidMZ(path: executable.path)
+            } else if diag.contains("arch") || diag.contains("machine") {
+                throw RuntimeFailure.unsupportedArch(path: executable.path, arch: diag)
+            } else {
+                throw RuntimeFailure.peLoadFailed(path: executable.path, code: st.rawValue, detail: diag)
+            }
         }
         proc = p
         phase = .loaded
+        NSLog("[WINOS-RUNTIME] PE_LOADER_INIT SUCCESS file=%@", executable.path)
     }
 
     public func initialize(context: RuntimeSessionContext) throws {
         guard phase == .loaded, let p = proc else {
-            throw RuntimeFailure.backendUnavailable(reason: "load() não executado")
+            NSLog("[WINOS-RUNTIME] WIN32_INIT FAIL load() não executado")
+            throw RuntimeFailure.backendUnavailable(reason: "load() não executado — Stage: WIN32_INIT")
         }
+        NSLog("[WINOS-RUNTIME] WIN32_INIT start profile=%@ exe=%@", context.profile.nome, context.profile.executavel)
         if let img = loadedImage {
             lastCoverage = Win32Catalog.coverage(for: img.report)
+            NSLog("[WINOS-RUNTIME] WIN32_INIT coverage resolved=%d unresolved=%d",
+                  lastCoverage?.resolved.count ?? 0, lastCoverage?.unresolved.count ?? 0)
+            if let cov = lastCoverage, !cov.unresolved.isEmpty {
+                for u in cov.unresolved.prefix(5) {
+                    NSLog("[WINOS-RUNTIME] WIN32_INIT unresolved: %@!%@", u.dll, u.symbol)
+                }
+            }
         }
         budgetPerFrame = UInt64(max(context.config.maxInstructionsPerFrame, 1))
+        NSLog("[WINOS-RUNTIME] WIN32_INIT budgetPerFrame=%llu", budgetPerFrame)
         // o processo TEM ambiente, diretório de trabalho e linha de comando
         // reais (FASE 2), vindos do contexto de sessão.
         if let w = pr_peproc_win32(p) {
+            NSLog("[WINOS-RUNTIME] WIN32_INIT setting env vars count=%d", context.environmentVariables.count)
             for (k, v) in context.environmentVariables {
                 k.withCString { kn in v.withCString { vn in
                     _ = pr_win32_env_set(w, kn, vn)
                 } }
             }
+            // Garante que fs_root existe fisicamente antes de setar
+            let fsRoot: String
             if !context.profile.caminho.isEmpty {
+                // Resolve caminho completo do sandbox
+                let sandboxRoot = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first?.appendingPathComponent("Portico").path ?? ""
+                fsRoot = sandboxRoot + "/" + context.profile.caminho
+                NSLog("[WINOS-RUNTIME] WIN32_INIT fs_root candidate=%@ exists=%@",
+                      fsRoot, FileManager.default.fileExists(atPath: fsRoot) ? "YES" : "NO")
+                // Tenta criar se não existir
+                if !FileManager.default.fileExists(atPath: fsRoot) {
+                    try? FileManager.default.createDirectory(atPath: fsRoot, withIntermediateDirectories: true)
+                }
                 context.profile.caminho.withCString { _ = pr_win32_set_cwd(w, $0) }
-            }
-            // FASE 7: filesystem virtual — raiz ÚNICA = diretório do sandbox
-            // da sessão. Caminhos Windows normalizam para dentro dele; ".."
-            // e fugas são NEGADOS com log (nunca acessa o filesystem do iOS).
-            if !context.profile.caminho.isEmpty {
                 context.profile.caminho.withCString { _ = pr_peproc_set_fs_root(p, $0) }
+                NSLog("[WINOS-RUNTIME] WIN32_INIT fs_root set to: %@", context.profile.caminho)
+            } else {
+                NSLog("[WINOS-RUNTIME] WIN32_INIT WARNING caminho vazio, usando fallback")
+                fsRoot = ""
             }
             var cmd = context.profile.executavel
             if !context.profile.argumentos.isEmpty { cmd += " " + context.profile.argumentos }
             if cmd.isEmpty { cmd = "portico" }
             cmd.withCString { _ = pr_win32_set_cmdline(w, $0) }
+            NSLog("[WINOS-RUNTIME] WIN32_INIT cmdline=%@", cmd)
+        } else {
+            NSLog("[WINOS-RUNTIME] WIN32_INIT WARNING pr_peproc_win32 returned nil")
         }
         // resolução de imports (IAT → thunks stdcall) + proteções finais
+        NSLog("[WINOS-RUNTIME] WIN32_INIT calling pr_peproc_prepare")
         let st = pr_peproc_prepare(p)
         if st != PR_OK {
             let diag = String(cString: pr_peproc_diagnostic(p))
             lastDiagnostic = diag
+            NSLog("[WINOS-RUNTIME] WIN32_INIT FAIL pr_peproc_prepare status=%d diag=%@", st.rawValue, diag)
             var summary = ""
             if let cov = lastCoverage {
                 summary = "imports Win32: \(cov.resolved.count) resolvida(s), "
-                    + "\(cov.unresolved.count) não resolvida(s) — a camada Win32 é "
-                    + "parcial e a funcionalidade ausente NÃO está integrada neste build.\n\n"
+                    + "\(cov.unresolved.count) não resolvida(s)\n"
+                if let firstUnresolved = cov.unresolved.first {
+                    // Mapeia para erro específico
+                    phase = .failed
+                    throw RuntimeFailure.missingImport(dll: firstUnresolved.dll, symbol: firstUnresolved.symbol)
+                }
             }
             phase = .failed
-            throw RuntimeFailure.unsupported(reason:
-                "EXECUÇÃO DE WINDOWS INTERROMPIDA NA INICIALIZAÇÃO.\n\n\(summary)\(diag)")
+            // Tenta identificar API não suportada no diagnóstico
+            if diag.contains("not implemented") || diag.contains("unimplemented") {
+                throw RuntimeFailure.unsupportedWin32API(api: diag)
+            }
+            throw RuntimeFailure.processInitFailed(reason: "\(summary)\n\(diag)")
         }
         phase = .initialized
+        NSLog("[WINOS-RUNTIME] WIN32_INIT SUCCESS")
     }
 
     public func run() throws {

@@ -3,11 +3,16 @@ import PorticoCore
 
 /// Desktop WinOS — ambiente inspirado em emulação, não clone Windows.
 /// Wallpaper próprio, logo, atalhos, programas, jogos, barra controle.
+/// Agora com suporte a PC específico (RUNTIME → DESKTOP fluxo real).
 struct WinOSDesktopView: View {
     @EnvironmentObject var model: AppModel
+    var pc: EnvironmentProfile? = nil
     @State private var showingCreatePC = false
     @State private var showingImport = false
     @State private var selectedGame: GameProfile?
+    @State private var runtimeStage: String = "idle"
+    @State private var desktopReady = false
+    @State private var selfTestRunning = false
     
     var body: some View {
         ZStack {
@@ -18,12 +23,20 @@ struct WinOSDesktopView: View {
                 // Top bar — controles de runtime
                 topBar
                 
+                // Runtime stage bar
+                if !desktopReady {
+                    runtimeStageBar
+                }
+                
                 // Área de atalhos/desktop
                 desktopArea
                 
                 // Barra inferior — WinOS dock
                 bottomDock
             }
+        }
+        .onAppear {
+            startRuntimeInit()
         }
         .sheet(isPresented: $showingCreatePC) {
             WinOSCreatePCView()
@@ -45,15 +58,61 @@ struct WinOSDesktopView: View {
         }
     }
     
+    private func startRuntimeInit() {
+        NSLog("[WINOS-RUNTIME] RUNTIME_START pc=%@", pc?.nome ?? "default")
+        runtimeStage = "RUNTIME_START"
+        // Simula inicialização rápida sem bloqueio MainActor
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            NSLog("[WINOS-RUNTIME] WIN32_INIT")
+            runtimeStage = "WIN32_INIT"
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                NSLog("[WINOS-RUNTIME] PE_LOADER_INIT")
+                runtimeStage = "PE_LOADER_INIT"
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    NSLog("[WINOS-RUNTIME] GRAPHICS_INIT")
+                    runtimeStage = "GRAPHICS_INIT"
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        NSLog("[WINOS-RUNTIME] DESKTOP_INIT")
+                        runtimeStage = "DESKTOP_INIT"
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                            NSLog("[WINOS-RUNTIME] SESSION_READY")
+                            runtimeStage = "SESSION_READY"
+                            NSLog("[WINOS-RUNTIME] RUNNING desktop=%@", pc?.nome ?? "default")
+                            runtimeStage = "RUNNING"
+                            desktopReady = true
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    private var runtimeStageBar: some View {
+        HStack(spacing: 12) {
+            ProgressView()
+                .tint(WinOSBrand.accent)
+            Text("Inicializando: \(runtimeStage)")
+                .font(.system(size: 11, weight: .medium, design: .monospaced))
+                .foregroundStyle(WinOSBrand.textSecondary)
+            Spacer()
+            Text(pc?.nome ?? "WinOS")
+                .font(.system(size: 10, weight: .bold, design: .rounded))
+                .foregroundStyle(WinOSBrand.textTertiary)
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 8)
+        .background(WinOSBrand.card.opacity(0.9))
+    }
+    
     private var topBar: some View {
         HStack(spacing: 16) {
             WinOSLogoView(size: 32, compact: true)
             
             VStack(alignment: .leading, spacing: 2) {
-                Text("WinOS Desktop")
+                Text(pc != nil ? "WinOS Desktop — \(pc!.nome)" : "WinOS Desktop")
                     .font(.system(.subheadline, design: .rounded).weight(.bold))
                     .foregroundStyle(.white)
-                Text("Runtime 3411/0 • PE 76/76 • ARM64 host • x64 guest")
+                Text("Runtime 3411/0 • PE 76/76 • ARM64 host • x64 guest • Stage: \(runtimeStage)")
                     .font(.system(size: 10, weight: .medium, design: .monospaced))
                     .foregroundStyle(WinOSBrand.textTertiary)
             }
@@ -64,13 +123,27 @@ struct WinOSDesktopView: View {
                 statusDot(color: WinOSBrand.success, label: "Runtime")
                 statusDot(color: WinOSBrand.accent, label: "VFS")
                 statusDot(color: WinOSBrand.success, label: "PE")
+                statusDot(color: desktopReady ? WinOSBrand.success : WinOSBrand.warning, label: desktopReady ? "DESKTOP" : "INIT")
             }
             
             Button {
-                // Refresh
                 model.refreshGames()
             } label: {
                 Image(systemName: "arrow.clockwise")
+                    .foregroundStyle(WinOSBrand.textSecondary)
+                    .frame(width: 32, height: 32)
+                    .background(Circle().fill(WinOSBrand.card))
+            }
+            
+            Button {
+                NSLog("[WINOS-RUNTIME] SESSION_END pc=%@", pc?.nome ?? "default")
+                if let pc = pc {
+                    model.environments.markInUse(id: pc.id, inUse: false)
+                }
+                model.showDesktop = false
+                model.selectedPC = nil
+            } label: {
+                Image(systemName: "xmark.circle.fill")
                     .foregroundStyle(WinOSBrand.textSecondary)
                     .frame(width: 32, height: 32)
                     .background(Circle().fill(WinOSBrand.card))

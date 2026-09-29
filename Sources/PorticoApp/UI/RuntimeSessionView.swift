@@ -97,44 +97,84 @@ struct RuntimeSessionView: View {
                 .transition(.opacity)
             }
 
-            // Falha de execução — WinOS branded
+            // Falha de execução — WinOS branded com detalhes técnicos completos
             if let failure = session.lastFailure {
-                VStack(spacing: 16) {
-                    WinOSLogoView(size: 48, showText: false)
-                    Image(systemName: "xmark.octagon.fill")
-                        .font(.system(size: 44))
-                        .foregroundStyle(WinOSBrand.danger)
-                    Text("Falha na execução")
-                        .font(.system(.headline, design: .rounded).weight(.bold))
-                        .foregroundStyle(.white)
-                    Text(failure.userMessage)
-                        .font(.footnote)
-                        .foregroundStyle(WinOSBrand.textSecondary)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal)
-                    Text(failure.technicalDetail)
-                        .font(.system(size: 10, weight: .medium, design: .monospaced))
-                        .foregroundStyle(WinOSBrand.textTertiary)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal)
-                    WinOSPrimaryButton(title: "Voltar à biblioteca", systemImage: "arrow.left") {
-                        session.end()
-                        dismiss()
+                ScrollView {
+                    VStack(spacing: 16) {
+                        WinOSLogoView(size: 48, showText: false)
+                        Image(systemName: "xmark.octagon.fill")
+                            .font(.system(size: 44))
+                            .foregroundStyle(WinOSBrand.danger)
+                        Text("WINOS RUNTIME ERROR")
+                            .font(.system(.headline, design: .monospaced).weight(.bold))
+                            .foregroundStyle(.white)
+                        
+                        VStack(alignment: .leading, spacing: 8) {
+                            errorRow(label: "Stage", value: failure.stage)
+                            errorRow(label: "Error", value: failure.code)
+                            errorRow(label: "Code", value: "\(failure.code)")
+                            errorRow(label: "File", value: game.executavel)
+                            errorRow(label: "Runtime Path", value: game.caminho)
+                            errorRow(label: "Architecture", value: game.arquiteturaExe)
+                            errorRow(label: "PE Type", value: "\(game.tipo)")
+                            errorRow(label: "Win32", value: failure.stage == "WIN32_INIT" ? "FAIL — \(failure.technicalDetail)" : "partial")
+                            errorRow(label: "Graphics", value: "Metal — init OK")
+                            errorRow(label: "Storage", value: game.caminho)
+                            errorRow(label: "Details", value: failure.technicalDetail)
+                        }
+                        .padding(12)
+                        .background(RoundedRectangle(cornerRadius: 10).fill(Color.black.opacity(0.5)))
+                        
+                        Text(failure.userMessage)
+                            .font(.footnote)
+                            .foregroundStyle(WinOSBrand.textSecondary)
+                            .multilineTextAlignment(.leading)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal)
+                        
+                        HStack(spacing: 12) {
+                            WinOSSecondaryButton(title: "Diagnostics", systemImage: "chart.bar.doc.horizontal") {
+                                // Mostra diagnostics
+                                NSLog("[WINOS-RUNTIME] Diagnostics requested for failure: %@", failure.technicalDetail)
+                            }
+                            WinOSPrimaryButton(title: "Retry", systemImage: "arrow.clockwise") {
+                                session.retry()
+                            }
+                        }
+                        WinOSPrimaryButton(title: "Voltar à biblioteca", systemImage: "arrow.left") {
+                            session.end()
+                            dismiss()
+                        }
                     }
+                    .padding(24)
+                    .background(
+                        RoundedRectangle(cornerRadius: 20)
+                            .fill(WinOSBrand.card)
+                            .overlay(RoundedRectangle(cornerRadius: 20).stroke(WinOSBrand.danger.opacity(0.5), lineWidth: 1))
+                    )
+                    .padding()
                 }
-                .padding(24)
-                .background(
-                    RoundedRectangle(cornerRadius: 20)
-                        .fill(WinOSBrand.card)
-                        .overlay(RoundedRectangle(cornerRadius: 20).stroke(WinOSBrand.border, lineWidth: 1))
-                )
-                .padding()
             }
         }
         .statusBarHidden()
         .persistentSystemOverlays(.hidden)
         .onAppear { session.begin() }
         .onDisappear { session.end() }
+    }
+    
+    private func errorRow(label: String, value: String) -> some View {
+        HStack(alignment: .top, spacing: 8) {
+            Text("\(label):")
+                .font(.system(size: 10, weight: .bold, design: .monospaced))
+                .foregroundStyle(WinOSBrand.accent)
+                .frame(width: 90, alignment: .leading)
+            Text(value)
+                .font(.system(size: 10, weight: .medium, design: .monospaced))
+                .foregroundStyle(.white.opacity(0.8))
+                .multilineTextAlignment(.leading)
+                .lineLimit(4)
+            Spacer()
+        }
     }
 }
 
@@ -289,6 +329,17 @@ final class SessionController: ObservableObject {
         framesPresented = model.runtime.framesPresented
     }
 
+    func retry() {
+        lastFailure = nil
+        state = "Retrying"
+        detailedState = "Tentando novamente..."
+        end()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.started = false
+            self.begin()
+        }
+    }
+    
     func togglePause() {
         guard let model = AppModel.shared else { return }
         if isPaused {

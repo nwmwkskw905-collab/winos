@@ -208,6 +208,29 @@ struct WinOSPrimaryButton: View {
     }
 }
 
+/// Botão secundário WinOS
+struct WinOSSecondaryButton: View {
+    let title: String
+    let systemImage: String
+    let action: () -> Void
+    
+    var body: some View {
+        Button(action: action) {
+            Label(title, systemImage: systemImage)
+                .font(.system(.subheadline, design: .rounded).weight(.medium))
+                .foregroundStyle(WinOSBrand.textSecondary)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 12)
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(WinOSBrand.card)
+                        .overlay(RoundedRectangle(cornerRadius: 12).stroke(WinOSBrand.border, lineWidth: 1))
+                )
+        }
+        .buttonStyle(.plain)
+    }
+}
+
 /// Badge de status WinOS
 struct WinOSStatusBadge: View {
     let text: String

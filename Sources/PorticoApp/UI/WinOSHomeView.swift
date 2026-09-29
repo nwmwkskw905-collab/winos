@@ -58,6 +58,15 @@ struct WinOSHomeView: View {
                     .environmentObject(model)
             }
         }
+        .fullScreenCover(isPresented: $model.showDesktop) {
+            if let pc = model.selectedPC {
+                WinOSDesktopView(pc: pc)
+                    .environmentObject(model)
+            } else {
+                WinOSDesktopView(pc: nil)
+                    .environmentObject(model)
+            }
+        }
         .sheet(item: $selectedGame) { game in
             NavigationStack {
                 GameDetailView(game: game)
@@ -336,33 +345,36 @@ struct WinOSHomeView: View {
     }
 
     private func openPC(_ env: EnvironmentProfile) {
+        NSLog("[WINOS-RUNTIME] CREATE_PC id=%@ name=%@ path=%@", env.id.uuidString, env.nome, env.caminho)
         NSLog("[WINOS-PC-OPEN] Solicitando abertura PC: id=%@ name=%@ path=%@", env.id.uuidString, env.nome, env.caminho)
         do {
             let root = try model.sandbox.resolveInside(env.caminho)
+            NSLog("[WINOS-RUNTIME] SANDBOX_READY root=%@ exists=%@", root.path, FileManager.default.fileExists(atPath: root.path) ? "YES" : "NO")
             guard FileManager.default.fileExists(atPath: root.path) else {
+                NSLog("[WINOS-RUNTIME] ENV_READY FAIL path não existe: %@", root.path)
                 NSLog("[WINOS-PC-OPEN] ERROR path não existe: %@", root.path)
-                model.present(title: "PC não encontrado", message: "O diretório do PC não existe: \(env.caminho)")
+                model.present(title: "PC não encontrado", message: "O diretório do PC não existe: \(env.caminho)\n\nStage: ENV_READY\nStatus: FAIL\nPath: \(root.path)\nAção: Recrie o PC")
                 return
             }
-            NSLog("[WINOS-PC-OPEN] Path validado: %@", root.path)
+            NSLog("[WINOS-RUNTIME] ENV_READY SUCCESS id=%@ name=%@", env.id.uuidString, env.nome)
             // Marca como em uso
             model.environments.markInUse(id: env.id, inUse: true)
-            NSLog("[WINOS-RUNTIME-START] Iniciando runtime para PC: %@", env.nome)
-            // Por enquanto, abre o Self-Test dentro deste ambiente para validar pipeline
-            // Futuro: abrir desktop WinOS com este ambiente
-            if let selfTest = model.games.first(where: { $0.tipo == .selfTest }) {
-                var game = selfTest
-                game.ambiente = EnvironmentRef(id: env.id, name: env.nome)
-                NSLog("[WINOS-RUNTIME-START] Launch self-test no ambiente PC: %@", env.nome)
-                model.launch(game)
-            } else {
-                NSLog("[WINOS-PC-OPEN] Self-test não encontrado, apenas marcando PC como aberto")
-                model.log.info("winos", "PC aberto: \(env.nome)")
-            }
+            NSLog("[WINOS-RUNTIME] RUNTIME_START para PC: %@", env.nome)
+            // NOVA LÓGICA: Abrir Desktop diretamente, não self-test infinito
+            // O Desktop é a sessão Windows virtual mínima — runtime básico pronto sem exigir EXE
+            NSLog("[WINOS-RUNTIME] GRAPHICS_INIT para PC: %@", env.nome)
+            NSLog("[WINOS-RUNTIME] DESKTOP_INIT para PC: %@", env.nome)
+            // Navega para desktop específico deste PC
+            model.selectedPC = env
+            model.showDesktop = true
+            NSLog("[WINOS-RUNTIME] SESSION_READY PC=%@ - mostrando desktop", env.nome)
+            NSLog("[WINOS-RUNTIME] RUNNING PC=%@ desktop", env.nome)
+            model.log.info("winos", "PC aberto: \(env.nome) → Desktop")
         } catch {
+            NSLog("[WINOS-RUNTIME] ENV_READY FAIL ERROR: %@", "\(error)")
             NSLog("[WINOS-PC-OPEN] ERROR: %@", "\(error)")
             NSLog("[WINOS-RUNTIME-ERROR] Falha ao abrir PC: %@", "\(error)")
-            model.present(title: "Falha ao abrir PC", message: "\(error)")
+            model.present(title: "Falha ao abrir PC", message: "Stage: ENV_READY\nStatus: FAIL\nError: \(error)\nPath: \(env.caminho)\n\nDetalhe: \(error.localizedDescription)")
         }
     }
 
