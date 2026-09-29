@@ -144,7 +144,10 @@ final class SessionController: ObservableObject {
         guard !started else { return }
         started = true
 
-        let model = AppModel.shared
+        guard let model = AppModel.shared else {
+            lastFailure = .backendUnavailable(reason: "AppModel.shared não inicializado")
+            return
+        }
         let config = model.effectiveConfig(for: game)
 
         model.runtime.events.onFPS = { [weak self] v in
@@ -153,7 +156,8 @@ final class SessionController: ObservableObject {
         model.runtime.events.onFailure = { [weak self] f in
             Task { @MainActor in self?.lastFailure = f }
         }
-        model.runtime.events.onAudioFrames = { [weak self] pcm in
+        // Áudio: RuntimeManager expõe onAudioFrames diretamente, não em events
+        model.runtime.onAudioFrames = { [weak self] pcm in
             self?.audio.enqueue(interleaved: pcm)
         }
 
@@ -186,7 +190,8 @@ final class SessionController: ObservableObject {
     }
 
     private func step() {
-        guard !isPaused, let model = AppModel.shared else { return }
+        guard !isPaused else { return }
+        guard let model = AppModel.shared else { return }
         let frame = model.runtime.tick(now: CACurrentMediaTime(), input: router.state)
         if let frame {
             renderer?.execute(frame)
@@ -195,7 +200,7 @@ final class SessionController: ObservableObject {
     }
 
     func togglePause() {
-        let model = AppModel.shared
+        guard let model = AppModel.shared else { return }
         if isPaused {
             model.runtime.resume()
             isPaused = false
@@ -220,7 +225,7 @@ final class SessionController: ObservableObject {
         displayTimer = nil
         audio.stop()
         gamePads.detach()
-        AppModel.shared.runtime.endGame(clockNow: CACurrentMediaTime())
+        AppModel.shared?.runtime.endGame(clockNow: CACurrentMediaTime())
         started = false
     }
 }

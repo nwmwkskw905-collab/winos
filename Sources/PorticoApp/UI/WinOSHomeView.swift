@@ -180,20 +180,23 @@ struct WinOSHomeView: View {
                     }
                     .buttonStyle(.plain)
                     
-                    ForEach(model.environments.environments) { env in
+                    ForEach(model.environments.environments, id: \.id) { env in
+                        let arch = env.variables["WINOS_ARCH"] ?? "x64"
+                        let ram = env.variables["WINOS_RAM_MB"] ?? "2048"
+                        let backend = env.variables["WINOS_BACKEND"] ?? "Metal"
                         WinOSCard {
                             VStack(alignment: .leading, spacing: 8) {
                                 HStack {
                                     Image(systemName: "desktopcomputer")
                                         .foregroundStyle(WinOSBrand.accent)
                                     Spacer()
-                                    WinOSStatusBadge(text: env.arquitetura, color: WinOSBrand.success)
+                                    WinOSStatusBadge(text: arch, color: WinOSBrand.success)
                                 }
                                 Text(env.nome)
                                     .font(.system(.subheadline, design: .rounded).weight(.semibold))
                                     .foregroundStyle(.white)
                                     .lineLimit(1)
-                                Text("\(env.ramMB) MB • \(env.backend)")
+                                Text("\(ram) MB • \(backend)")
                                     .font(.caption2)
                                     .foregroundStyle(WinOSBrand.textSecondary)
                             }
