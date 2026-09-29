@@ -1,0 +1,36 @@
+name: Check Apple Signing Simple
+
+on:
+  workflow_dispatch:
+
+jobs:
+  signing:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Apple Environment
+        run: |
+          echo "=== XCODE ==="
+          xcodebuild -version
+
+          echo "=== SDK ==="
+          xcrun --sdk iphoneos --show-sdk-version
+
+          echo "=== SIGNING IDENTITIES ==="
+          security find-identity -v -p codesigning || true
+
+      - name: Project Signing
+        run: |
+          echo "=== PROJECT SIGNING ==="
+
+          xcodebuild \
+            -project Portico.xcodeproj \
+            -scheme Portico \
+            -showBuildSettings \
+            2>/dev/null |
+            grep -E \
+            'PRODUCT_BUNDLE_IDENTIFIER|DEVELOPMENT_TEAM|CODE_SIGN_STYLE|CODE_SIGN_IDENTITY|PROVISIONING_PROFILE_SPECIFIER' \
+            || true
