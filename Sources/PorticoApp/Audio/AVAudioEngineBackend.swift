@@ -31,7 +31,7 @@ final class AVAudioEngineBackend: AudioOutputBackend {
         self.sampleRate = sampleRate
         self.bufferFrames = bufferFrames
         if ring == nil {
-            ring = pr_audio_ring_create(UInt(max(bufferFrames * 8, 4096)))
+            ring = pr_audio_ring_create(max(bufferFrames * 8, 4096))
         }
         let session = AVAudioSession.sharedInstance()
         try session.setCategory(.playback, mode: .default)

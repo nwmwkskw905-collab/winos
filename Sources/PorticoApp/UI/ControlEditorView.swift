@@ -64,9 +64,9 @@ struct ControlEditorView: View {
                         dismiss()
                     }
                 }
-                ToolbarItem(placement: .destructive) {
+                ToolbarItem(placement: .topBarTrailing) {
                     if selectedID != nil {
-                        Button {
+                        Button(role: .destructive) {
                             removeSelected()
                         } label: {
                             Image(systemName: "trash")
@@ -108,7 +108,7 @@ struct ControlEditorView: View {
                 }
                 HStack {
                     Text("Tamanho")
-                    Slider(value: sel.frame.wrappedValue.wBinding,
+                    Slider(value: sel.frame.wBinding,
                            in: 0.05...0.5)
                 }
             }
@@ -142,9 +142,12 @@ struct ControlEditorView: View {
     }
 }
 
-extension NormalizedRect {
+extension Binding where Value == NormalizedRect {
     var wBinding: Binding<Double> {
-        Binding(get: { w }, set: { w = $0 })
+        Binding(
+            get: { wrappedValue.w },
+            set: { wrappedValue.w = $0 }
+        )
     }
 }
 

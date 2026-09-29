@@ -96,7 +96,11 @@ public final class MetalGameRenderer: NSObject, GraphicsBackend, MTKViewDelegate
     }
 
     public func resize(targetSize: CGSize, renderScale: Double) {
-        initialize(targetSize: targetSize, renderScale: renderScale)
+        do {
+            try initialize(targetSize: targetSize, renderScale: renderScale)
+        } catch {
+            NSLog("Portico/Metal: resize failed: %@", "\(error)")
+        }
     }
 
     public func setVSyncLimit(_ fps: Int) {

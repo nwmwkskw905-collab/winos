@@ -19,7 +19,7 @@ final class GameControllerBridge {
         center.addObserver(self, selector: #selector(controllerDisconnected(_:)),
                            name: .GCControllerDidDisconnect, object: nil)
         GCController.startWirelessControllerDiscovery()
-        for c in GCController.controllers {
+        for c in GCController.controllers() {
             bind(c)
         }
         updateStatus()
