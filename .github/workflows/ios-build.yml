@@ -60,26 +60,67 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             clean build
 
-      - name: Capture Portico.app (iOS device)
+      - name: Locate Portico.app (iOS device)
         run: |
-          set -e
-          APP_PATH=$(find "$HOME/Library/Developer/Xcode/DerivedData" -type d -name "Portico.app" -path "*/Debug-iphoneos/Portico.app" -print -quit)
+          echo "=== Locating Portico.app (iOS device) ==="
+          echo "Searching DerivedData for Portico.app..."
+          find ~/Library/Developer/Xcode/DerivedData -name "*.app" -type d 2>/dev/null | head -n 20
+          echo ""
+          # Prefer Debug-iphoneos/Portico.app (device ARM64)
+          APP_PATH=$(find ~/Library/Developer/Xcode/DerivedData -path "*/Build/Products/Debug-iphoneos/Portico.app" -type d 2>/dev/null | head -n 1)
           if [ -z "$APP_PATH" ]; then
-            echo "ERROR: Device Portico.app not found immediately after device build"
-            find "$HOME/Library/Developer/Xcode/DerivedData" -type d -name "Portico.app" -print || true
+            echo "Debug-iphoneos not found, searching any Portico.app"
+            APP_PATH=$(find ~/Library/Developer/Xcode/DerivedData -name "Portico.app" -type d 2>/dev/null | head -n 1)
+          fi
+          if [ -z "$APP_PATH" ]; then
+            echo "ERROR: Portico.app not found!"
+            echo "Listing DerivedData:"
+            ls -la ~/Library/Developer/Xcode/DerivedData/ | grep Portico || ls -la ~/Library/Developer/Xcode/DerivedData/ | head -n 20
             exit 1
           fi
-          echo "FOUND DEVICE APP: $APP_PATH"
+          echo "Found app at: $APP_PATH"
+          ls -lh "$APP_PATH"
+          echo ""
+          du -sh "$APP_PATH"
+          echo ""
+          echo "Frameworks inside app:"
+          ls -lh "$APP_PATH/Frameworks/" 2>/dev/null || echo "No Frameworks dir"
+          echo ""
+          # Copy to staging for artifact
           mkdir -p build/app-artifact
           rm -rf build/app-artifact/Portico.app
-          cp -R "$APP_PATH" build/app-artifact/Portico.app
-          echo "DEVICE APP CAPTURED SUCCESSFULLY"
+          cp -R "$APP_PATH" build/app-artifact/
+          echo "Staged:"
+          ls -lh build/app-artifact/
+          du -sh build/app-artifact/Portico.app
 
-      - name: Upload WinOS App (iOS device)
+      - name: Upload WinOS App (Portico.app device)
         uses: actions/upload-artifact@v4
         with:
           name: winos-app
           path: build/app-artifact/Portico.app
+          if-no-files-found: error
+
+      - name: Package WinOS IPA (unsigned)
+        run: |
+          set -e
+          echo "Packaging WinOS IPA..."
+          rm -rf build/ipa
+          mkdir -p build/ipa/Payload
+          cp -R build/app-artifact/Portico.app build/ipa/Payload/Portico.app
+          cd build/ipa
+          zip -qry ../WinOS-unsigned.ipa Payload
+          cd ../..
+          echo "IPA CREATED SUCCESSFULLY:"
+          ls -lh build/WinOS-unsigned.ipa
+          echo "IPA CONTENTS:"
+          unzip -l build/WinOS-unsigned.ipa
+
+      - name: Upload WinOS IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: winos-ipa
+          path: build/WinOS-unsigned.ipa
           if-no-files-found: error
 
       - name: Build Portico App (iOS Simulator)
@@ -92,6 +133,31 @@ jobs:
             -destination 'generic/platform=iOS Simulator' \
             CODE_SIGNING_ALLOWED=NO \
             clean build
+
+      - name: Locate Portico.app (Simulator)
+        if: always()
+        run: |
+          echo "=== Locating Portico.app (Simulator) ==="
+          SIM_APP=$(find ~/Library/Developer/Xcode/DerivedData -path "*/Build/Products/Debug-iphonesimulator/Portico.app" -type d 2>/dev/null | head -n 1)
+          if [ -n "$SIM_APP" ]; then
+            echo "Found simulator app at: $SIM_APP"
+            ls -lh "$SIM_APP" | head -n 20
+            du -sh "$SIM_APP"
+            mkdir -p build/app-artifact-sim
+            rm -rf build/app-artifact-sim/Portico.app
+            cp -R "$SIM_APP" build/app-artifact-sim/
+            ls -lh build/app-artifact-sim/
+          else
+            echo "Simulator Portico.app not found (optional)"
+          fi
+
+      - name: Upload WinOS App (Simulator)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: winos-app-simulator
+          path: build/app-artifact-sim/Portico.app
+          if-no-files-found: ignore
 
       - name: Archive (optional, no signing)
         run: |
