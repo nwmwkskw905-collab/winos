@@ -85,8 +85,8 @@ jobs:
       - name: Locate Portico.app (iOS device)
         run: |
           set -e
-          APP_PATH=$(find "$HOME/Library/Developer/Xcode/DerivedData" -path "*/Build/Products/Debug-iphoneos/Portico.app" -type d -print -quit)
-          if [ -z "$APP_PATH" ]; then echo "ERROR: Portico.app not found"; exit 1; fi
+          APP_PATH=$(find "$HOME/Library/Developer/Xcode/DerivedData" -type d -name "Portico.app" -path "*/Debug-iphoneos/Portico.app" -print -quit)
+          if [ -z "$APP_PATH" ]; then echo "ERROR: Portico.app not found"; find "$HOME/Library/Developer/Xcode/DerivedData" -type d -name "Portico.app" -print || true; exit 1; fi
           mkdir -p build/app-artifact
           rm -rf build/app-artifact/Portico.app
           cp -R "$APP_PATH" build/app-artifact/Portico.app
