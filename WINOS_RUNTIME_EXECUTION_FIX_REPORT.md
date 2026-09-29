@@ -495,3 +495,155 @@ consumeGraphicsFrame(): pr_peproc_surface → SurfaceBuffer → Metal BGRA8
 - **C Tests:** 3411/0 PASS
 - **PE Tests:** 76/76 PASS
 - **Workflow:** 15 steps, artifacts winos-app/winos-ipa/winos-app-simulator/build-logs
+
+---
+
+## 11. BUILD FIX — ExecutionBackend PEReport / Win32 coverage (2026-09-29)
+
+### Erros confirmados pelo GitHub Actions (Xcode)
+
+**Arquivo:** `Sources/PorticoCore/Runtime/ExecutionBackend.swift`
+
+**Erro 1 — PEReport sem membros arch/machine/isPE32Plus:**
+```text
+value of type 'PEReport' has no member 'arch'
+value of type 'PEReport' has no member 'machine'
+value of type 'PEReport' has no member 'isPE32Plus'
+```
+Código usava:
+```swift
+loadedImage?.report.arch
+loadedImage?.report.machine
+loadedImage?.report.isPE32Plus
+img.report.arch
+img.report.machine
+```
+Mas estrutura real `PEReport` é:
+```swift
+struct PEReport {
+  let image: PEImage
+  let imports: [PEImportDLL]
+  let exports: [PEExportEntry]
+  let diagnostics: String
+}
+```
+E `PEImage` real:
+```swift
+struct PEImage {
+  let isPE32Plus: Bool
+  let isDLL: Bool
+  let machine: UInt16
+  let arch: String
+  ...
+}
+```
+Portanto propriedades corretas são `report.image.arch`, `report.image.machine`, `report.image.isPE32Plus`.
+
+**Erro 2 — UInt32 vs Int32 em peLoadFailed:**
+```swift
+throw RuntimeFailure.peLoadFailed(path: ..., code: st.rawValue, detail: diag)
+```
+`st.rawValue` é `UInt32` (pr_status enum C), mas `peLoadFailed` exige `Int32`.
+Correção segura: `Int32(bitPattern: st.rawValue)` — preserva bits, conversão explícita sem hack.
+
+**Erro 3 — unresolved como String, não struct:**
+```swift
+u.dll
+u.symbol
+firstUnresolved.dll
+firstUnresolved.symbol
+```
+Compilador: `unresolved: [String]`. Estrutura real `Win32Coverage`:
+```swift
+struct Win32Coverage {
+  let resolved: [String]     // "kernel32!GetTickCount64"
+  let unresolved: [String]   // conhecidas mas não implementadas
+  let unknown: [String]      // fora do catálogo
+}
+```
+Formato real é `"dll!symbol"` — ex: `"kernel32.dll!CreateFileW"`.
+
+### Correções aplicadas (somente tipos/API reais, sem reescrever Runtime)
+
+**1. Metadados PE log:**
+```swift
+// Antes (inválido):
+loadedImage?.report.arch
+// Depois (real):
+let rArch = loadedImage?.report.image.arch ?? "unknown"
+let rMachine = loadedImage?.report.image.machine ?? 0
+let rIsPE32Plus = loadedImage?.report.image.isPE32Plus ?? false
+NSLog("[WINOS-RUNTIME] PE_LOADER_INIT metadados OK arch=%@ machine=0x%x isPE32Plus=%@",
+      rArch, rMachine, rIsPE32Plus ? "YES" : "NO")
+```
+Mesma correção para `img.report.image.arch` e `img.report.image.machine` na validação ARM64.
+
+**2. PE load error code:**
+```swift
+// Antes:
+code: st.rawValue // UInt32 → Int32 erro
+// Depois:
+let code = Int32(bitPattern: st.rawValue)
+code: code
+```
+Preserva API `RuntimeFailure.peLoadFailed(path:code:Int32,detail:)` sem alterar assinatura.
+
+**3. Unresolved handling:**
+```swift
+// Antes (inválido):
+NSLog("... unresolved: %@!%@", u.dll, u.symbol)
+// Depois (real String):
+NSLog("[WINOS-RUNTIME] WIN32_INIT unresolved: %@", u)
+
+// Antes:
+throw RuntimeFailure.missingImport(dll: firstUnresolved.dll, symbol: firstUnresolved.symbol)
+// Depois — parse seguro do formato real "dll!symbol":
+if let sepRange = firstUnresolved.range(of: "!") {
+    let dllPart = String(firstUnresolved[..<sepRange.lowerBound])
+    let symPart = String(firstUnresolved[sepRange.upperBound...])
+    throw RuntimeFailure.missingImport(dll: dllPart.isEmpty ? "unknown.dll" : dllPart,
+                                       symbol: symPart.isEmpty ? firstUnresolved : symPart)
+} else {
+    throw RuntimeFailure.missingImport(dll: "unknown.dll", symbol: firstUnresolved)
+}
+```
+Não inventa formato — usa separador "!" existente no projeto, preserva string original se sem separador.
+
+**4. Logs preservados:**
+- `[WINOS-IMPORT] source/sandbox/runtime/vfs/exists/readable/size/extension/loadable` — mantido
+- `[WINOS-RUNTIME] PE_LOADER_INIT / WIN32_INIT / CREATE_PC / SANDBOX_READY / ENV_READY / RUNTIME_START / GRAPHICS_INIT / DESKTOP_INIT / SESSION_READY / RUNNING` — mantido
+- Códigos `INVALID_MZ/PE/UNSUPPORTED_ARCH/MISSING_IMPORT/UNSUPPORTED_WIN32_API/VFS_NOT_FOUND/STORAGE_ACCESS_DENIED/PE_LOAD_FAILED/RELOCATION_FAILED/ENTRYPOINT_FAILED/PROCESS_INIT_FAILED` — mantidos
+
+**5. Fluxo Desktop preservado:**
+- `openPC()` continua navegando para `WinOSDesktopView(pc:)` sem self-test bloqueante
+- `startRuntimeInit()` staged RUNTIME_START→WIN32_INIT→PE_LOADER_INIT→GRAPHICS_INIT→DESKTOP_INIT→SESSION_READY→RUNNING — preservado
+- `showDesktop`, `selectedPC`, `runtimeStage` — preservados
+
+### Auditoria pós-correção
+
+```bash
+grep -rn "report\.arch\|report\.machine\|report\.isPE32Plus" Sources --include="*.swift" | grep -v "image\.arch\|image\.machine\|image\.isPE32Plus"
+# → 0 resultados (nenhuma referência inválida restante)
+
+grep -rn "\.dll\|\.symbol" Sources/PorticoCore/Runtime/ExecutionBackend.swift
+# → apenas dllPart/symPart locais, sem .dll em String
+
+make test
+# → 3411 verificações, 0 falhas (C 3411/3411 PASS)
+```
+
+### Validação
+
+- **C:** 3411/3411 PASS — `make test` (test_cpu, test_cpu64, test_gl*, test_pe*, test_win32, etc)
+- **PE:** 76/76 PASS — preservado via `PEInspector` / `PELoader` (C harness)
+- **Swift static audit:** sem propriedades inexistentes, sem tipos incompatíveis, sem duplicatas, sem placeholders, sem Any, sem unsafeBitCast, sem @preconcurrency hacks
+- **Build:** PorticoRuntime → aguarda GitHub Actions, PorticoCore → aguarda, Portico App → aguarda. Objetivo desta fase: restaurar build real, não declarar PASS sem Xcode real.
+
+### Status BUILD FIX
+
+- Causa: uso de propriedades inexistentes em PEReport (arch/machine/isPE32Plus direto ao invés de via image) + UInt32→Int32 + unresolved como struct ao invés de String
+- Estruturas reais encontradas: PEReport.image: PEImage, PEImage.arch/machine/isPE32Plus, Win32Coverage.unresolved: [String] formato "dll!symbol"
+- Correção: acesso via `report.image.*`, conversão `Int32(bitPattern:)`, parse seguro "!" para missingImport
+- Testes: C 3411/0 PASS, PE 76/76 PASS, static audit PASS
+- Próximo: novo push GitHub Actions para validar PorticoRuntime → PASS, PorticoCore → PASS, Portico App device/simulator → PASS, Archive → PASS
+- Critério sucesso: ExecutionBackend.swift compila, PEReport usado somente via propriedades reais, unresolved tratado como [String], UInt32→Int32 correto, sem hacks, C 3411/3411, PE 76/76, fluxo Desktop preservado, pronto para build.

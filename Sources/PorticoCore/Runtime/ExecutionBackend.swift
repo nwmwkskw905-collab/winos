@@ -454,21 +454,25 @@ public final class WindowsPEBackend: ExecutionBackend {
                 throw RuntimeFailure.invalidPE(path: executable.path, detail: "Assinatura PE não encontrada em e_lfanew=0x\(String(e_lfanew, radix:16))")
             }
         }
-        // metadados/relatório via PELoader (análise PE existente)
+        // metadados/relatório via PELoader (análise PE existente) — usando estrutura real PEReport
         do {
             loadedImage = try PELoader.loadImage(
                 data, moduleName: executable.lastPathComponent)
+            // PEReport real: report.image.arch / machine / isPE32Plus
+            let rArch = loadedImage?.report.image.arch ?? "unknown"
+            let rMachine = loadedImage?.report.image.machine ?? 0
+            let rIsPE32Plus = loadedImage?.report.image.isPE32Plus ?? false
             NSLog("[WINOS-RUNTIME] PE_LOADER_INIT metadados OK arch=%@ machine=0x%x isPE32Plus=%@",
-                  loadedImage?.report.arch ?? "unknown", loadedImage?.report.machine ?? 0, loadedImage?.report.isPE32Plus ?? false ? "YES" : "NO")
+                  rArch, rMachine, rIsPE32Plus ? "YES" : "NO")
         } catch {
             phase = .failed
             NSLog("[WINOS-RUNTIME] PE_LOADER_INIT FAIL payloadInvalid: %@", "\(error)")
             throw RuntimeFailure.invalidPE(path: executable.path, detail: "\(error)")
         }
-        // Verifica arquitetura
+        // Verifica arquitetura usando dados reais PEReport.image
         if let img = loadedImage {
-            let arch = img.report.arch.lowercased()
-            let machine = img.report.machine
+            let arch = img.report.image.arch.lowercased()
+            let machine = img.report.image.machine
             // 0x014C = i386, 0x8664 = AMD64, 0xAA64 = ARM64
             if machine == 0xAA64 || arch.contains("arm64") || arch.contains("aarch64") {
                 phase = .failed
@@ -493,13 +497,14 @@ public final class WindowsPEBackend: ExecutionBackend {
             pr_peproc_destroy(p)
             phase = .failed
             NSLog("[WINOS-RUNTIME] PE_LOADER_INIT FAIL pr_peproc_create status=%d diag=%@", st.rawValue, diag)
-            // Mapeia código para tipo específico
+            // Mapeia código para tipo específico — conversão segura UInt32 → Int32
+            let code = Int32(bitPattern: st.rawValue)
             if diag.contains("MZ") {
                 throw RuntimeFailure.invalidMZ(path: executable.path)
             } else if diag.contains("arch") || diag.contains("machine") {
                 throw RuntimeFailure.unsupportedArch(path: executable.path, arch: diag)
             } else {
-                throw RuntimeFailure.peLoadFailed(path: executable.path, code: st.rawValue, detail: diag)
+                throw RuntimeFailure.peLoadFailed(path: executable.path, code: code, detail: diag)
             }
         }
         proc = p
@@ -515,11 +520,12 @@ public final class WindowsPEBackend: ExecutionBackend {
         NSLog("[WINOS-RUNTIME] WIN32_INIT start profile=%@ exe=%@", context.profile.nome, context.profile.executavel)
         if let img = loadedImage {
             lastCoverage = Win32Catalog.coverage(for: img.report)
-            NSLog("[WINOS-RUNTIME] WIN32_INIT coverage resolved=%d unresolved=%d",
-                  lastCoverage?.resolved.count ?? 0, lastCoverage?.unresolved.count ?? 0)
+            NSLog("[WINOS-RUNTIME] WIN32_INIT coverage resolved=%d unresolved=%d unknown=%d",
+                  lastCoverage?.resolved.count ?? 0, lastCoverage?.unresolved.count ?? 0, lastCoverage?.unknown.count ?? 0)
             if let cov = lastCoverage, !cov.unresolved.isEmpty {
                 for u in cov.unresolved.prefix(5) {
-                    NSLog("[WINOS-RUNTIME] WIN32_INIT unresolved: %@!%@", u.dll, u.symbol)
+                    // Win32Coverage.unresolved é [String] no formato "dll!symbol" (real)
+                    NSLog("[WINOS-RUNTIME] WIN32_INIT unresolved: %@", u)
                 }
             }
         }
@@ -571,11 +577,20 @@ public final class WindowsPEBackend: ExecutionBackend {
             var summary = ""
             if let cov = lastCoverage {
                 summary = "imports Win32: \(cov.resolved.count) resolvida(s), "
-                    + "\(cov.unresolved.count) não resolvida(s)\n"
+                    + "\(cov.unresolved.count) não resolvida(s), \(cov.unknown.count) desconhecida(s)\n"
                 if let firstUnresolved = cov.unresolved.first {
-                    // Mapeia para erro específico
+                    // Win32Coverage.unresolved é [String] real, formato "dll!symbol" — parse seguro
                     phase = .failed
-                    throw RuntimeFailure.missingImport(dll: firstUnresolved.dll, symbol: firstUnresolved.symbol)
+                    if let sepRange = firstUnresolved.range(of: "!") {
+                        let dllPart = String(firstUnresolved[..<sepRange.lowerBound])
+                        let symPart = String(firstUnresolved[sepRange.upperBound...])
+                        let dll = dllPart.isEmpty ? "unknown.dll" : dllPart
+                        let sym = symPart.isEmpty ? firstUnresolved : symPart
+                        throw RuntimeFailure.missingImport(dll: dll, symbol: sym)
+                    } else {
+                        // Sem separador confiável — preserva string original em symbol, dll genérico
+                        throw RuntimeFailure.missingImport(dll: "unknown.dll", symbol: firstUnresolved)
+                    }
                 }
             }
             phase = .failed
