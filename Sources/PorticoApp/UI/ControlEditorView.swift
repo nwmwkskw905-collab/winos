@@ -144,7 +144,7 @@ struct ControlEditorView: View {
 
 extension Binding where Value == NormalizedRect {
     var wBinding: Binding<Double> {
-        Binding(
+        Binding<Double>(
             get: { wrappedValue.w },
             set: { wrappedValue.w = $0 }
         )
