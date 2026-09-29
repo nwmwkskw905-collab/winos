@@ -73,7 +73,7 @@ struct WinOSDiagnosticsView: View {
             diagnostics = DiagnosticsData.collect(model: model)
             NSLog("[WINOS-DIAG] Diagnostics collected")
             NSLog("[WINOS-DIAG] Device: %@ iOS: %@ arch: %@", diagnostics.deviceModel, diagnostics.iOSVersion, diagnostics.architecture)
-            NSLog("[WINOS-DIAG] Metal: %@ device: %@", diagnostics.metalStatus.rawValue, diagnostics.metalDeviceName)
+            NSLog("[WINOS-DIAG] Metal: %@ device: %@", String(describing: diagnostics.metalStatus), diagnostics.metalDeviceName)
         }
         .refreshable {
             diagnostics = DiagnosticsData.collect(model: model)
@@ -161,6 +161,7 @@ struct DiagnosticsData {
     var cTestsResult = "Not run"
     var recentLogs: [String] = []
 
+    @MainActor
     static func collect(model: AppModel) -> DiagnosticsData {
         var data = DiagnosticsData()
 
