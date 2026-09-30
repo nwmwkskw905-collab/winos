@@ -197,7 +197,7 @@ static void test_gl_unidade(void) {
           == PR_ERR_RANGE);
     CHECK(ret == 0);
     /* d3d9 inteiro = fora do grupo 8 → STOP honesto */
-    CHECK(pr_win32_lookup("d3d9.dll", "Direct3DCreate9") == NULL);
+    CHECK(pr_win32_lookup("d3d9.dll", "Direct3DCreate9") != NULL); /* FASE 7: D3D9 stub honesto UNIMPLEMENTED → EXECUTION STOPPED (antes NULL, agora detectado) */
 
     pr_win32_destroy(ctx);
 }

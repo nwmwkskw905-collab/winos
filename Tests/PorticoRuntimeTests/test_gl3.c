@@ -413,7 +413,7 @@ static void test_gl3_honestidade(void) {
     CHECK(pr_win32_call(ctx, "opengl32.dll", "glTexImage3D", a, 9, &ret)
           == PR_ERR_RANGE);
     /* D3D9 continua inteiramente fora (decisão G8/G9 preservada) */
-    CHECK(pr_win32_lookup("d3d9.dll", "Direct3DCreate9") == NULL);
+    CHECK(pr_win32_lookup("d3d9.dll", "Direct3DCreate9") != NULL); /* FASE 7: D3D9 stub honesto UNIMPLEMENTED → EXECUTION STOPPED (antes NULL, agora detectado) */
 
     pr_win32_destroy(ctx);
 }

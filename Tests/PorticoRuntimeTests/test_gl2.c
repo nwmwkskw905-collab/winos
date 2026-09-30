@@ -205,7 +205,7 @@ static void test_gl2_matrizes_arrays(void) {
     CHECK(pr_win32_lookup("opengl32.dll", "glFogf") == NULL);        /* fora */
     CHECK(pr_win32_lookup("opengl32.dll", "glAlphaFunc") == NULL);   /* fora */
     CHECK(pr_win32_lookup("opengl32.dll", "glTexEnvf") == NULL);     /* fora */
-    CHECK(pr_win32_lookup("d3d9.dll", "Direct3DCreate9") == NULL);   /* G9: sem D3D9 */
+    CHECK(pr_win32_lookup("d3d9.dll", "Direct3DCreate9") != NULL); /* FASE 7: D3D9 stub honesto UNIMPLEMENTED → EXECUTION STOPPED (antes NULL, agora detectado) */   /* G9: sem D3D9 */
     memset(a, 0, sizeof(a));
     a[0] = 0x0B60; a[1] = 0x0B62; a[2] = 0;
     CHECK(pr_win32_call(ctx, "opengl32.dll", "glFogf", a, 3, &ret)

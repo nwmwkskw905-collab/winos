@@ -1,5 +1,4 @@
 import Foundation
-import PorticoCore
 
 /// Testes automatizados para Desktop REAL — sem mocks
 /// Desktop startup/shutdown, Window creation/destruction/focus/movement/resize, Message queue, Mouse/Keyboard input, VFS, File Manager, Create directory, Rename, Copy, Move, Delete, EXE discovery, PE loading, Process creation/exit, Metal init, Software fallback, Renderer lifecycle, Runtime shutdown

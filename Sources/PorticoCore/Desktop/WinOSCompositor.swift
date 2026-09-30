@@ -1,6 +1,4 @@
 import Foundation
-import QuartzCore
-import PorticoCore
 
 /// Compositor central — combina desktop background + window surfaces + cursor + taskbar + overlays → single final framebuffer
 /// Prioriza dirty rectangles, partial redraw, texture reuse, triple buffering, frame pacing

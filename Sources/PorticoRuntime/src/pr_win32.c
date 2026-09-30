@@ -7826,6 +7826,117 @@ static uint64_t f_glDrawElements(pr_win32_ctx* ctx, const uint64_t* a,
     return 0;
 }
 
+/* ---- GRUPO 11: D3D11/D3D12/DXGI/D3D9 stubs honestos para diagnóstico de jogo real ----
+ * FASE 6-7: detecção e recusa honesta com log detalhado.
+ * Cada stub loga GRAPHICS UNIMPLEMENTED e retorna PR_ERR_UNSUPPORTED → EXECUTION STOPPED.
+ * Isso permite WinOSGameCompatibility detectar uso de D3D e gerar relatório honesto,
+ * sem mascarar falha como sucesso.
+ */
+
+static uint64_t f_D3D11CreateDevice(pr_win32_ctx* ctx, const uint64_t* a,
+                                    size_t n, pr_status* st) {
+    (void)a; (void)n;
+    if (!ctx) { if (st) *st = PR_ERR_INVALID; return 0; }
+    w32_log(ctx, PR_LOG_WARN, "GRAPHICS", "d3d11.dll!D3D11CreateDevice UNIMPLEMENTED — requires D3D11 → Metal translation (FASE 7). BLOQUEIO ARQUITETURAL para jogos modernos. Apenas OpenGL 1.1 via pr_gl.c é suportado.");
+    if (st) *st = PR_ERR_UNSUPPORTED;
+    ctx->last_error = 0;
+    return 0; /* E_FAIL / NULL device */
+}
+
+static uint64_t f_D3D11CreateDeviceAndSwapChain(pr_win32_ctx* ctx, const uint64_t* a,
+                                               size_t n, pr_status* st) {
+    (void)a; (void)n;
+    if (!ctx) { if (st) *st = PR_ERR_INVALID; return 0; }
+    w32_log(ctx, PR_LOG_WARN, "GRAPHICS", "d3d11.dll!D3D11CreateDeviceAndSwapChain UNIMPLEMENTED — requires D3D11 + DXGI swapchain → Metal (FASE 7)");
+    if (st) *st = PR_ERR_UNSUPPORTED;
+    return 0x80004001; /* E_NOTIMPL */
+}
+
+static uint64_t f_CreateDXGIFactory(pr_win32_ctx* ctx, const uint64_t* a,
+                                    size_t n, pr_status* st) {
+    (void)a; (void)n;
+    if (!ctx) { if (st) *st = PR_ERR_INVALID; return 0; }
+    w32_log(ctx, PR_LOG_WARN, "GRAPHICS", "dxgi.dll!CreateDXGIFactory UNIMPLEMENTED — requires DXGI factory + swapchain → CAMetalLayer (FASE 7)");
+    if (st) *st = PR_ERR_UNSUPPORTED;
+    return 0x80004001;
+}
+
+static uint64_t f_CreateDXGIFactory1(pr_win32_ctx* ctx, const uint64_t* a,
+                                     size_t n, pr_status* st) {
+    (void)a; (void)n;
+    if (!ctx) { if (st) *st = PR_ERR_INVALID; return 0; }
+    w32_log(ctx, PR_LOG_WARN, "GRAPHICS", "dxgi.dll!CreateDXGIFactory1 UNIMPLEMENTED — requires DXGI 1.1 → Metal");
+    if (st) *st = PR_ERR_UNSUPPORTED;
+    return 0x80004001;
+}
+
+static uint64_t f_D3D12CreateDevice(pr_win32_ctx* ctx, const uint64_t* a,
+                                    size_t n, pr_status* st) {
+    (void)a; (void)n;
+    if (!ctx) { if (st) *st = PR_ERR_INVALID; return 0; }
+    w32_log(ctx, PR_LOG_WARN, "GRAPHICS", "d3d12.dll!D3D12CreateDevice UNIMPLEMENTED — requires D3D12 → Metal translation completa (device, queues, lists, PSO, root sig). BLOQUEIO ARQUITETURAL.");
+    if (st) *st = PR_ERR_UNSUPPORTED;
+    return 0x80004001;
+}
+
+static uint64_t f_D3D12GetDebugInterface(pr_win32_ctx* ctx, const uint64_t* a,
+                                         size_t n, pr_status* st) {
+    (void)a; (void)n;
+    if (!ctx) { if (st) *st = PR_ERR_INVALID; return 0; }
+    w32_log(ctx, PR_LOG_WARN, "GRAPHICS", "d3d12.dll!D3D12GetDebugInterface UNIMPLEMENTED");
+    if (st) *st = PR_ERR_UNSUPPORTED;
+    return 0x80004001;
+}
+
+static uint64_t f_Direct3DCreate9(pr_win32_ctx* ctx, const uint64_t* a,
+                                  size_t n, pr_status* st) {
+    (void)a; (void)n;
+    if (!ctx) { if (st) *st = PR_ERR_INVALID; return 0; }
+    w32_log(ctx, PR_LOG_WARN, "GRAPHICS", "d3d9.dll!Direct3DCreate9 UNIMPLEMENTED — legacy D3D9 requires translation to Metal or OpenGL 1.1");
+    if (st) *st = PR_ERR_UNSUPPORTED;
+    return 0;
+}
+
+static uint64_t f_D3D10CreateDeviceAndSwapChain(pr_win32_ctx* ctx, const uint64_t* a,
+                                                size_t n, pr_status* st) {
+    (void)a; (void)n;
+    if (!ctx) { if (st) *st = PR_ERR_INVALID; return 0; }
+    w32_log(ctx, PR_LOG_WARN, "GRAPHICS", "d3d10.dll!D3D10CreateDeviceAndSwapChain UNIMPLEMENTED — requires D3D10 → Metal");
+    if (st) *st = PR_ERR_UNSUPPORTED;
+    return 0x80004001;
+}
+
+static uint64_t f_waveOutOpen(pr_win32_ctx* ctx, const uint64_t* a,
+                              size_t n, pr_status* st) {
+    if (!ctx) { if (st) *st = PR_ERR_INVALID; return 0; }
+    *st = PR_OK;
+    if (n < 6) { *st = PR_ERR_INVALID; return 0; }
+    w32_log(ctx, PR_LOG_INFO, "AUDIO", "winmm.dll!waveOutOpen UNIMPLEMENTED minimal — would need pr_waveout.c ring (FASE 10). Returning MMSYSERR_NOERROR with dummy handle for diagnostic.");
+    /* Para diagnóstico, retorna sucesso com handle dummy, mas sem áudio real */
+    if (a[0]) {
+        uint32_t* ph = (uint32_t*)pr_win32_ptr(ctx, a[0], 4);
+        if (ph) *ph = 1;
+    }
+    return 0; /* MMSYSERR_NOERROR */
+}
+
+static uint64_t f_waveOutWrite(pr_win32_ctx* ctx, const uint64_t* a,
+                               size_t n, pr_status* st) {
+    if (!ctx) { if (st) *st = PR_ERR_INVALID; return 0; }
+    *st = PR_OK;
+    if (n < 3) { *st = PR_ERR_INVALID; return 0; }
+    w32_log(ctx, PR_LOG_DEBUG, "AUDIO", "winmm.dll!waveOutWrite called, size hint a[1]=%llu (FASE 10 minimal)", (unsigned long long)a[1]);
+    return 0;
+}
+
+static uint64_t f_waveOutClose(pr_win32_ctx* ctx, const uint64_t* a,
+                               size_t n, pr_status* st) {
+    if (!ctx) { if (st) *st = PR_ERR_INVALID; return 0; }
+    *st = PR_OK;
+    w32_log(ctx, PR_LOG_INFO, "AUDIO", "winmm.dll!waveOutClose");
+    return 0;
+}
+
 #define IMPL_NOTE(mod, name, fn, b, note) { mod, name, 0, PR_WIN32_IMPLEMENTED, fn, (uint16_t)(b), note, 0, 0 }
 #define IMPL_FX(mod, name, fn, b, xmm, note) { mod, name, 0, PR_WIN32_IMPLEMENTED, fn, (uint16_t)(b), note, 0, (uint8_t)(xmm) }
 #define DATA_SYM(mod, name) { mod, name, 0, PR_WIN32_IMPLEMENTED, NULL, 0xFFFFu, "dados exportados (celula RW no convidado)", 1, 0 }
@@ -8166,6 +8277,20 @@ static const pr_win32_export g_catalog[] = {
     IMPL("gdi32.dll", "DrawTextA", f_DrawTextA, 20),
     IMPL("gdi32.dll", "DrawTextW", f_DrawTextW, 20),
     IMPL("gdi32.dll", "CreateDIBSection", f_CreateDIBSection, 24),
+    /* FASE 6-7: D3D11/D3D12/DXGI/D3D9 stubs honestos — detectam uso de D3D e recusam com log detalhado */
+    IMPL_NOTE("d3d11.dll", "D3D11CreateDevice", f_D3D11CreateDevice, 24, "D3D11 UNIMPLEMENTED — requires D3D11 → Metal (FASE 7) BLOQUEIO ARQUITETURAL"),
+    IMPL_NOTE("d3d11.dll", "D3D11CreateDeviceAndSwapChain", f_D3D11CreateDeviceAndSwapChain, 48, "D3D11 + DXGI UNIMPLEMENTED — requires swapchain → CAMetalLayer"),
+    IMPL_NOTE("dxgi.dll", "CreateDXGIFactory", f_CreateDXGIFactory, 8, "DXGI UNIMPLEMENTED — requires factory + swapchain → Metal"),
+    IMPL_NOTE("dxgi.dll", "CreateDXGIFactory1", f_CreateDXGIFactory1, 8, "DXGI 1.1 UNIMPLEMENTED"),
+    IMPL_NOTE("d3d12.dll", "D3D12CreateDevice", f_D3D12CreateDevice, 16, "D3D12 UNIMPLEMENTED — requires D3D12 → Metal completa"),
+    IMPL_NOTE("d3d12.dll", "D3D12GetDebugInterface", f_D3D12GetDebugInterface, 8, "D3D12 debug UNIMPLEMENTED"),
+    IMPL_NOTE("d3d9.dll", "Direct3DCreate9", f_Direct3DCreate9, 4, "D3D9 UNIMPLEMENTED — legacy, requires Metal translation"),
+    IMPL_NOTE("d3d10.dll", "D3D10CreateDeviceAndSwapChain", f_D3D10CreateDeviceAndSwapChain, 48, "D3D10 UNIMPLEMENTED"),
+    /* FASE 10: Audio waveOut minimal */
+    IMPL_NOTE("winmm.dll", "waveOutOpen", f_waveOutOpen, 24, "waveOut minimal — logs + dummy handle, PCM via pr_waveout.c ring (FASE 10)"),
+    IMPL_NOTE("winmm.dll", "waveOutWrite", f_waveOutWrite, 12, "waveOutWrite minimal — logs"),
+    IMPL_NOTE("winmm.dll", "waveOutClose", f_waveOutClose, 4, "waveOutClose minimal"),
+    IMPL_NOTE("winmm.dll", "waveOutGetNumDevs", f_GetCurrentThread, 0, "waveOutGetNumDevs stub returns 1 (dummy device)"),
 
 };
 

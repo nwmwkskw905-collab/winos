@@ -1,7 +1,4 @@
 import Foundation
-import QuartzCore
-import PorticoCore
-import Combine
 
 /// Desktop Shell REAL — sobre o runtime, não sistema fictício separado
 /// WinOSDesktop → Shell → WindowManager → FileManager → Taskbar → StartMenu → DesktopIcons → ProcessManager → RuntimeBridge → InputBridge → RenderSurface
@@ -28,6 +25,15 @@ public final class WinOSDesktopShell: ObservableObject {
     public let compositor: WinOSCompositor
     public let inputBridge: WinOSInputBridge
     
+    // NOVO - Desktop Responsivo + Cursor + Mouse Real (modulo adicional, nao substitui existentes)
+    public let displayManager: WinOSDisplayManager
+    public let orientationManager: WinOSOrientationManager
+    public let mouseCursorManager: WinOSMouseCursorManager
+    public let cursorRenderer: WinOSCursorRenderer
+    public let mouseStateMachine: WinOSMouseStateMachine
+    public let desktopInputHandler: WinOSDesktopInputHandler
+    public let responsiveTests: WinOSDesktopResponsiveTests
+    
     private let sandbox: AppSandbox
     private let log: LogCenter
     private var pcPath: String = ""
@@ -49,6 +55,19 @@ public final class WinOSDesktopShell: ObservableObject {
         self.renderEngine = WinOSRenderEngine()
         self.compositor = WinOSCompositor(width: 1920, height: 1080)
         self.inputBridge = WinOSInputBridge()
+        
+        // NOVO - Inicializa modulo responsivo (preserva baseline)
+        let initialMetrics = WinOSDisplayMetrics(deviceScreenWidth: 390, deviceScreenHeight: 844, desktopWidth: 1280, desktopHeight: 720, orientation: .portrait)
+        self.displayManager = WinOSDisplayManager(initialMetrics: initialMetrics)
+        self.orientationManager = WinOSOrientationManager(displayManager: displayManager, windowManager: windowManager)
+        self.mouseCursorManager = WinOSMouseCursorManager(initialX: initialMetrics.desktopWidth/2, initialY: initialMetrics.desktopHeight/2, displayMetrics: initialMetrics)
+        self.cursorRenderer = WinOSCursorRenderer(displayMetrics: initialMetrics, compositor: compositor)
+        self.mouseStateMachine = WinOSMouseStateMachine()
+        self.desktopInputHandler = WinOSDesktopInputHandler(displayManager: displayManager, windowManager: windowManager, inputBridge: inputBridge, compositor: compositor)
+        self.responsiveTests = WinOSDesktopResponsiveTests()
+        
+        // Conecta cursor manager ao renderer
+        self.cursorRenderer.setCompositor(compositor)
         
         NSLog("[WINOS-SHELL] init pcPath=%@", pcPath)
         
@@ -85,8 +104,24 @@ public final class WinOSDesktopShell: ObservableObject {
         // Render engine
         NSLog("[WINOS-RUNTIME] GRAPHICS_INIT shell")
         renderEngine.initialize()
-        compositor.setDesktopSize(width: 1920, height: 1080)
-        inputBridge.setDesktopSize(logicalWidth: 1920, logicalHeight: 1080, physicalWidth: 1920, physicalHeight: 1080)
+        // Usa desktop virtual 1280x720 com viewport dinâmica (responsivo)
+        let desktopW = Int32(displayManager.metrics.desktopWidth)
+        let desktopH = Int32(displayManager.metrics.desktopHeight)
+        compositor.setDesktopSize(width: desktopW, height: desktopH)
+        inputBridge.setDesktopSize(logicalWidth: desktopW, logicalHeight: desktopH, physicalWidth: Int32(displayManager.metrics.viewportWidth), physicalHeight: Int32(displayManager.metrics.viewportHeight))
+        
+        // NOVO - Display metrics diagnostics
+        NSLog("%@", displayManager.metrics.diagnosticsLog)
+        NSLog("[WINOS-DISPLAY] orientation=%@ viewport=%dx%d desktop=%dx%d scale=%.3f", displayManager.orientation.rawValue, Int(displayManager.metrics.viewportWidth), Int(displayManager.metrics.viewportHeight), desktopW, desktopH, displayManager.metrics.scale)
+        
+        // NOVO - Cursor acima das janelas (ordem: background -> windows -> overlays -> taskbar -> cursor)
+        cursorRenderer.setCompositor(compositor)
+        mouseCursorManager.setVisible(true)
+        
+        // NOVO - Testes responsivos (apenas log, nao bloqueia)
+        let testResults = responsiveTests.runAll()
+        let passed = testResults.filter { $0.passed }.count
+        NSLog("[WINOS-TEST] responsive tests %d/%d PASS", passed, testResults.count)
         
         // Cria janela File Manager inicial? Não, desktop começa vazio com ícones
         NSLog("[WINOS-RUNTIME] DESKTOP_INIT shell")
@@ -242,7 +277,57 @@ public final class WinOSDesktopShell: ObservableObject {
         }
     }
     
+    // MARK: - NOVO - Orientation handling (preserva estado)
+    
+    public func handleOrientationChange(orientation: WinOSOrientation, deviceWidth: Double, deviceHeight: Double) {
+        NSLog("[WINOS-DISPLAY] handleOrientationChange %@ device=%.0fx%.0f", orientation.rawValue, deviceWidth, deviceHeight)
+        orientationManager.updateOrientation(orientation, deviceWidth: deviceWidth, deviceHeight: deviceHeight)
+        
+        // Atualiza compositor e inputBridge via displayManager callbacks ja configurados
+        // Preserva window ID, posicao logica, tamanho, z-order, estado, conteudo
+        // Apenas recalcula transform desktop -> viewport
+        
+        let metrics = displayManager.metrics
+        compositor.setDesktopSize(width: Int32(metrics.desktopWidth), height: Int32(metrics.desktopHeight))
+        
+        NSLog("[WINOS-DISPLAY] after rotation %@", metrics.diagnosticsLog)
+    }
+    
+    public func handleDeviceScreenChange(width: Double, height: Double, scale: Double = 3.0) {
+        orientationManager.updateDeviceScreen(width: width, height: height, scale: scale)
+    }
+    
+    // MARK: - NOVO - Input handling responsivo (screen -> desktop -> Win32)
+    
+    public func handleTouchResponsive(screenX: Double, screenY: Double, phase: String) {
+        // Converte screen -> desktop via displayManager (centralizado)
+        let desktop = displayManager.screenToDesktop(screenX: screenX, screenY: screenY)
+        
+        switch phase {
+        case "began":
+            desktopInputHandler.handleTouchBegan(screenX: screenX, screenY: screenY)
+        case "moved":
+            desktopInputHandler.handleTouchMoved(screenX: screenX, screenY: screenY)
+        case "ended":
+            desktopInputHandler.handleTouchEnded(screenX: screenX, screenY: screenY)
+        case "cancelled":
+            desktopInputHandler.handleTouchCancelled()
+        default:
+            break
+        }
+        
+        // Tambem chama handleTouch legado para compatibilidade (usa desktop coords)
+        handleTouch(x: desktop.x, y: desktop.y, phase: phase)
+        
+        NSLog("[WINOS-INPUT] message=%@ x=%d y=%d screen=%.0f,%.0f desktop=%.0f,%.0f orient=%@", phase, Int(desktop.x), Int(desktop.y), screenX, screenY, desktop.x, desktop.y, displayManager.orientation.rawValue)
+    }
+    
+    public func handleWheelResponsive(screenX: Double, screenY: Double, deltaY: Double) {
+        desktopInputHandler.handleWheel(screenX: screenX, screenY: screenY, deltaY: deltaY)
+    }
+    
     // MARK: - Diagnostics
+
     
     public func diagnostics() -> [String: String] {
         var d: [String: String] = [:]

@@ -121,6 +121,27 @@ DA85ADD5337C49EF97B6CB83 /* WinOSCompositor.swift in Sources */ = {isa = PBXBuil
 E7ACA2A0782241BEB814EAE9 /* WinOSProcessManagerReal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A21115A0894C808AF01578 /* WinOSProcessManagerReal.swift */; };
 C74B878E9F014E9A820B4FE8 /* WinOSRenderEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A49F50536642EBA9F3F34C /* WinOSRenderEngine.swift */; };
 E67C0F91B7AA42808991DF88 /* WinOSWindowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D04AA5A0AD47E5BD34FBA8 /* WinOSWindowManager.swift */; };
+
+            464E1442638148CD93ABF48C /* WinOSDisplayMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E33ACFF5E3944D3A0A48A6A /* WinOSDisplayMetrics.swift */; };
+            C6F525C5FC3D4C71B71F36C1 /* WinOSMouseCursor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E93DAE6EC9B48F59CB5AD15 /* WinOSMouseCursor.swift */; };
+            101F8DAB2DAF4A3CA5669CAF /* WinOSCursorRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F32DB633934280A30A3A09 /* WinOSCursorRenderer.swift */; };
+            272853E4B4D34161953A01E8 /* WinOSMouseStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E309E076C56D40D0A9FD632F /* WinOSMouseStateMachine.swift */; };
+            8AE00E82A65E4AD9AF1884CE /* WinOSDesktopInputHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFF9611886746B6B6E2FD7B /* WinOSDesktopInputHandler.swift */; };
+            3F95C0E721594E6BBA9C0219 /* WinOSOrientationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0149F180582416FAC6ABD5E /* WinOSOrientationManager.swift */; };
+            7288E074BCB64D3D8F5BDFA6 /* WinOSDesktopResponsiveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB579072B0F64A52913DDD14 /* WinOSDesktopResponsiveTests.swift */; };
+
+            155FC3A3F30F406CB40466DE /* WinOSGameDiagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D11E08774E4304B947D765 /* WinOSGameDiagnostics.swift */; };
+            085B816F226D40A5ABFFFC14 /* WinOSGameCompatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29689CF7D72F4D88A2D16FE8 /* WinOSGameCompatibility.swift */; };
+            6CC390EAD7B04505BA187377 /* WinOSGraphicsDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7248F186F014099804DC3F4 /* WinOSGraphicsDetector.swift */; };
+            16F6045AF5FF45B990EF1AC0 /* WinOSGraphicsTranslator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FF559F25144D2EA99C20DA /* WinOSGraphicsTranslator.swift */; };
+            55412E3C577F405CBA818DA4 /* WinOSRenderLoop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BB0E61490C41759E44143A /* WinOSRenderLoop.swift */; };
+            EAFE63EACA6A4E09BA0C18C0 /* WinOSInputPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCFE802832346C7BE896759 /* WinOSInputPipeline.swift */; };
+            DED9E71FA4244C13BA312A08 /* WinOSAudioPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58C305B4A1F4D35B53F823A /* WinOSAudioPipeline.swift */; };
+            07AD791FD8544B808FEE2655 /* WinOSGameHarness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B760317AF4C41C08984A0A9 /* WinOSGameHarness.swift */; };
+            BD32874376644F18BC90AD6C /* WinOSGameRuntime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683CBBE13A1A4BEFB79ABF37 /* WinOSGameRuntime.swift */; };
+
+            DCF03E743F4741B4BDE34EA9 /* pr_d3d.c in Sources */ = {isa = PBXBuildFile; fileRef = FA0182B792E54CF3B4407F49 /* pr_d3d.c */; };
+            5642B589573549EDBBDE986A /* pr_waveout.c in Sources */ = {isa = PBXBuildFile; fileRef = F986823952D1487DA6CC2A47 /* pr_waveout.c */; };
 /* End PBXBuildFile section */
 /* Begin PBXContainerItemProxy section */
 		36A1A12706ED424BB5DB8939 /* PBXContainerItemProxy */ = {
@@ -253,6 +274,29 @@ DDCFAF8BABA047358D063F7A /* WinOSDesktopShell.swift */ = {isa = PBXFileReference
 D3A21115A0894C808AF01578 /* WinOSProcessManagerReal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSProcessManagerReal.swift; sourceTree = "<group>"; };
 E8A49F50536642EBA9F3F34C /* WinOSRenderEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSRenderEngine.swift; sourceTree = "<group>"; };
 76D04AA5A0AD47E5BD34FBA8 /* WinOSWindowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSWindowManager.swift; sourceTree = "<group>"; };
+
+            9E33ACFF5E3944D3A0A48A6A /* WinOSDisplayMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSDisplayMetrics.swift; sourceTree = "<group>"; };
+            3E93DAE6EC9B48F59CB5AD15 /* WinOSMouseCursor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSMouseCursor.swift; sourceTree = "<group>"; };
+            D3F32DB633934280A30A3A09 /* WinOSCursorRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSCursorRenderer.swift; sourceTree = "<group>"; };
+            E309E076C56D40D0A9FD632F /* WinOSMouseStateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSMouseStateMachine.swift; sourceTree = "<group>"; };
+            ADFF9611886746B6B6E2FD7B /* WinOSDesktopInputHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSDesktopInputHandler.swift; sourceTree = "<group>"; };
+            C0149F180582416FAC6ABD5E /* WinOSOrientationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSOrientationManager.swift; sourceTree = "<group>"; };
+            CB579072B0F64A52913DDD14 /* WinOSDesktopResponsiveTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSDesktopResponsiveTests.swift; sourceTree = "<group>"; };
+
+            45D11E08774E4304B947D765 /* WinOSGameDiagnostics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSGameDiagnostics.swift; sourceTree = "<group>"; };
+            29689CF7D72F4D88A2D16FE8 /* WinOSGameCompatibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSGameCompatibility.swift; sourceTree = "<group>"; };
+            F7248F186F014099804DC3F4 /* WinOSGraphicsDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSGraphicsDetector.swift; sourceTree = "<group>"; };
+            90FF559F25144D2EA99C20DA /* WinOSGraphicsTranslator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSGraphicsTranslator.swift; sourceTree = "<group>"; };
+            88BB0E61490C41759E44143A /* WinOSRenderLoop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSRenderLoop.swift; sourceTree = "<group>"; };
+            FFCFE802832346C7BE896759 /* WinOSInputPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSInputPipeline.swift; sourceTree = "<group>"; };
+            D58C305B4A1F4D35B53F823A /* WinOSAudioPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSAudioPipeline.swift; sourceTree = "<group>"; };
+            7B760317AF4C41C08984A0A9 /* WinOSGameHarness.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSGameHarness.swift; sourceTree = "<group>"; };
+            683CBBE13A1A4BEFB79ABF37 /* WinOSGameRuntime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSGameRuntime.swift; sourceTree = "<group>"; };
+
+            FA0182B792E54CF3B4407F49 /* pr_d3d.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_d3d.c; sourceTree = "<group>"; };
+            F986823952D1487DA6CC2A47 /* pr_waveout.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_waveout.c; sourceTree = "<group>"; };
+            982184F2CD914802BAB43152 /* pr_d3d.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_d3d.h; sourceTree = "<group>"; };
+            2066BBB063B74084AAE695DD /* pr_waveout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_waveout.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 /* Begin PBXResourcesBuildPhase section */
 		1A4D70BCDB0BF886810D55C3 /* Resources */ = {
@@ -413,6 +457,8 @@ E8A49F50536642EBA9F3F34C /* WinOSRenderEngine.swift */ = {isa = PBXFileReference
 				63CDD140957D478AAB9DB8CB /* Input */,
 				28F9089E9BEC4C609821F444 /* Logging */,
 				4761F86BA02547A48471C607 /* Models */,
+                            609065A52F4548824594DBDE /* Desktop */,
+                            D87B619874834227AAF1A881 /* GameRuntime */,
 				826EA91CA1754F9B95F36484 /* Runtime */,
 				0362EB699C434BA4882BE00D /* Store */,
                                 609065A52F4548824594DBDE /* Desktop */,
@@ -546,6 +592,8 @@ E8A49F50536642EBA9F3F34C /* WinOSRenderEngine.swift */ = {isa = PBXFileReference
 			children = (
 				A61F992BA4734E1C8B5A30C2 /* portico */,
 				90B1B2ACB9724A92A384EFA2 /* PorticoRuntime.h */,
+                            982184F2CD914802BAB43152 /* pr_d3d.h */,
+                            2066BBB063B74084AAE695DD /* pr_waveout.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
@@ -641,6 +689,44 @@ E8A49F50536642EBA9F3F34C /* WinOSRenderEngine.swift */ = {isa = PBXFileReference
                         sourceTree = "<group>";
                 };
 
+            609065A52F4548824594DBDE /* Desktop */ = {
+                    isa = PBXGroup;
+                    children = (
+                            DDCFAF8BABA047358D063F7A /* WinOSDesktopShell.swift */,
+                            58A21F5AAAE34F7491D404EB /* WinOSDesktopTests.swift */,
+                            4E84E580D2AE4FA6ADCA290D /* WinOSFileManagerReal.swift */,
+                            1D952329D22D43EB95EF5B95 /* WinOSInputBridge.swift */,
+                            D3A21115A0894C808AF01578 /* WinOSProcessManagerReal.swift */,
+                            E8A49F50536642EBA9F3F34C /* WinOSRenderEngine.swift */,
+                            76D04AA5A0AD47E5BD34FBA8 /* WinOSWindowManager.swift */,
+                            E2C6316DC0534172B7D3B6F7 /* WinOSCompositor.swift */,
+                            9E33ACFF5E3944D3A0A48A6A /* WinOSDisplayMetrics.swift */,
+                            3E93DAE6EC9B48F59CB5AD15 /* WinOSMouseCursor.swift */,
+                            D3F32DB633934280A30A3A09 /* WinOSCursorRenderer.swift */,
+                            E309E076C56D40D0A9FD632F /* WinOSMouseStateMachine.swift */,
+                            ADFF9611886746B6B6E2FD7B /* WinOSDesktopInputHandler.swift */,
+                            C0149F180582416FAC6ABD5E /* WinOSOrientationManager.swift */,
+                            CB579072B0F64A52913DDD14 /* WinOSDesktopResponsiveTests.swift */,
+                    );
+                    path = Desktop;
+                    sourceTree = "<group>";
+            };
+            D87B619874834227AAF1A881 /* GameRuntime */ = {
+                    isa = PBXGroup;
+                    children = (
+                            45D11E08774E4304B947D765 /* WinOSGameDiagnostics.swift */,
+                            29689CF7D72F4D88A2D16FE8 /* WinOSGameCompatibility.swift */,
+                            F7248F186F014099804DC3F4 /* WinOSGraphicsDetector.swift */,
+                            90FF559F25144D2EA99C20DA /* WinOSGraphicsTranslator.swift */,
+                            88BB0E61490C41759E44143A /* WinOSRenderLoop.swift */,
+                            FFCFE802832346C7BE896759 /* WinOSInputPipeline.swift */,
+                            D58C305B4A1F4D35B53F823A /* WinOSAudioPipeline.swift */,
+                            7B760317AF4C41C08984A0A9 /* WinOSGameHarness.swift */,
+                            683CBBE13A1A4BEFB79ABF37 /* WinOSGameRuntime.swift */,
+                    );
+                    path = GameRuntime;
+                    sourceTree = "<group>";
+            };
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -797,6 +883,23 @@ E8A49F50536642EBA9F3F34C /* WinOSRenderEngine.swift */ = {isa = PBXFileReference
 				D9205347360940FD96F1E022 /* WinOSLoadingView.swift in Sources */,
 				7D39C96C66C74916B6401B8A /* WinOSOverlayView.swift in Sources */,
 				27D034CA8040CCA146C51A6F /* WinOSDiagnosticsView.swift in Sources */,
+                            464E1442638148CD93ABF48C /* WinOSDisplayMetrics.swift in Sources */,
+                            C6F525C5FC3D4C71B71F36C1 /* WinOSMouseCursor.swift in Sources */,
+                            101F8DAB2DAF4A3CA5669CAF /* WinOSCursorRenderer.swift in Sources */,
+                            272853E4B4D34161953A01E8 /* WinOSMouseStateMachine.swift in Sources */,
+                            8AE00E82A65E4AD9AF1884CE /* WinOSDesktopInputHandler.swift in Sources */,
+                            3F95C0E721594E6BBA9C0219 /* WinOSOrientationManager.swift in Sources */,
+                            7288E074BCB64D3D8F5BDFA6 /* WinOSDesktopResponsiveTests.swift in Sources */,
+                            155FC3A3F30F406CB40466DE /* WinOSGameDiagnostics.swift in Sources */,
+                            085B816F226D40A5ABFFFC14 /* WinOSGameCompatibility.swift in Sources */,
+                            6CC390EAD7B04505BA187377 /* WinOSGraphicsDetector.swift in Sources */,
+                            16F6045AF5FF45B990EF1AC0 /* WinOSGraphicsTranslator.swift in Sources */,
+                            55412E3C577F405CBA818DA4 /* WinOSRenderLoop.swift in Sources */,
+                            EAFE63EACA6A4E09BA0C18C0 /* WinOSInputPipeline.swift in Sources */,
+                            DED9E71FA4244C13BA312A08 /* WinOSAudioPipeline.swift in Sources */,
+                            07AD791FD8544B808FEE2655 /* WinOSGameHarness.swift in Sources */,
+                            BD32874376644F18BC90AD6C /* WinOSGameRuntime.swift in Sources */,
+
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -856,6 +959,8 @@ E8A49F50536642EBA9F3F34C /* WinOSRenderEngine.swift */ = {isa = PBXFileReference
 				8B6C8FBB19684C66B93EC64D /* pr_unwind.c in Sources */,
 				45FCEDC7958B4CD380EF511E /* pr_vm.c in Sources */,
 				FF1DA04D210B45248D518DE5 /* pr_win32.c in Sources */,
+                            DCF03E743F4741B4BDE34EA9 /* pr_d3d.c in Sources */,
+                            5642B589573549EDBBDE986A /* pr_waveout.c in Sources */,
 				AA7C591E40FD49FA9F4CD220 /* pr_winhello.c in Sources */,
 				F2BC62FD0E3B40B89AFD4C49 /* pr_zip.c in Sources */,
 			);

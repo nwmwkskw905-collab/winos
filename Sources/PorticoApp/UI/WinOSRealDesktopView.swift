@@ -24,78 +24,129 @@ struct WinOSRealDesktopView: View {
         _shell = StateObject(wrappedValue: WinOSDesktopShell(sandbox: sandbox, log: log, pcPath: pc?.caminho ?? "Environments"))
     }
     
+    @State private var orientation: UIDeviceOrientation = .portrait
+    @State private var lastGeoSize: CGSize = .zero
+    
     var body: some View {
         GeometryReader { geo in
             ZStack {
-                // Wallpaper próprio WinOS
+                // Wallpaper próprio WinOS — preserva aspect ratio via displayMetrics
                 WinOSWallpaperView()
+                    .onAppear {
+                        updateDisplayMetrics(geo: geo)
+                    }
                 
-                // Área de desktop com ícones
-                desktopIconsArea
+                // Desktop virtual com escala dinâmica (aspect ratio preservado)
+                // Calcula displayWidth/Height e offset para centralizar
+                let metrics = shell.displayManager.metrics
+                let scale = metrics.scale
+                let offsetX = metrics.offsetX
+                let offsetY = metrics.offsetY
+                let displayW = metrics.displayWidth
+                let displayH = metrics.displayHeight
                 
-                // Janelas reais via WindowManager
-                ForEach(shell.windowManager.visibleWindows(), id: \.id) { win in
-                    WinOSWindowView(window: win, shell: shell)
-                        .position(x: CGFloat(win.x + win.width/2), y: CGFloat(win.y + win.height/2))
-                        .zIndex(Double(win.zIndex))
-                        .onTapGesture {
-                            shell.windowManager.focusWindow(id: win.id)
-                        }
+                ZStack {
+                    // Área de desktop com ícones — em desktop coords, escalada para viewport
+                    desktopIconsArea
+                    
+                    // Janelas reais via WindowManager — em desktop coords
+                    ForEach(shell.windowManager.visibleWindows(), id: \.id) { win in
+                        WinOSWindowView(window: win, shell: shell)
+                            .position(x: CGFloat(win.x + win.width/2), y: CGFloat(win.y + win.height/2))
+                            .zIndex(Double(win.zIndex))
+                            .onTapGesture {
+                                shell.windowManager.focusWindow(id: win.id)
+                            }
+                    }
+                }
+                .frame(width: CGFloat(metrics.desktopWidth), height: CGFloat(metrics.desktopHeight))
+                .scaleEffect(CGFloat(scale))
+                .offset(x: CGFloat(offsetX - (CGFloat(metrics.desktopWidth) * CGFloat(scale) - CGFloat(metrics.desktopWidth))/2), y: CGFloat(offsetY - (CGFloat(metrics.desktopHeight) * CGFloat(scale) - CGFloat(metrics.desktopHeight))/2))
+                // Nota: scaleEffect centraliza, offset ajusta para viewport
+                
+                // Cursor visual REAL — acima das janelas (zIndex 9999)
+                // Ordem: background -> windows -> overlays -> taskbar -> cursor
+                if shell.mouseCursorManager.cursor.visible {
+                    let cursorScreen = shell.displayManager.desktopToScreen(desktopX: shell.mouseCursorManager.cursor.x, desktopY: shell.mouseCursorManager.cursor.y)
+                    WinOSCursorView(cursor: shell.mouseCursorManager.cursor, displayMetrics: shell.displayManager.metrics)
+                        .position(x: CGFloat(cursorScreen.x), y: CGFloat(cursorScreen.y))
+                        .zIndex(9999)
                 }
                 
-                // Taskbar funcional
+                // Taskbar funcional — sempre visível, fora da área escalada (ou dentro, mas com z alto)
                 VStack {
                     Spacer()
                     WinOSTaskbarRealView(shell: shell, showingStartMenu: $showingStartMenu, currentTime: currentTime, pc: pc)
                 }
+                .zIndex(1000)
                 
                 // Start Menu
                 if showingStartMenu {
                     WinOSStartMenuRealView(shell: shell, showingStartMenu: $showingStartMenu)
                         .transition(.move(edge: .bottom).combined(with: .opacity))
+                        .zIndex(1001)
                 }
-                
-                // File Manager overlay quando aberto via janela
-                // Na arquitetura real, File Manager é uma janela, não sheet separado
             }
             .onAppear {
                 startDesktop()
                 startClock()
+                updateDisplayMetrics(geo: geo)
+                // Observa orientação
+                NotificationCenter.default.addObserver(forName: UIDevice.orientationDidChangeNotification, object: nil, queue: .main) { _ in
+                    updateDisplayMetrics(geo: geo)
+                }
             }
             .onDisappear {
                 shell.shutdown()
                 timer?.invalidate()
+                NotificationCenter.default.removeObserver(self, name: UIDevice.orientationDidChangeNotification, object: nil)
             }
-            .onTapGesture { location in
-                // Clique no desktop → deseleciona janelas, fecha start menu
-                if showingStartMenu {
-                    showingStartMenu = false
-                } else {
-                    // Hit test: se clicou fora de janelas, desfoca
-                    let hit = shell.windowManager.windowAt(pointX: Int32(location.x), pointY: Int32(location.y))
-                    if hit == nil {
-                        // Clique no desktop
-                    }
+            .onChange(of: geo.size) { oldSize, newSize in
+                if newSize != lastGeoSize {
+                    lastGeoSize = newSize
+                    updateDisplayMetrics(geo: geo)
                 }
             }
+            // Input responsivo — screen -> desktop -> Win32
             .gesture(
-                DragGesture(minimumDistance: 0)
+                DragGesture(minimumDistance: 0, coordinateSpace: .local)
                     .onChanged { value in
-                        shell.handleTouch(x: Double(value.location.x), y: Double(value.location.y), phase: "moved")
+                        // Usa handler responsivo que converte screen->desktop centralizado
+                        shell.handleTouchResponsive(screenX: Double(value.location.x), screenY: Double(value.location.y), phase: value.translation == .zero ? "began" : "moved")
                     }
                     .onEnded { value in
-                        shell.handleTouch(x: Double(value.location.x), y: Double(value.location.y), phase: "ended")
+                        shell.handleTouchResponsive(screenX: Double(value.location.x), screenY: Double(value.location.y), phase: "ended")
                     }
             )
             .simultaneousGesture(
-                TapGesture()
+                TapGesture(count: 2)
                     .onEnded { _ in
-                        // Touch began handled via drag
+                        // Double tap — já tratado via state machine
+                    }
+            )
+            .simultaneousGesture(
+                LongPressGesture(minimumDuration: 0.6)
+                    .onEnded { _ in
+                        // Long press -> right click — já tratado via state machine
                     }
             )
         }
         .statusBarHidden()
         .persistentSystemOverlays(.hidden)
+        .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
+            // Atualiza orientação
+        }
+    }
+    
+    private func updateDisplayMetrics(geo: GeometryProxy) {
+        let size = geo.size
+        let width = Double(size.width)
+        let height = Double(size.height)
+        // Detecta orientação
+        let orient: WinOSOrientation = width > height ? .landscapeLeft : .portrait
+        shell.handleDeviceScreenChange(width: width, height: height, scale: 3.0)
+        shell.handleOrientationChange(orientation: orient, deviceWidth: width, deviceHeight: height)
+        NSLog("[WINOS-DISPLAY] updateDisplayMetrics geo=%.0fx%.0f orient=%@ metrics=%@", width, height, orient.rawValue, shell.displayManager.metrics.description)
     }
     
     private var desktopIconsArea: some View {
@@ -657,5 +708,109 @@ struct WinOSStartMenuRealView: View {
             .background(RoundedRectangle(cornerRadius: 8).fill(Color.white.opacity(0.02)))
         }
         .buttonStyle(.plain)
+    }
+}
+
+
+// MARK: - Cursor Visual REAL — acima das janelas, acompanha escala, portrait/landscape
+
+struct WinOSCursorView: View {
+    var cursor: WinOSMouseCursor
+    var displayMetrics: WinOSDisplayMetrics
+    
+    var body: some View {
+        ZStack {
+            // Cursor arrow simples — visual real
+            switch cursor.type {
+            case .arrow:
+                WinOSArrowCursor()
+            case .hand:
+                WinOSHandCursor()
+            case .text:
+                WinOSTextCursor()
+            case .busy:
+                WinOSBusyCursor()
+            default:
+                WinOSArrowCursor()
+            }
+            
+            // Debug: mostra coordenadas quando dragging
+            if cursor.isDragging {
+                Circle()
+                    .fill(Color.blue.opacity(0.3))
+                    .frame(width: 20, height: 20)
+            }
+        }
+        .frame(width: 20, height: 30)
+        .opacity(cursor.visible ? 1 : 0)
+        .scaleEffect(CGFloat(displayMetrics.scale)) // acompanha escala do desktop
+    }
+}
+
+struct WinOSArrowCursor: View {
+    var body: some View {
+        // Arrow cursor desenhado com Path
+        ZStack {
+            Path { path in
+                path.move(to: CGPoint(x: 0, y: 0))
+                path.addLine(to: CGPoint(x: 0, y: 20))
+                path.addLine(to: CGPoint(x: 4, y: 15))
+                path.addLine(to: CGPoint(x: 7, y: 18))
+                path.addLine(to: CGPoint(x: 8, y: 17))
+                path.addLine(to: CGPoint(x: 5, y: 14))
+                path.addLine(to: CGPoint(x: 9, y: 14))
+                path.closeSubpath()
+            }
+            .fill(Color.white)
+            .shadow(color: .black, radius: 1, x: 1, y: 1)
+            
+            Path { path in
+                path.move(to: CGPoint(x: 0, y: 0))
+                path.addLine(to: CGPoint(x: 0, y: 20))
+                path.addLine(to: CGPoint(x: 4, y: 15))
+                path.addLine(to: CGPoint(x: 7, y: 18))
+                path.addLine(to: CGPoint(x: 8, y: 17))
+                path.addLine(to: CGPoint(x: 5, y: 14))
+                path.addLine(to: CGPoint(x: 9, y: 14))
+                path.closeSubpath()
+            }
+            .stroke(Color.black, lineWidth: 0.5)
+        }
+        .frame(width: 16, height: 24)
+    }
+}
+
+struct WinOSHandCursor: View {
+    var body: some View {
+        Image(systemName: "hand.point.up.left.fill")
+            .font(.system(size: 16))
+            .foregroundStyle(.white)
+            .shadow(color: .black, radius: 1)
+    }
+}
+
+struct WinOSTextCursor: View {
+    var body: some View {
+        Rectangle()
+            .fill(Color.white)
+            .frame(width: 2, height: 16)
+            .shadow(color: .black, radius: 0.5)
+    }
+}
+
+struct WinOSBusyCursor: View {
+    @State private var rotation: Double = 0
+    
+    var body: some View {
+        Circle()
+            .trim(from: 0, to: 0.7)
+            .stroke(Color.white, lineWidth: 2)
+            .frame(width: 16, height: 16)
+            .rotationEffect(.degrees(rotation))
+            .onAppear {
+                withAnimation(.linear(duration: 1).repeatForever(autoreverses: false)) {
+                    rotation = 360
+                }
+            }
     }
 }
