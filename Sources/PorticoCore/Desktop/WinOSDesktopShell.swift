@@ -131,7 +131,7 @@ public final class WinOSDesktopShell: ObservableObject {
         NSLog("[WINOS-RUNTIME] SESSION_READY shell")
         NSLog("[WINOS-RUNTIME] RUNNING shell desktop pid=%u", desktopPID)
         state = .running
-        lastFPSTime = CACurrentMediaTime()
+        lastFPSTime = ProcessInfo.processInfo.systemUptime
     }
     
     public func shutdown() {
@@ -253,7 +253,7 @@ public final class WinOSDesktopShell: ObservableObject {
     
     public func tick() {
         frameCount += 1
-        let now = CACurrentMediaTime()
+        let now = ProcessInfo.processInfo.systemUptime
         let dt = now - lastFPSTime
         if dt >= 0.5 {
             fps = Double(frameCount) / dt

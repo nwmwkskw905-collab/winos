@@ -161,7 +161,7 @@ public final class WinOSCompositor: ObservableObject {
     }
     
     public func composite() -> [UInt32] {
-        let start = CACurrentMediaTime()
+        let start = ProcessInfo.processInfo.systemUptime
         
         // Se não há dirty rects, não redesenha tudo — retorna front buffer
         if dirtyRects.isEmpty && frameCount > 0 {
@@ -221,7 +221,7 @@ public final class WinOSCompositor: ObservableObject {
         
         finalFramebuffer = frontBuffer
         frameCount += 1
-        let end = CACurrentMediaTime()
+        let end = ProcessInfo.processInfo.systemUptime
         lastCompositeTimeMs = (end - start) * 1000.0
         
         // Limpa dirty rects após composite

@@ -24,7 +24,7 @@ public struct WinOSInputEvent: Sendable {
         self.button = button
         self.keyCode = keyCode
         self.char = char
-        self.timestamp = timestamp == 0 ? CACurrentMediaTime() : timestamp
+        self.timestamp = timestamp == 0 ? ProcessInfo.processInfo.systemUptime : timestamp
     }
 }
 
@@ -68,7 +68,7 @@ public struct Win32MessageEntry: Sendable {
         self.lParam = lParam
         self.x = x
         self.y = y
-        self.time = UInt32(CACurrentMediaTime() * 1000)
+        self.time = UInt32(ProcessInfo.processInfo.systemUptime * 1000)
     }
 }
 
