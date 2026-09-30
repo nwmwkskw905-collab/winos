@@ -237,7 +237,7 @@ struct DiagnosticsData {
         var cap = pr_cap_info()
         pr_cap_probe(&cap)
         let cpuBrand = withUnsafeBytes(of: cap.cpu_brand) { String(cString: $0.bindMemory(to: CChar.self).baseAddress!) }
-        data.runtimeDetail = "CPU: \(cpuBrand) JIT: \(cap.jit_available != 0 ? \"YES\" : \"NO\") iOS: \(cap.is_ios != 0 ? \"YES\" : \"NO\")"
+        data.runtimeDetail = "CPU: \(cpuBrand) JIT: \(cap.jit_available != 0 ? "YES" : "NO") iOS: \(cap.is_ios != 0 ? "YES" : "NO")"
         data.runtimeStage = model.runtimeStage
         data.runtimePath = model.sandbox.root.path
         data.lastError = model.lastRuntimeError.isEmpty ? "none" : model.lastRuntimeError
