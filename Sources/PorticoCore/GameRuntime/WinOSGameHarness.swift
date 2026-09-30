@@ -201,10 +201,8 @@ public final class WinOSGameHarness: ObservableObject {
         // Initialize audio pipeline
         let audio = WinOSAudioPipeline()
         audio.configure(diagnostics: diagnostics)
-        if let report = compatibility?.graphics {
-            // Use report from compatibility
-            _ = audio.detectAudioAPI(report: PEReport(image: PEImageInfo(isPE32Plus: false, isDLL: false, machine: 0, subsystem: 0, timestamp: 0, imageBase: 0, sizeOfImage: 0, entryPointRVA: 0, sectionCount: 0, importCount: 0, arch: "", imports: [], sections: [], entryPoint: 0, imageSize: 0), sections: [], imports: [], exports: [], diagnostics: ""))
-        }
+        // Audio detection requires the original PEReport; compatibility.graphics is only a graphics detection result.
+        // Audio detection is therefore skipped here when only the compatibility report is available.
         audioPipeline = audio
         
         phase = .idle

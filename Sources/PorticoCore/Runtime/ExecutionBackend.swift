@@ -811,7 +811,7 @@ public final class WindowsPEBackend: ExecutionBackend {
 
 extension PEImage {
     /// Somente para mensagens de recusa (sem arquivo real).
-    static func mockForRefusal(_ arch: String) -> PEImage {
+    public static func mockForRefusal(_ arch: String) -> PEImage {
         PEImage(isPE32Plus: arch.contains("64"), isDLL: false, machine: 0,
                 subsystem: 2, timestamp: 0, imageBase: 0, sizeOfImage: 0,
                 entryPointRVA: 0, sectionCount: 0, importCount: 0,
