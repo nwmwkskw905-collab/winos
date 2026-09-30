@@ -1,6 +1,7 @@
 import SwiftUI
+#if !PORTICO_XCODE_MONOLITHIC
 import PorticoCore
-
+#endif
 /// Editor de controles: posição, tamanho, transparência, função, salvar.
 struct ControlEditorView: View {
     @Environment(\.dismiss) private var dismiss

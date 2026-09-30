@@ -1,7 +1,8 @@
 import Foundation
 import GameController
+#if !PORTICO_XCODE_MONOLITHIC
 import PorticoCore
-
+#endif
 /// Integra controles físicos (GameController framework): MFi, Bluetooth,
 /// controles de console pareados. Hotplug por notificação.
 @MainActor

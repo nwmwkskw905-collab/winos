@@ -1,6 +1,5 @@
 import Foundation
 import PorticoRuntime
-
 /// Metadados de uma imagem PE (Windows .exe/.dll) — lidos pelo parser C real.
 public struct PEImage: Equatable, Sendable {
     public let isPE32Plus: Bool

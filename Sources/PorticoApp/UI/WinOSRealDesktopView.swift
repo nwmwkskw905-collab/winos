@@ -1,6 +1,7 @@
 import SwiftUI
+#if !PORTICO_XCODE_MONOLITHIC
 import PorticoCore
-
+#endif
 /// Desktop REAL — WinOSDesktop Shell + WindowManager + FileManager + Taskbar + StartMenu + RenderEngine + InputBridge
 /// Arquitetura: Desktop → Win32 → processo → VFS/Sandbox → renderização → tela
 /// Não é simulação visual — cada janela/processo passa pelo runtime

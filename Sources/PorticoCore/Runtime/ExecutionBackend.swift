@@ -530,11 +530,18 @@ public final class WindowsPEBackend: ExecutionBackend {
         }
 
         NSLog("[WINOS-RUNTIME] PE_LOADER_INIT file=%@ archHint=%@ label=%@", executable.path, archHint, image.label)
+        let sizeStr: String
+        if let attrs = try? FileManager.default.attributesOfItem(atPath: executable.path),
+           let size = attrs[.size] as? Int64 {
+            sizeStr = "\(size)"
+        } else {
+            sizeStr = "unknown"
+        }
         NSLog("[WINOS-IMPORT] source=%@ exists=%@ readable=%@ size=%@ extension=%@",
               executable.path,
               FileManager.default.fileExists(atPath: executable.path) ? "YES" : "NO",
               FileManager.default.isReadableFile(atPath: executable.path) ? "YES" : "NO",
-              (try? FileManager.default.attributesOfItem(atPath: executable.path)[.size] as? Int64) != nil ? "\(try! FileManager.default.attributesOfItem(atPath: executable.path)[.size] as! Int64)" : "unknown",
+              sizeStr,
               executable.pathExtension)
 
         let data = try loadRealData(from: executable)
@@ -728,7 +735,7 @@ public final class WindowsPEBackend: ExecutionBackend {
         var realArch = context.profile.arquiteturaExe
         var realMachine: UInt16 = 0
         var isRealPE = false
-
+        
         if let data = try? Data(contentsOf: context.executableURL),
            PEInspector.looksLikePE(data),
            let realImage = try? PEInspector.scan(data) {
@@ -740,7 +747,7 @@ public final class WindowsPEBackend: ExecutionBackend {
         } else {
             NSLog("[WINOS-RUNTIME] start: PE real não detectado, usando arch do profile=%@ file=%@", realArch, context.executableURL.lastPathComponent)
         }
-
+        
         let a = realArch.lowercased()
         // Se é PE real, verifica machine real, não só string
         if isRealPE {
@@ -760,7 +767,7 @@ public final class WindowsPEBackend: ExecutionBackend {
                 throw RuntimeFailure.unsupported(reason: "PE Windows (\(realArch)): \(diag)")
             }
         }
-
+        
         // CORREÇÃO: usa PE real para load, não mockForRefusal
         // Se tem PE real, cria SoftwareImage com metadados reais para logs
         // Se não, usa .unknown para forçar load a ler arquivo real e falhar com diag honesto
@@ -787,7 +794,7 @@ public final class WindowsPEBackend: ExecutionBackend {
             // Isso remove dependência de mockForRefusal na execução real
             imageForLoad = .unknown
         }
-
+        
         try load(executable: context.executableURL, image: imageForLoad)
         try initialize(context: context)
         try run()

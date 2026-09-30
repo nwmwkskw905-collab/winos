@@ -1,6 +1,7 @@
 import SwiftUI
+#if !PORTICO_XCODE_MONOLITHIC
 import PorticoCore
-
+#endif
 /// Configurações globais: tema, idioma, qualidade, áudio, controles,
 /// armazenamento e logs.
 struct GlobalSettingsView: View {

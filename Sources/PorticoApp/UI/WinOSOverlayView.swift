@@ -1,6 +1,7 @@
 import SwiftUI
+#if !PORTICO_XCODE_MONOLITHIC
 import PorticoCore
-
+#endif
 /// Overlay WinOS durante execução — controles, FPS, CPU, memória, resolução, pausa, sair.
 /// Identidade própria WinOS, não Windows.
 struct WinOSOverlayView: View {

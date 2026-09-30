@@ -1,6 +1,7 @@
 import SwiftUI
+#if !PORTICO_XCODE_MONOLITHIC
 import PorticoCore
-
+#endif
 /// Fluxo Criar PC WinOS — configurações realmente utilizadas pelo runtime.
 /// Não cria configurações visuais sem efeito.
 struct WinOSCreatePCView: View {

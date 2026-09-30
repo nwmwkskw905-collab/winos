@@ -23,9 +23,37 @@ jobs:
           swift --version
           clang --version
 
-      - name: List targets and schemes
+      - name: Validate project structure (PBXNativeTarget / Scheme / Config)
         run: |
-          xcodebuild -list -project Portico.xcodeproj
+          echo "=== PBXNativeTarget ==="
+          grep -c "isa = PBXNativeTarget" Portico.xcodeproj/project.pbxproj
+          grep "isa = PBXNativeTarget" -A 2 Portico.xcodeproj/project.pbxproj
+          echo ""
+          echo "=== Targets list from pbxproj ==="
+          grep "PBXNativeTarget" Portico.xcodeproj/project.pbxproj | grep -o "name = [^;]*" || true
+          echo ""
+          echo "=== Checking for PorticoRuntime / PorticoCore targets (should NOT exist) ==="
+          if grep -q "name = PorticoRuntime" Portico.xcodeproj/project.pbxproj; then echo "FOUND PorticoRuntime (unexpected)"; else echo "OK: PorticoRuntime target NOT found"; fi
+          if grep -q "name = PorticoCore" Portico.xcodeproj/project.pbxproj; then echo "FOUND PorticoCore (unexpected)"; else echo "OK: PorticoCore target NOT found"; fi
+          echo ""
+          echo "=== Schemes ==="
+          ls -la Portico.xcodeproj/xcshareddata/xcschemes/ || echo "No shared schemes"
+          cat Portico.xcodeproj/xcshareddata/xcschemes/Portico.xcscheme | grep -o 'BlueprintName = "[^"]*"' | sort | uniq || true
+          echo ""
+          echo "=== Configurations ==="
+          grep -o "name = Debug;" Portico.xcodeproj/project.pbxproj | head -n 5
+          grep -o "name = Release;" Portico.xcodeproj/project.pbxproj | head -n 5
+          echo ""
+          echo "=== PRODUCT_BUNDLE_IDENTIFIER / PRODUCT_NAME / IPHONEOS_DEPLOYMENT_TARGET ==="
+          grep "PRODUCT_BUNDLE_IDENTIFIER" Portico.xcodeproj/project.pbxproj | head -n 5
+          grep "PRODUCT_NAME" Portico.xcodeproj/project.pbxproj | head -n 5
+          grep "IPHONEOS_DEPLOYMENT_TARGET" Portico.xcodeproj/project.pbxproj | head -n 10
+          echo ""
+          echo "=== Portico.app product ==="
+          grep "Portico.app" Portico.xcodeproj/project.pbxproj | head -n 10
+          echo ""
+          echo "=== xcodebuild -list ==="
+          xcodebuild -list -project Portico.xcodeproj || true
 
       - name: Build Portico App (iOS device)
         run: |
@@ -137,7 +165,9 @@ jobs:
           path: build/app-artifact-sim/Portico.app
           if-no-files-found: ignore
 
-      - name: Archive (optional, no signing)
+      - name: Archive (optional, no signing - diagnostic only)
+        if: always()
+        continue-on-error: true
         run: |
           xcodebuild \
             -project Portico.xcodeproj \
@@ -146,7 +176,7 @@ jobs:
             -sdk iphoneos \
             -destination generic/platform=iOS \
             CODE_SIGNING_ALLOWED=NO \
-            archive -archivePath build/Portico.xcarchive || echo "Archive may require signing, but build succeeded"
+            archive -archivePath build/Portico.xcarchive || echo "Archive may require signing, but device build already succeeded - not failing workflow"
 
       - name: Upload build logs
         if: always()

@@ -1,6 +1,5 @@
 import Foundation
 import PorticoRuntime
-
 public struct ZipEntry: Equatable, Sendable {
     public let name: String
     public let compressedSize: UInt64

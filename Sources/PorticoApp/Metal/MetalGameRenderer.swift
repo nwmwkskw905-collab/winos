@@ -1,8 +1,9 @@
 import Foundation
 import Metal
 import MetalKit
+#if !PORTICO_XCODE_MONOLITHIC
 import PorticoCore
-
+#endif
 /// Backend gráfico Metal: executa o stream de comandos do runtime em um
 /// framebuffer interno (resolução do jogo × qualidade) e apresenta escalado.
 /// Sem alocações por frame: buffers e texturas reutilizados.

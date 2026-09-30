@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-            C1D2E3F40516273849A5B6C7 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B5C /* Shaders.metal */; };
-
+			C1D2E3F40516273849A5B6C7 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B5C /* Shaders.metal */; };
 		464E1442638148CD93ABF48C /* WinOSDisplayMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E33ACFF5E3944D3A0A48A6A /* WinOSDisplayMetrics.swift */; };
 		C6F525C5FC3D4C71B71F36C1 /* WinOSMouseCursor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E93DAE6EC9B48F59CB5AD15 /* WinOSMouseCursor.swift */; };
 		101F8DAB2DAF4A3CA5669CAF /* WinOSCursorRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F32DB633934280A30A3A09 /* WinOSCursorRenderer.swift */; };
@@ -118,8 +117,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-            A1B2C3D4E5F60718293A4B5C /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
-
+			A1B2C3D4E5F60718293A4B5C /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		9E33ACFF5E3944D3A0A48A6A /* WinOSDisplayMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSDisplayMetrics.swift; sourceTree = "<group>"; };
 		3E93DAE6EC9B48F59CB5AD15 /* WinOSMouseCursor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSMouseCursor.swift; sourceTree = "<group>"; };
 		D3F32DB633934280A30A3A09 /* WinOSCursorRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSCursorRenderer.swift; sourceTree = "<group>"; };
@@ -283,7 +281,7 @@
 				C87B64D0524BA67768F0D98F /* Runtime */,
 				CAC3D4442B41D82159EFB461 /* Audio */,
 				ECCA96BE540C4CE8C1D14A94 /* Support */,
-
+			
 				D87B619874834227AAF1A881 /* GameRuntime */,);
 			path = PorticoCore;
 			sourceTree = "<group>";
@@ -311,7 +309,7 @@
 				C120B02BF38291034BB89E9A /* pr_audio.c */,
 				E7EDB1536433E720FF97B3E1 /* pr_unwind.c */,
 				E9C4B8C6521BEF258E870E4D /* pr_host.c */,
-
+			
 				FA0182B792E54CF3B4407F49 /* pr_d3d.c */,
 				F986823952D1487DA6CC2A47 /* pr_waveout.c */,);
 			path = src;
@@ -333,7 +331,7 @@
 			children = (
 				27D5431D040CF61AF782570B /* MTKGameView.swift */,
 				D1DD48AC96FA9F67ED729C4E /* MetalGameRenderer.swift */,
-                                A1B2C3D4E5F60718293A4B5C /* Shaders.metal */,
+							A1B2C3D4E5F60718293A4B5C /* Shaders.metal */,
 			);
 			path = Metal;
 			sourceTree = "<group>";
@@ -413,7 +411,7 @@
 				D3A21115A0894C808AF01578 /* WinOSProcessManagerReal.swift */,
 				E8A49F50536642EBA9F3F34C /* WinOSRenderEngine.swift */,
 				76D04AA5A0AD47E5BD34FBA8 /* WinOSWindowManager.swift */,
-
+			
 				9E33ACFF5E3944D3A0A48A6A /* WinOSDisplayMetrics.swift */,
 				3E93DAE6EC9B48F59CB5AD15 /* WinOSMouseCursor.swift */,
 				D3F32DB633934280A30A3A09 /* WinOSCursorRenderer.swift */,
@@ -473,7 +471,7 @@
 				DD8B4632E276206C65E09477 /* pr_host.h */,
 				E03ECF965746C9420A1B56F0 /* pr_cap.h */,
 				EC4189457BE7AEDE728B8673 /* pr_audio.h */,
-
+			
 				982184F2CD914802BAB43152 /* pr_d3d.h */,
 				2066BBB063B74084AAE695DD /* pr_waveout.h */,);
 			path = portico;
@@ -684,7 +682,7 @@
 				33D6682768D6F35074C566B2 /* GameControllerBridge.swift in Sources */,
 				EB491F0BCB362EC61A62CB86 /* VirtualControlsView.swift in Sources */,
 				BCFD031D389F16B580D49FE3 /* MTKGameView.swift in Sources */,
-                            C1D2E3F40516273849A5B6C7 /* Shaders.metal in Sources */,
+							C1D2E3F40516273849A5B6C7 /* Shaders.metal in Sources */,
 				E2B00E79F8895815DFE0E7CD /* MetalGameRenderer.swift in Sources */,
 				BB4564DB7DE721BC304790BA /* PorticoApp.swift in Sources */,
 				0C5236EB458F4B61027BBA10 /* MinimalPETestGenerator.swift in Sources */,
@@ -763,7 +761,7 @@
 				E7ACA2A0782241BEB814EAE9 /* WinOSProcessManagerReal.swift in Sources */,
 				C74B878E9F014E9A820B4FE8 /* WinOSRenderEngine.swift in Sources */,
 				E67C0F91B7AA42808991DF88 /* WinOSWindowManager.swift in Sources */,
-
+			
 				155FC3A3F30F406CB40466DE /* WinOSGameDiagnostics.swift in Sources */,
 				085B816F226D40A5ABFFFC14 /* WinOSGameCompatibility.swift in Sources */,
 				6CC390EAD7B04505BA187377 /* WinOSGraphicsDetector.swift in Sources */,
@@ -797,9 +795,10 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
+                                SWIFT_ACTIVE_COMPILATION_CONDITIONS = PORTICO_XCODE_MONOLITHIC;
 
 				ONLY_ACTIVE_ARCH = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG PORTICO_XCODE_MONOLITHIC";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -818,6 +817,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
+                                SWIFT_ACTIVE_COMPILATION_CONDITIONS = PORTICO_XCODE_MONOLITHIC;
 
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				GCC_OPTIMIZATION_LEVEL = s;
@@ -846,6 +846,9 @@
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/Sources/PorticoRuntime/include",
 				);
+				SWIFT_INCLUDE_PATHS = (
+					"$(SRCROOT)/Sources/PorticoRuntime/include",
+				);
 
 			};
 			name = Debug;
@@ -870,6 +873,9 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/Sources/PorticoRuntime/include",
+				);
+				SWIFT_INCLUDE_PATHS = (
 					"$(SRCROOT)/Sources/PorticoRuntime/include",
 				);
 

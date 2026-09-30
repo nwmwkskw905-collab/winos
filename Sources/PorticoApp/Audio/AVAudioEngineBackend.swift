@@ -1,8 +1,9 @@
 import Foundation
 import AVFoundation
+#if !PORTICO_XCODE_MONOLITHIC
 import PorticoCore
+#endif
 import PorticoRuntime
-
 /// AudioBackend iOS: AVAudioEngine com source node que consome o PCM do
 /// runtime via ring buffer (sem bloquear a main thread). Volume, pausa,
 /// retomada e interrupções (chamadas/alarmes) implementados.

@@ -1,6 +1,7 @@
 import SwiftUI
+#if !PORTICO_XCODE_MONOLITHIC
 import PorticoCore
-
+#endif
 /// Tela inicial WinOS — identidade própria, inspirada em ambiente de emulação,
 /// não clone Windows. Mostra logo WinOS, PCs criados, ações principais.
 struct WinOSHomeView: View {

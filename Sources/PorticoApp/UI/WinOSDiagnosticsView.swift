@@ -1,10 +1,11 @@
 import SwiftUI
+#if !PORTICO_XCODE_MONOLITHIC
 import PorticoCore
+#endif
 import Metal
 import AVFoundation
 import GameController
 import PorticoRuntime
-
 /// Tela de diagnóstico físico para iPhone 13 — mostra estado real de subsistemas
 struct WinOSDiagnosticsView: View {
     @EnvironmentObject var model: AppModel

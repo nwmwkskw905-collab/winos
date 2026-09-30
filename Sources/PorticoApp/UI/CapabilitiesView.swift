@@ -1,6 +1,7 @@
 import SwiftUI
+#if !PORTICO_XCODE_MONOLITHIC
 import PorticoCore
-
+#endif
 /// Relatório de capacidades honesto (SUPPORTED / PARTIAL / NOT SUPPORTED).
 struct CapabilitiesView: View {
     @EnvironmentObject var model: AppModel

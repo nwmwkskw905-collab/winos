@@ -20,8 +20,6 @@
                ReferencedContainer = "container:Portico.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
-
-
       </BuildActionEntries>
    </BuildAction>
    <TestAction

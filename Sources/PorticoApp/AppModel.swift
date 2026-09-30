@@ -1,9 +1,10 @@
 import Foundation
 import SwiftUI
 import Combine
+#if !PORTICO_XCODE_MONOLITHIC
 import PorticoCore
+#endif
 import PorticoRuntime
-
 /// Fábrica do app: conecta sandbox, biblioteca, configurações, ambientes,
 /// importação, backends de execução e o RuntimeManager.
 @MainActor

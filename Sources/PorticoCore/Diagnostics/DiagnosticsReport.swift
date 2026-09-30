@@ -1,6 +1,5 @@
 import Foundation
 import PorticoRuntime
-
 /// Gera o relatório agregado de diagnóstico (capacidades + armazenamento +
 /// biblioteca + logs recentes) para exibição e exportação.
 public enum DiagnosticsReport {

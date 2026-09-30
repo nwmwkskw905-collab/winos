@@ -1,6 +1,7 @@
 import SwiftUI
+#if !PORTICO_XCODE_MONOLITHIC
 import PorticoCore
-
+#endif
 @main
 struct PorticoApp: App {
     @StateObject private var model = AppModel()

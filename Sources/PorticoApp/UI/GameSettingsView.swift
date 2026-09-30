@@ -1,6 +1,7 @@
 import SwiftUI
+#if !PORTICO_XCODE_MONOLITHIC
 import PorticoCore
-
+#endif
 /// Configurações individuais do jogo: gráficos, áudio, controles, ambiente, avançado.
 struct GameSettingsView: View {
     @Environment(\.dismiss) private var dismiss

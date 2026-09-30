@@ -1,6 +1,7 @@
 import SwiftUI
+#if !PORTICO_XCODE_MONOLITHIC
 import PorticoCore
-
+#endif
 /// Controles virtuais touchscreen (posições/tamanhos do layout do jogo).
 struct VirtualControlsView: View {
     let layout: ControlProfile

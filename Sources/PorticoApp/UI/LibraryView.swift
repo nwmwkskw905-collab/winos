@@ -1,6 +1,7 @@
 import SwiftUI
+#if !PORTICO_XCODE_MONOLITHIC
 import PorticoCore
-
+#endif
 /// Tela principal: Biblioteca + Adicionar jogo + Configurações.
 struct LibraryView: View {
     @EnvironmentObject var model: AppModel

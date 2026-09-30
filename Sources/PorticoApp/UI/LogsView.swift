@@ -1,6 +1,7 @@
 import SwiftUI
+#if !PORTICO_XCODE_MONOLITHIC
 import PorticoCore
-
+#endif
 /// Visualização de logs: filtro por nível, limpar, exportar (quando permitido).
 struct LogsView: View {
     @EnvironmentObject var model: AppModel

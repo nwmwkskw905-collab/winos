@@ -1,6 +1,5 @@
 import Foundation
 import PorticoRuntime
-
 /// Detalhe completo de uma imagem PE — construído pelo loader C real:
 /// imports por função, exports e texto de diagnóstico. NADA é executado.
 public struct PEImportFunction: Equatable, Sendable {

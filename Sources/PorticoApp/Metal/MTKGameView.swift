@@ -1,7 +1,8 @@
 import SwiftUI
 import MetalKit
+#if !PORTICO_XCODE_MONOLITHIC
 import PorticoCore
-
+#endif
 /// Embalagem UIKit do MTKView para SwiftUI com diagnóstico físico iPhone 13.
 struct MTKGameView: UIViewRepresentable {
     let renderScale: Double

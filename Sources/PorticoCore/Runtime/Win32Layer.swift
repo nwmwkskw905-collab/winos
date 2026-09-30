@@ -1,6 +1,5 @@
 import Foundation
 import PorticoRuntime
-
 /// Fachada Swift da camada Win32 (dispatch real por subsistema).
 /// APIs implementadas executam comportamento real; não implementadas retornam
 /// `PR_ERR_UNSUPPORTED` com log — nunca fingem sucesso.

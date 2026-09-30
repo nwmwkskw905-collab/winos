@@ -1,7 +1,8 @@
 import SwiftUI
 import UniformTypeIdentifiers
+#if !PORTICO_XCODE_MONOLITHIC
 import PorticoCore
-
+#endif
 /// Importação via document picker oficial do iOS com suporte a .exe, .7z, .zip
 /// Fluxo: escolher → analisar → escolher executável principal → nomear → salvar.
 struct ImportFlowView: View {

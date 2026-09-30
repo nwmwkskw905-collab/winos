@@ -1,6 +1,7 @@
 import SwiftUI
+#if !PORTICO_XCODE_MONOLITHIC
 import PorticoCore
-
+#endif
 /// Tela do jogo: capa/ícone, nome, Jogar, configurações, informações, logs.
 struct GameDetailView: View {
     @EnvironmentObject var model: AppModel

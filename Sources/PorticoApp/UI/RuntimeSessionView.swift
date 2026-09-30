@@ -1,7 +1,8 @@
 import SwiftUI
 import QuartzCore
+#if !PORTICO_XCODE_MONOLITHIC
 import PorticoCore
-
+#endif
 /// Tela de execução: jogo (Metal) + controles + overlay configurável.
 /// O overlay NÃO interrompe o runtime; a pausa é explícita.
 struct RuntimeSessionView: View {

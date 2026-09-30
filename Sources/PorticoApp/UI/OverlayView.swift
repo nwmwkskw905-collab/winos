@@ -1,6 +1,7 @@
 import SwiftUI
+#if !PORTICO_XCODE_MONOLITHIC
 import PorticoCore
-
+#endif
 /// Overlay de execução: voltar, pausar/continuar, configurações, controles,
 /// FPS, resolução, áudio, logs, encerrar jogo. Não interrompe o runtime
 /// ao abrir (pausa é opcional).

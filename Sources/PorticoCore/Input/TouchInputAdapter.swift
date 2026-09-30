@@ -1,6 +1,5 @@
 import Foundation
 import PorticoRuntime
-
 /// Evento de toque normalizado no formato interno do WinOS (UITouch →
 /// camada de entrada host, SEPARADA da representação Win32).
 public struct TouchEvent: Equatable, Sendable {

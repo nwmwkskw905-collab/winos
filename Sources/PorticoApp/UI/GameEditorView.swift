@@ -1,6 +1,7 @@
 import SwiftUI
+#if !PORTICO_XCODE_MONOLITHIC
 import PorticoCore
-
+#endif
 /// Edição dos dados do perfil do jogo.
 struct GameEditorView: View {
     @Environment(\.dismiss) private var dismiss

@@ -1,6 +1,7 @@
 import SwiftUI
+#if !PORTICO_XCODE_MONOLITHIC
 import PorticoCore
-
+#endif
 /// Gerenciamento de ambientes/prefixos independentes.
 struct EnvironmentView: View {
     @EnvironmentObject var model: AppModel

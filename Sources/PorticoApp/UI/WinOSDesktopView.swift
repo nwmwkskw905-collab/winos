@@ -1,6 +1,7 @@
 import SwiftUI
+#if !PORTICO_XCODE_MONOLITHIC
 import PorticoCore
-
+#endif
 /// Desktop WinOS — ambiente inspirado em emulação, não clone Windows.
 /// Wallpaper próprio, logo, atalhos, programas, jogos, barra controle.
 /// Agora com suporte a PC específico (RUNTIME → DESKTOP fluxo real).

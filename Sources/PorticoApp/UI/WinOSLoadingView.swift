@@ -1,6 +1,7 @@
 import SwiftUI
+#if !PORTICO_XCODE_MONOLITHIC
 import PorticoCore
-
+#endif
 /// Tela de carregamento WinOS — logo, animação, progresso real quando disponível,
 /// mensagens de estado (runtime, ambiente, PE). Sem progresso falso.
 struct WinOSLoadingView: View {
