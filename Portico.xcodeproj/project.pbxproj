@@ -293,10 +293,10 @@ E8A49F50536642EBA9F3F34C /* WinOSRenderEngine.swift */ = {isa = PBXFileReference
             7B760317AF4C41C08984A0A9 /* WinOSGameHarness.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSGameHarness.swift; sourceTree = "<group>"; };
             683CBBE13A1A4BEFB79ABF37 /* WinOSGameRuntime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSGameRuntime.swift; sourceTree = "<group>"; };
 
-            FA0182B792E54CF3B4407F49 /* pr_d3d.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = src/pr_d3d.c; sourceTree = "<group>"; };
-            F986823952D1487DA6CC2A47 /* pr_waveout.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = src/pr_waveout.c; sourceTree = "<group>"; };
-            982184F2CD914802BAB43152 /* pr_d3d.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = include/portico/pr_d3d.h; sourceTree = "<group>"; };
-            2066BBB063B74084AAE695DD /* pr_waveout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = include/portico/pr_waveout.h; sourceTree = "<group>"; };
+            FA0182B792E54CF3B4407F49 /* pr_d3d.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_d3d.c; sourceTree = "<group>"; };
+            F986823952D1487DA6CC2A47 /* pr_waveout.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_waveout.c; sourceTree = "<group>"; };
+            982184F2CD914802BAB43152 /* pr_d3d.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_d3d.h; sourceTree = "<group>"; };
+            2066BBB063B74084AAE695DD /* pr_waveout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_waveout.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 /* Begin PBXResourcesBuildPhase section */
 		1A4D70BCDB0BF886810D55C3 /* Resources */ = {
@@ -619,7 +619,8 @@ E8A49F50536642EBA9F3F34C /* WinOSRenderEngine.swift */ = {isa = PBXFileReference
 				2F2B47924DD178CB9A119D01 /* pr_vm.h */,
 				8D487B81E5B7828DB6CC6BBD /* pr_win32.h */,
 				D94B0CEC4FC0EB2699F30A11 /* pr_winhello.h */,
-				D24A9A10CCAA48D24967739C /* pr_zip.h */,
+				D24A9A10CCAA48D24967739C /* pr_zip.h */,                            982184F2CD914802BAB43152 /* pr_d3d.h */,
+                            2066BBB063B74084AAE695DD /* pr_waveout.h */,
 			);
 			path = portico;
 			sourceTree = "<group>";
@@ -646,7 +647,8 @@ E8A49F50536642EBA9F3F34C /* WinOSRenderEngine.swift */ = {isa = PBXFileReference
 				B0A53672A321D794C2E36460 /* pr_vm.c */,
 				BA71D34C8983D4B3F9A3CC2F /* pr_win32.c */,
 				3FAD3756E3342FC51677A6FF /* pr_winhello.c */,
-				30E9BB9D04C4BB5C7DB1E092 /* pr_zip.c */,
+				30E9BB9D04C4BB5C7DB1E092 /* pr_zip.c */,                            FA0182B792E54CF3B4407F49 /* pr_d3d.c */,
+                            F986823952D1487DA6CC2A47 /* pr_waveout.c */,
 			);
 			path = src;
 			sourceTree = "<group>";
