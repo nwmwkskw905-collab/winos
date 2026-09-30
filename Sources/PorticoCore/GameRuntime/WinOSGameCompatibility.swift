@@ -168,7 +168,7 @@ public final class WinOSGameCompatibility: Sendable {
             arch: arch,
             machine: machine,
             isPE32Plus: isPE32Plus,
-            sectionCount: sectionCount,
+            sectionCount: Int(sectionCount),
             importCount: importCount,
             totalAPIs: totalAPIs,
             resolvedAPIs: resolved,
