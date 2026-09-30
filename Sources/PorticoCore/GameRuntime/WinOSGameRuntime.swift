@@ -81,13 +81,19 @@ public final class WinOSGameRuntime: ObservableObject {
             tags: []
         )
         
-        let runtimeConfig = RuntimeConfig(
-            resolution: ResolutionPreset.custom(width: config.resolution.0, height: config.resolution.1),
-            fps: FPSPreset.custom(config.targetFPS),
-            graphics: GraphicsPreset.balanced,
-            audio: AudioPreset.stereo,
-            input: InputPreset.gamepad,
-            maxInstructionsPerFrame: 200_000
+        let runtimeConfig = EffectiveConfig(
+            resolution: profile.resolucao,
+            fps: profile.fps,
+            renderer: profile.renderer,
+            audioEnabled: profile.audio.enabled,
+            gameVolume: profile.audio.volume,
+            masterVolume: 0.8,
+            quality: .high,
+            showTouchControls: profile.controles.showTouchControls,
+            physicalControllersEnabled: profile.controles.physicalControllersEnabled,
+            environmentVariables: profile.opcoes.environmentVariables,
+            debugLogging: profile.opcoes.debugLogging,
+            maxInstructionsPerFrame: profile.opcoes.maxInstructionsPerFrame
         )
         
         // Load + Analyze
