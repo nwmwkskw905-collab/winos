@@ -178,8 +178,41 @@ public final class RuntimeManager {
     private static func detectImage(kind: GameKind, arch: String,
                                     executableURL: URL) -> SoftwareImage {
         switch kind {
-        case .windowsPE: return .windowsPE(PEImage.mockForRefusal(arch))
-        case .pxpNative, .selfTest: return .pxpNative
+        case .windowsPE:
+            // Tenta usar PE real quando possível (correção robusta)
+            // Se arquivo existe e é PE válido, usa metadados reais para seleção honesta
+            if FileManager.default.fileExists(atPath: executableURL.path) {
+                if let data = try? Data(contentsOf: executableURL),
+                   PEInspector.looksLikePE(data),
+                   let realImage = try? PEInspector.scan(data) {
+                    NSLog("[WINOS-RUNTIME] detectImage: usando PE real arch=%@ machine=0x%x isPE32Plus=%@ file=%@",
+                          realImage.arch, realImage.machine, realImage.isPE32Plus ? "YES" : "NO", executableURL.lastPathComponent)
+                    // Converte PEImage (do inspector) para PEImage usado em SoftwareImage
+                    // PEImage já é o tipo usado em SoftwareImage.windowsPE
+                    let peForSelection = PEImage(
+                        isPE32Plus: realImage.isPE32Plus,
+                        isDLL: realImage.isDLL,
+                        machine: realImage.machine,
+                        subsystem: realImage.subsystem,
+                        timestamp: realImage.timestamp,
+                        imageBase: realImage.imageBase,
+                        sizeOfImage: realImage.sizeOfImage,
+                        entryPointRVA: realImage.entryPointRVA,
+                        sectionCount: realImage.sectionCount,
+                        importCount: realImage.importCount,
+                        arch: realImage.arch,
+                        imports: realImage.imports,
+                        sections: realImage.sections
+                    )
+                    return .windowsPE(peForSelection)
+                }
+            }
+            // Fallback honesto: usa mock baseado na string de arquitetura do profile
+            // Isso preserva seleção honesta quando arquivo não existe ou não é PE
+            NSLog("[WINOS-RUNTIME] detectImage: fallback mockForRefusal arch=%@ file=%@", arch, executableURL.lastPathComponent)
+            return .windowsPE(PEImage.mockForRefusal(arch))
+        case .pxpNative, .selfTest:
+            return .pxpNative
         }
     }
 

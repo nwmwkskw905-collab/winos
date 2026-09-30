@@ -1,5 +1,4 @@
 import Foundation
-import PorticoCore
 
 /// Desktop Shell REAL — sobre o runtime, não sistema fictício separado
 /// WinOSDesktop → Shell → WindowManager → FileManager → Taskbar → StartMenu → DesktopIcons → ProcessManager → RuntimeBridge → InputBridge → RenderSurface
@@ -131,7 +130,7 @@ public final class WinOSDesktopShell: ObservableObject {
         NSLog("[WINOS-RUNTIME] SESSION_READY shell")
         NSLog("[WINOS-RUNTIME] RUNNING shell desktop pid=%u", desktopPID)
         state = .running
-        lastFPSTime = ProcessInfo.processInfo.systemUptime
+        lastFPSTime = CACurrentMediaTime()
     }
     
     public func shutdown() {
@@ -253,7 +252,7 @@ public final class WinOSDesktopShell: ObservableObject {
     
     public func tick() {
         frameCount += 1
-        let now = ProcessInfo.processInfo.systemUptime
+        let now = CACurrentMediaTime()
         let dt = now - lastFPSTime
         if dt >= 0.5 {
             fps = Double(frameCount) / dt

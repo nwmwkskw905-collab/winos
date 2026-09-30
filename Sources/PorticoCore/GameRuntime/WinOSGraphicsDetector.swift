@@ -1,5 +1,4 @@
 import Foundation
-import PorticoCore
 
 /// FASE 6 — Graphics detection real
 /// Detecta qual API gráfica o jogo usa via imports PE
@@ -84,12 +83,12 @@ public final class WinOSGraphicsDetector: Sendable {
         
         for imp in report.imports {
             let dll = imp.dll.lowercased()
-            let funcs = imp.functions.map { $0.displayName.lowercased() }
+            let funcs = imp.functions.map { $0.lowercased() }
             allDLLs.append(imp.dll)
-            allFuncs.append(contentsOf: imp.functions.map { $0.displayName })
+            allFuncs.append(contentsOf: imp.functions)
             
             // Acumula evidência
-            evidence[imp.dll] = imp.functions.map { $0.displayName }
+            evidence[imp.dll] = imp.functions
             
             // D3D12
             if dll.contains("d3d12") {

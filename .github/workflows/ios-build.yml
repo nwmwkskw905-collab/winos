@@ -27,28 +27,6 @@ jobs:
         run: |
           xcodebuild -list -project Portico.xcodeproj
 
-      - name: Build PorticoRuntime (framework)
-        run: |
-          xcodebuild \
-            -project Portico.xcodeproj \
-            -target PorticoRuntime \
-            -configuration Debug \
-            -sdk iphoneos \
-            -destination generic/platform=iOS \
-            CODE_SIGNING_ALLOWED=NO \
-            clean build
-
-      - name: Build PorticoCore (framework)
-        run: |
-          xcodebuild \
-            -project Portico.xcodeproj \
-            -target PorticoCore \
-            -configuration Debug \
-            -sdk iphoneos \
-            -destination generic/platform=iOS \
-            CODE_SIGNING_ALLOWED=NO \
-            clean build
-
       - name: Build Portico App (iOS device)
         run: |
           xcodebuild \

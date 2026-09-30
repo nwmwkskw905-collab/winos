@@ -1,5 +1,4 @@
 import Foundation
-import PorticoCore
 import Metal
 import MetalKit
 
@@ -100,7 +99,7 @@ public final class WinOSMetalRenderer: WinOSRenderBackend {
         currentWidth = width
         currentHeight = height
         drawCalls = 0
-        lastFrameTime = ProcessInfo.processInfo.systemUptime
+        lastFrameTime = CACurrentMediaTime()
         _ = inflightSemaphore.wait(timeout: .now() + 0.016) // evita bloqueio excessivo
     }
     
@@ -120,7 +119,7 @@ public final class WinOSMetalRenderer: WinOSRenderBackend {
     
     public func endFrame() -> Bool {
         frameCount += 1
-        let now = ProcessInfo.processInfo.systemUptime
+        let now = CACurrentMediaTime()
         let dt = now - lastFrameTime
         if dt > 0 {
             fps = 1.0 / dt
@@ -177,7 +176,7 @@ public final class WinOSSoftwareRenderer: WinOSRenderBackend {
             buffer = [UInt32](repeating: 0xFF0A0E14, count: width*height) // fundo WinOS #0A0E14
         }
         drawCalls = 0
-        lastTime = ProcessInfo.processInfo.systemUptime
+        lastTime = CACurrentMediaTime()
     }
     
     public func drawSurface(pixels: UnsafeRawPointer?, width: Int, height: Int, x: Int, y: Int) {
@@ -218,7 +217,7 @@ public final class WinOSSoftwareRenderer: WinOSRenderBackend {
     
     public func endFrame() -> Bool {
         frameCount += 1
-        let now = ProcessInfo.processInfo.systemUptime
+        let now = CACurrentMediaTime()
         let dt = now - lastTime
         if dt > 0 { fps = 1.0 / dt }
         return true
@@ -306,7 +305,7 @@ public final class WinOSRenderEngine: ObservableObject {
         displayLink = CADisplayLink(target: self, selector: #selector(displayLinkFired))
         displayLink?.preferredFrameRateRange = CAFrameRateRange(minimum: 30, maximum: Float(targetFPS), preferred: Float(targetFPS))
         displayLink?.add(to: .main, forMode: .common)
-        lastFrameTime = ProcessInfo.processInfo.systemUptime
+        lastFrameTime = CACurrentMediaTime()
         NSLog("[WINOS-RENDER] DisplayLink started FPS=%d", targetFPS)
     }
     
@@ -317,7 +316,7 @@ public final class WinOSRenderEngine: ObservableObject {
     }
     
     @objc private func displayLinkFired() {
-        let now = ProcessInfo.processInfo.systemUptime
+        let now = CACurrentMediaTime()
         let dt = now - lastFrameTime
         lastFrameTime = now
         frameCount += 1

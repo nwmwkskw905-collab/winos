@@ -7,169 +7,147 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C926BA1CE48E468E881892E1 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAD037C3DD3AA2F20C33801 /* AppModel.swift */; };
-		CBD0C65AE69D4B9899AEA579 /* AVAudioEngineBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD46AECE5E55393DAA53A376 /* AVAudioEngineBackend.swift */; };
-				434CEFAAD9B2413EB07358BA /* GameControllerBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFFA1746869E6DC1620BF07 /* GameControllerBridge.swift */; };
-		F0AB037C1E114245AA55AE64 /* VirtualControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A07358188C2465E1E40A03C5 /* VirtualControlsView.swift */; };
-		FC09EBFEE26E4A8098B821DE /* MTKGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D5431D040CF61AF782570B /* MTKGameView.swift */; };
-		4A136084FCF340CE82318C1D /* MetalGameRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DD48AC96FA9F67ED729C4E /* MetalGameRenderer.swift */; };
-		D9B1CE08A5654933AB20FF2F /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = FC367CF71F02448B917CB2AC /* Shaders.metal */; };
-		322DE67C76C64BECB9C5E761 /* PorticoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396985C66686FE7C05565B71 /* PorticoApp.swift */; };
-		0678C6EF9C8B4AD8BEF1530E /* CapabilitiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD1806A43F747E635447776 /* CapabilitiesView.swift */; };
-		49947D7EA5684E368A5CE5BE /* ControlEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CB50AEDBB4A5DFCADFCA8D /* ControlEditorView.swift */; };
-		0CB8772517054A95AE12E29A /* EnvironmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9128E434B58808121DC38347 /* EnvironmentView.swift */; };
-		820D67F4E85C4A42B4946C6C /* GameDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3636E97F7E9C254BFE4B58D9 /* GameDetailView.swift */; };
-		0063C28C4E1349C1A61BB9BB /* GameEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB5E14773AAED5BDA36112D /* GameEditorView.swift */; };
-		66CBE5DAB70648FAB47206F0 /* GameSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273ACCD7A0D2A4CE62256807 /* GameSettingsView.swift */; };
-		DEF8C37E9C0B4407B1686B4B /* GlobalSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4882B14CAA17625FF698D10 /* GlobalSettingsView.swift */; };
-		4F26802BDF1E480F9A75C9B0 /* ImportFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C2205592991D7E20905D34 /* ImportFlowView.swift */; };
-		6CA731E145604142B0F699FC /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AFD3194FF8D2DEBD2E1E815 /* LibraryView.swift */; };
-		4962FB4F425048AB8D26C13C /* LogsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6B4E9E8BB7F909699227FE /* LogsView.swift */; };
-		935A594530EC41B181592D28 /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847088E87217A565172AB1C6 /* OverlayView.swift */; };
-		B03E90FAB7C84B6BA4889C91 /* RuntimeSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0D357BC96ABD39F71CBF166 /* RuntimeSessionView.swift */; };
-		61E41FCEBDE34FAE9507D8FD /* WinOSBrand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B82DC66FF1847C0A8ECF53F /* WinOSBrand.swift */; };
-		2A7F56D9F719413C9D607981 /* WinOSCreatePCView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36893DF8B194472B7793C41 /* WinOSCreatePCView.swift */; };
-		99B2F6427D8F41F882F35AD0 /* WinOSDesktopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA848EA62FA4DC682EDE23A /* WinOSDesktopView.swift */; };
-		7B6AF5B6E21C49BFBC8E626A /* WinOSHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D8620CA03C43798720BD18 /* WinOSHomeView.swift */; };
-		D9205347360940FD96F1E022 /* WinOSLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701A9D0D1D6B44B58691E906 /* WinOSLoadingView.swift */; };
-		7D39C96C66C74916B6401B8A /* WinOSOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F303DE74D44F77A29F4C07 /* WinOSOverlayView.swift */; };
-		EB447D9DFEFC440983C23542 /* AudioCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A879E54FC5AD8424879929 /* AudioCore.swift */; };
-		917C0DA895B5417DB171F7D4 /* CompatibilityLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B201E2264E8E24894E0E5930 /* CompatibilityLayer.swift */; };
-		42E15DCABA094B42BE088415 /* DiagnosticsReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262934608449C213F6DE6DF6 /* DiagnosticsReport.swift */; };
-		9A297B6F304D401DB6E465AD /* EnvironmentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62708F7476BC718054B73CC5 /* EnvironmentManager.swift */; };
-		1E2D78768372400EAD51224F /* GraphicsBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB9E782C2CF58CD30DA5777 /* GraphicsBackend.swift */; };
-		F1B99321E826407A869092A0 /* SurfaceBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0135C47A7D3497F4A59E22 /* SurfaceBridge.swift */; };
-		D71F4ED8BD4E43F2802CB3B9 /* ImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3870F8A1A0552A3B2096DB13 /* ImportService.swift */; };
-		5C5A3EAC4E224C0EBE964C5A /* PEInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0848F8708C63089F301499D6 /* PEInspector.swift */; };
-		04B7C01E79E54D72B3B7941C /* PELoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D72929FA5D0FF1876D4433 /* PELoader.swift */; };
-		3B274743CED1418481865EF0 /* ZipReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15696B206F66E8896FAB7A78 /* ZipReader.swift */; };
-		0196E86BD7E14FA0AA2A941F /* GameControllerAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D659428596674B21A94F354B /* GameControllerAdapter.swift */; };
-		7B0C12059B20493FB9C8EB0D /* InputCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF73D23421A1D72774B39CB /* InputCore.swift */; };
-		A926D29C4987487E9C115C87 /* TouchInputAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4746A1276DE840EDA6C8DA3C /* TouchInputAdapter.swift */; };
-		313D897F8AB64BFCBC9B962D /* LogCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240AB51204825C547D57F7DE /* LogCenter.swift */; };
-		01A0732F3CDD49E9A04E130C /* ControlLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0475CE6E62FE22704F8ACD0C /* ControlLayout.swift */; };
-		5BC3DD3B1ED24631A18403E4 /* EnvironmentModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D305C8FE7584CD9F7E6222F /* EnvironmentModels.swift */; };
-		FFE4D28F4A3841C383A09133 /* GameModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D6FC9EBA0FBCBC9AE59705 /* GameModels.swift */; };
-		88AB6402B6E04D64B9D2D228 /* GlobalSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF830027368356D50DEB2C /* GlobalSettings.swift */; };
-		CEF9EFBDBA6549BCA63E443D /* ExecutionBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 482AA6348D19A4E059C2D888 /* ExecutionBackend.swift */; };
-		A0FFD1B92F0D4F2A936D15D9 /* ProcessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A912A187632F622C2663CB /* ProcessManager.swift */; };
-		7341B52A7ABF4D79A1903F52 /* RuntimeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23B609CEC9DE9137BCDBE67 /* RuntimeManager.swift */; };
-		85B5683654734FB1AA98C873 /* RuntimeModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB8FF03D1C3FE8D3DDE93EF /* RuntimeModels.swift */; };
-		4F46839D3576416ABC92404E /* Win32Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A8DC53CF7FC09C35C71BAA0 /* Win32Layer.swift */; };
-		DBA2268B7BAB4B04849110D4 /* AppSandbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECF21BBC6679292B66822EA /* AppSandbox.swift */; };
-		520D8E163A9D4A4A95C6ABC1 /* ConfigurationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3831B0B409ACFEED388773 /* ConfigurationManager.swift */; };
-		8D86090EB4F54C37B1F1F91F /* LibraryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C510A12AC2FE936BA27E10C9 /* LibraryStore.swift */; };
-		EDBD573A8DFB4ED5B62ABF57 /* SupportLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1851983F5D84FC875DA7DB9 /* SupportLevel.swift */; };
-		7717379767224568933CCDA7 /* pr_asm.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F7C3B3BED6C00E96BBE04B9 /* pr_asm.c */; };
-		526E10B1647D48F788A44ABD /* pr_audio.c in Sources */ = {isa = PBXBuildFile; fileRef = C120B02BF38291034BB89E9A /* pr_audio.c */; };
-		A160ADCB4300445DA7C1187D /* pr_cap.c in Sources */ = {isa = PBXBuildFile; fileRef = 29CA4B8FC15B0C1FE65A5FA8 /* pr_cap.c */; };
-		B2A4DCD195314F789DAA1E81 /* pr_cpu.c in Sources */ = {isa = PBXBuildFile; fileRef = 3D6A9CE14B3DF8DC1D12BCE9 /* pr_cpu.c */; };
-		17BDC2EA8287460EA8836CE1 /* pr_cpu64.c in Sources */ = {isa = PBXBuildFile; fileRef = 25D4DA263DAFB7C79EFBCF6E /* pr_cpu64.c */; };
-		51B843167B4444B18A651B7C /* pr_gfx.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DF2E041EAFA99AFFFA4D94E /* pr_gfx.c */; };
-		456D9A76F3C343109DD0D97E /* pr_gl.c in Sources */ = {isa = PBXBuildFile; fileRef = 396B1432811F47F3AD8ED72F /* pr_gl.c */; };
-		EDA09D91C3974AEE99F3BE61 /* pr_host.c in Sources */ = {isa = PBXBuildFile; fileRef = E9C4B8C6521BEF258E870E4D /* pr_host.c */; };
-		80F05FDD678F421A959AD98A /* pr_input.c in Sources */ = {isa = PBXBuildFile; fileRef = 594A837838B6E9FBBB146635 /* pr_input.c */; };
-		9CED773F4A2949A9B638CB64 /* pr_log.c in Sources */ = {isa = PBXBuildFile; fileRef = 9AD18E0D2837F36C0B783DF8 /* pr_log.c */; };
-		10763980BA9A4331966BF526 /* pr_pe.c in Sources */ = {isa = PBXBuildFile; fileRef = 9638E3D40BF9DE098A95202D /* pr_pe.c */; };
-		872903A2A89A44B386280F76 /* pr_peproc.c in Sources */ = {isa = PBXBuildFile; fileRef = 0AA945091CD4B6229701B0D9 /* pr_peproc.c */; };
-		7E6F5D5830EC443EBBA76A00 /* pr_selftest.c in Sources */ = {isa = PBXBuildFile; fileRef = 207E41BE1C791C814C035DC7 /* pr_selftest.c */; };
-		688F3B17B26E43E9BCF8EE4F /* pr_surf.c in Sources */ = {isa = PBXBuildFile; fileRef = B1BAFFAF02A11E5B836488E6 /* pr_surf.c */; };
-		2B4C893662D945B887DBFC13 /* pr_types.c in Sources */ = {isa = PBXBuildFile; fileRef = 313ECAC82D14C8DE75F614FB /* pr_types.c */; };
-		8B6C8FBB19684C66B93EC64D /* pr_unwind.c in Sources */ = {isa = PBXBuildFile; fileRef = 08B9B7710912483E9C874089 /* pr_unwind.c */; };
-		45FCEDC7958B4CD380EF511E /* pr_vm.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A53672A321D794C2E36460 /* pr_vm.c */; };
-		FF1DA04D210B45248D518DE5 /* pr_win32.c in Sources */ = {isa = PBXBuildFile; fileRef = BA71D34C8983D4B3F9A3CC2F /* pr_win32.c */; };
-		AA7C591E40FD49FA9F4CD220 /* pr_winhello.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FAD3756E3342FC51677A6FF /* pr_winhello.c */; };
-		F2BC62FD0E3B40B89AFD4C49 /* pr_zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 30E9BB9D04C4BB5C7DB1E092 /* pr_zip.c */; };
-		3B67C89F10574BD88A763159 /* pr_asm.h in Headers */ = {isa = PBXBuildFile; fileRef = C5861D9AAE251CD428C2FE7E /* pr_asm.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		68C9AA4355EB4DD6A3BEC6B0 /* pr_audio.h in Headers */ = {isa = PBXBuildFile; fileRef = EC4189457BE7AEDE728B8673 /* pr_audio.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EA91248F6FD448EEA1AA90F4 /* pr_cap.h in Headers */ = {isa = PBXBuildFile; fileRef = E03ECF965746C9420A1B56F0 /* pr_cap.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		ECA262028980440CA1D3513C /* pr_cpu.h in Headers */ = {isa = PBXBuildFile; fileRef = 70F27042365E1E65719FEB04 /* pr_cpu.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7D49A970CE0F4CDA9FE9C625 /* pr_cpu64.h in Headers */ = {isa = PBXBuildFile; fileRef = B2B7D752E0547481DB6B4F27 /* pr_cpu64.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		18F9DF69E78E467DBDC38985 /* pr_gfx.h in Headers */ = {isa = PBXBuildFile; fileRef = 2FBB2978FBD868C9E0F5F726 /* pr_gfx.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D07BC70665604C689F72C4A4 /* pr_gl.h in Headers */ = {isa = PBXBuildFile; fileRef = 2821339B42ED40E1AE0B3457 /* pr_gl.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		21E38B17566A42798AA3E050 /* pr_host.h in Headers */ = {isa = PBXBuildFile; fileRef = DD8B4632E276206C65E09477 /* pr_host.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F03E421F160544588250C01B /* pr_input.h in Headers */ = {isa = PBXBuildFile; fileRef = 493B2FA7976C2545A1B779BF /* pr_input.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C3A63DD138024109A794054C /* pr_log.h in Headers */ = {isa = PBXBuildFile; fileRef = 219B7D528CFE8A063D282B38 /* pr_log.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		789F6A1F165746D4AA957583 /* pr_pe.h in Headers */ = {isa = PBXBuildFile; fileRef = 1FABD96CD907641F93D0B5B1 /* pr_pe.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0A7E823F5A1D4DDF974F1192 /* pr_peproc.h in Headers */ = {isa = PBXBuildFile; fileRef = B50094914151944F354E1D6E /* pr_peproc.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CB899366D65640479FF6AFC2 /* pr_surf.h in Headers */ = {isa = PBXBuildFile; fileRef = BC8BA5886FE131AAD53A6675 /* pr_surf.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6D3FCD98209F4708A493D67D /* pr_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 89103E831804636517C2AB10 /* pr_types.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8271F9CC536C41908D37315C /* pr_unwind.h in Headers */ = {isa = PBXBuildFile; fileRef = F4322BC9AC4B4B24B3D8BFA5 /* pr_unwind.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C41272CDCD56492DB8A1B770 /* pr_vm.h in Headers */ = {isa = PBXBuildFile; fileRef = 2F2B47924DD178CB9A119D01 /* pr_vm.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		59CFE4747F86474E812A4B3A /* pr_win32.h in Headers */ = {isa = PBXBuildFile; fileRef = 8D487B81E5B7828DB6CC6BBD /* pr_win32.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		87CCD3F9D39E4303880A76DE /* pr_winhello.h in Headers */ = {isa = PBXBuildFile; fileRef = D94B0CEC4FC0EB2699F30A11 /* pr_winhello.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		177D658812714AE8AAB59A83 /* pr_zip.h in Headers */ = {isa = PBXBuildFile; fileRef = D24A9A10CCAA48D24967739C /* pr_zip.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E42B71BEA1804A688D293F48 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845175776DA9B77AB4CAFC16 /* Metal.framework */; };
-		9B73C8CCEE1144BAB4D2F0C9 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FAB3EFC261338FCDA442B95 /* MetalKit.framework */; };
-		0350AC41C97B4889BDE18C0D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B58392B0683CF37E493DE0B2 /* AVFoundation.framework */; };
-		82DC2A82D131470DBE367272 /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76E6407D70BFAF7376E20110 /* GameController.framework */; };
-		179E27379A354A068DC4F3F6 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 92DB7A71D3B15A69A5A049CD /* libz.tbd */; };
-		7DEB68BD86E040ACB7481CC8 /* PorticoCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6D79295F1764110985D75BB /* PorticoCore.framework */; };
-		184EAE95570A4DCC91448971 /* PorticoRuntime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 866A9E14934942B7AC191584 /* PorticoRuntime.framework */; };
-		072A6DC7187C4549BC253DD9 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 92DB7A71D3B15A69A5A049CD /* libz.tbd */; };
-		F6B7346289884BD9A1DE165B /* PorticoRuntime.h in Headers */ = {isa = PBXBuildFile; fileRef = 90B1B2ACB9724A92A384EFA2 /* PorticoRuntime.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BD68A4343122432BA74EBD15 /* PorticoCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F6D79295F1764110985D75BB /* PorticoCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		BDDC844D42B647DB9452CEB6 /* PorticoRuntime.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 866A9E14934942B7AC191584 /* PorticoRuntime.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C037BF1E87892E5B4003B219 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79C4344CDE739F111C433CB8 /* Assets.xcassets */; };
+            C1D2E3F40516273849A5B6C7 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B5C /* Shaders.metal */; };
+
+		464E1442638148CD93ABF48C /* WinOSDisplayMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E33ACFF5E3944D3A0A48A6A /* WinOSDisplayMetrics.swift */; };
+		C6F525C5FC3D4C71B71F36C1 /* WinOSMouseCursor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E93DAE6EC9B48F59CB5AD15 /* WinOSMouseCursor.swift */; };
+		101F8DAB2DAF4A3CA5669CAF /* WinOSCursorRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F32DB633934280A30A3A09 /* WinOSCursorRenderer.swift */; };
+		272853E4B4D34161953A01E8 /* WinOSMouseStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E309E076C56D40D0A9FD632F /* WinOSMouseStateMachine.swift */; };
+		8AE00E82A65E4AD9AF1884CE /* WinOSDesktopInputHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFF9611886746B6B6E2FD7B /* WinOSDesktopInputHandler.swift */; };
+		3F95C0E721594E6BBA9C0219 /* WinOSOrientationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0149F180582416FAC6ABD5E /* WinOSOrientationManager.swift */; };
+		7288E074BCB64D3D8F5BDFA6 /* WinOSDesktopResponsiveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB579072B0F64A52913DDD14 /* WinOSDesktopResponsiveTests.swift */; };
+		DCF03E743F4741B4BDE34EA9 /* pr_d3d.c in Sources */ = {isa = PBXBuildFile; fileRef = FA0182B792E54CF3B4407F49 /* pr_d3d.c */; };
+		5642B589573549EDBBDE986A /* pr_waveout.c in Sources */ = {isa = PBXBuildFile; fileRef = F986823952D1487DA6CC2A47 /* pr_waveout.c */; };
+		155FC3A3F30F406CB40466DE /* WinOSGameDiagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D11E08774E4304B947D765 /* WinOSGameDiagnostics.swift */; };
+		085B816F226D40A5ABFFFC14 /* WinOSGameCompatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29689CF7D72F4D88A2D16FE8 /* WinOSGameCompatibility.swift */; };
+		6CC390EAD7B04505BA187377 /* WinOSGraphicsDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7248F186F014099804DC3F4 /* WinOSGraphicsDetector.swift */; };
+		16F6045AF5FF45B990EF1AC0 /* WinOSGraphicsTranslator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FF559F25144D2EA99C20DA /* WinOSGraphicsTranslator.swift */; };
+		55412E3C577F405CBA818DA4 /* WinOSRenderLoop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BB0E61490C41759E44143A /* WinOSRenderLoop.swift */; };
+		EAFE63EACA6A4E09BA0C18C0 /* WinOSInputPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCFE802832346C7BE896759 /* WinOSInputPipeline.swift */; };
+		DED9E71FA4244C13BA312A08 /* WinOSAudioPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58C305B4A1F4D35B53F823A /* WinOSAudioPipeline.swift */; };
+		07AD791FD8544B808FEE2655 /* WinOSGameHarness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B760317AF4C41C08984A0A9 /* WinOSGameHarness.swift */; };
+		BD32874376644F18BC90AD6C /* WinOSGameRuntime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683CBBE13A1A4BEFB79ABF37 /* WinOSGameRuntime.swift */; };
+		CD93DAC8104828492727025D /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAD037C3DD3AA2F20C33801 /* AppModel.swift */; };
+		199916C2A1988153D1EB0B20 /* AVAudioEngineBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD46AECE5E55393DAA53A376 /* AVAudioEngineBackend.swift */; };
+		33D6682768D6F35074C566B2 /* GameControllerBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFFA1746869E6DC1620BF07 /* GameControllerBridge.swift */; };
+		EB491F0BCB362EC61A62CB86 /* VirtualControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A07358188C2465E1E40A03C5 /* VirtualControlsView.swift */; };
+		BCFD031D389F16B580D49FE3 /* MTKGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D5431D040CF61AF782570B /* MTKGameView.swift */; };
+		E2B00E79F8895815DFE0E7CD /* MetalGameRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DD48AC96FA9F67ED729C4E /* MetalGameRenderer.swift */; };
+		BB4564DB7DE721BC304790BA /* PorticoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396985C66686FE7C05565B71 /* PorticoApp.swift */; };
+		0C5236EB458F4B61027BBA10 /* MinimalPETestGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B0290126F141906599330A7 /* MinimalPETestGenerator.swift */; };
+		FF3F37C93A529CE1B7096DAB /* CapabilitiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD1806A43F747E635447776 /* CapabilitiesView.swift */; };
+		BCC3326DF7024F4E14F5BC77 /* ControlEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CB50AEDBB4A5DFCADFCA8D /* ControlEditorView.swift */; };
+		CC23B510065908BDBAC3506D /* EnvironmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9128E434B58808121DC38347 /* EnvironmentView.swift */; };
+		15B63C3D5D2F2E893C71972B /* GameDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3636E97F7E9C254BFE4B58D9 /* GameDetailView.swift */; };
+		44DF83092BBB9B6D4C473ADC /* GameEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB5E14773AAED5BDA36112D /* GameEditorView.swift */; };
+		4FC4B68A59EFDB941419B84E /* GameSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273ACCD7A0D2A4CE62256807 /* GameSettingsView.swift */; };
+		26CA2C507838B6E17461825C /* GlobalSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4882B14CAA17625FF698D10 /* GlobalSettingsView.swift */; };
+		2C3DB4064782A707BCA9CEBB /* ImportFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C2205592991D7E20905D34 /* ImportFlowView.swift */; };
+		FC7C0F1D484F4C54FC2E5422 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AFD3194FF8D2DEBD2E1E815 /* LibraryView.swift */; };
+		A84F84AD8914F997BF18F3D7 /* LogsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6B4E9E8BB7F909699227FE /* LogsView.swift */; };
+		971F89AC316C8D21ED2A069D /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847088E87217A565172AB1C6 /* OverlayView.swift */; };
+		7C0D9842D88BD5E709DCE822 /* RuntimeSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0D357BC96ABD39F71CBF166 /* RuntimeSessionView.swift */; };
+		31DD871E346A8914615A99EC /* WinOSBrand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537255928F42BF9B8DFB2BFD /* WinOSBrand.swift */; };
+		A717A3509388A89003DB1F38 /* WinOSCreatePCView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF61EE962D6EB33A44AA5A3 /* WinOSCreatePCView.swift */; };
+		BD26839E8C596F0433CBF65D /* WinOSDesktopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E7F3A779028549BD9FCFAC /* WinOSDesktopView.swift */; };
 		27D034CA8040CCA146C51A6F /* WinOSDiagnosticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE622EA507ADCA5C0EADDFE9 /* WinOSDiagnosticsView.swift */; };
-			4D9FF1771811435989554E43 /* WinOSRealDesktopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FEDF7B36449470FBDB52992 /* WinOSRealDesktopView.swift */; };
-DA85ADD5337C49EF97B6CB83 /* WinOSCompositor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C6316DC0534172B7D3B6F7 /* WinOSCompositor.swift */; };
-71B6A1D8BD7E4A4DBF23D43A /* WinOSDesktopShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCFAF8BABA047358D063F7A /* WinOSDesktopShell.swift */; };
-2025E64AE35F4AB1A24FA53F /* WinOSDesktopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A21F5AAAE34F7491D404EB /* WinOSDesktopTests.swift */; };
-34C5245E089B4B6195C83CE3 /* WinOSFileManagerReal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E84E580D2AE4FA6ADCA290D /* WinOSFileManagerReal.swift */; };
-431CAC85F4E64F8FB8A0283D /* WinOSInputBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D952329D22D43EB95EF5B95 /* WinOSInputBridge.swift */; };
-E7ACA2A0782241BEB814EAE9 /* WinOSProcessManagerReal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A21115A0894C808AF01578 /* WinOSProcessManagerReal.swift */; };
-C74B878E9F014E9A820B4FE8 /* WinOSRenderEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A49F50536642EBA9F3F34C /* WinOSRenderEngine.swift */; };
-E67C0F91B7AA42808991DF88 /* WinOSWindowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D04AA5A0AD47E5BD34FBA8 /* WinOSWindowManager.swift */; };
-
-            464E1442638148CD93ABF48C /* WinOSDisplayMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E33ACFF5E3944D3A0A48A6A /* WinOSDisplayMetrics.swift */; };
-            C6F525C5FC3D4C71B71F36C1 /* WinOSMouseCursor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E93DAE6EC9B48F59CB5AD15 /* WinOSMouseCursor.swift */; };
-            101F8DAB2DAF4A3CA5669CAF /* WinOSCursorRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F32DB633934280A30A3A09 /* WinOSCursorRenderer.swift */; };
-            272853E4B4D34161953A01E8 /* WinOSMouseStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E309E076C56D40D0A9FD632F /* WinOSMouseStateMachine.swift */; };
-            8AE00E82A65E4AD9AF1884CE /* WinOSDesktopInputHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFF9611886746B6B6E2FD7B /* WinOSDesktopInputHandler.swift */; };
-            3F95C0E721594E6BBA9C0219 /* WinOSOrientationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0149F180582416FAC6ABD5E /* WinOSOrientationManager.swift */; };
-            7288E074BCB64D3D8F5BDFA6 /* WinOSDesktopResponsiveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB579072B0F64A52913DDD14 /* WinOSDesktopResponsiveTests.swift */; };
-
-            155FC3A3F30F406CB40466DE /* WinOSGameDiagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D11E08774E4304B947D765 /* WinOSGameDiagnostics.swift */; };
-            085B816F226D40A5ABFFFC14 /* WinOSGameCompatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29689CF7D72F4D88A2D16FE8 /* WinOSGameCompatibility.swift */; };
-            6CC390EAD7B04505BA187377 /* WinOSGraphicsDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7248F186F014099804DC3F4 /* WinOSGraphicsDetector.swift */; };
-            16F6045AF5FF45B990EF1AC0 /* WinOSGraphicsTranslator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FF559F25144D2EA99C20DA /* WinOSGraphicsTranslator.swift */; };
-            55412E3C577F405CBA818DA4 /* WinOSRenderLoop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BB0E61490C41759E44143A /* WinOSRenderLoop.swift */; };
-            EAFE63EACA6A4E09BA0C18C0 /* WinOSInputPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCFE802832346C7BE896759 /* WinOSInputPipeline.swift */; };
-            DED9E71FA4244C13BA312A08 /* WinOSAudioPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58C305B4A1F4D35B53F823A /* WinOSAudioPipeline.swift */; };
-            07AD791FD8544B808FEE2655 /* WinOSGameHarness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B760317AF4C41C08984A0A9 /* WinOSGameHarness.swift */; };
-            BD32874376644F18BC90AD6C /* WinOSGameRuntime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683CBBE13A1A4BEFB79ABF37 /* WinOSGameRuntime.swift */; };
-
-            DCF03E743F4741B4BDE34EA9 /* pr_d3d.c in Sources */ = {isa = PBXBuildFile; fileRef = FA0182B792E54CF3B4407F49 /* pr_d3d.c */; };
-            5642B589573549EDBBDE986A /* pr_waveout.c in Sources */ = {isa = PBXBuildFile; fileRef = F986823952D1487DA6CC2A47 /* pr_waveout.c */; };
+		34CC67A98920076B49BB34FF /* WinOSHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6175D38181FFC2685D08F431 /* WinOSHomeView.swift */; };
+		FFBAA15F6A8F6E0BFD895D6A /* WinOSLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DEE3000E5CB78C36074F88A /* WinOSLoadingView.swift */; };
+		654DEE7499789FCB74B29B14 /* WinOSOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 481C4EB207DB884663A9B21E /* WinOSOverlayView.swift */; };
+		35ADCD4E23EC2288A6BAA41E /* AudioCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A879E54FC5AD8424879929 /* AudioCore.swift */; };
+		DF7155748E3A26E6DF879A4E /* CompatibilityLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B201E2264E8E24894E0E5930 /* CompatibilityLayer.swift */; };
+		546EEA4C0D0CC7894E8295EE /* DiagnosticsReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262934608449C213F6DE6DF6 /* DiagnosticsReport.swift */; };
+		FB12EAFD0F76A8148AFC6A5D /* EnvironmentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62708F7476BC718054B73CC5 /* EnvironmentManager.swift */; };
+		9E964F1096BC4280E0DA8D16 /* GraphicsBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB9E782C2CF58CD30DA5777 /* GraphicsBackend.swift */; };
+		52CB0139BD60A31A32BB2C91 /* SurfaceBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0135C47A7D3497F4A59E22 /* SurfaceBridge.swift */; };
+		12A5293FF1BD5CAB34F72493 /* ImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3870F8A1A0552A3B2096DB13 /* ImportService.swift */; };
+		F34F37AE78AAE4728B70FF11 /* PEInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0848F8708C63089F301499D6 /* PEInspector.swift */; };
+		B86F759A7939ABB955E0BA54 /* PELoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D72929FA5D0FF1876D4433 /* PELoader.swift */; };
+		B5D3561F1A6FCA7309FCA9B5 /* ZipReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15696B206F66E8896FAB7A78 /* ZipReader.swift */; };
+		76150E470D069EAE447B091B /* GameControllerAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C48EE16D349D1852CAEB6A9 /* GameControllerAdapter.swift */; };
+		72C5D7F32AC10DF467A6C5D3 /* InputCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF73D23421A1D72774B39CB /* InputCore.swift */; };
+		FCB3F991D457965C83FD36B8 /* TouchInputAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA5994C7B4EC878D8033CC2 /* TouchInputAdapter.swift */; };
+		52EEE8BC06DCC0561CF56944 /* LogCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240AB51204825C547D57F7DE /* LogCenter.swift */; };
+		85433CDAFCA5FE9F1CE447EF /* ControlLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0475CE6E62FE22704F8ACD0C /* ControlLayout.swift */; };
+		5DCB1209DF0AF60D20BB33BB /* EnvironmentModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D305C8FE7584CD9F7E6222F /* EnvironmentModels.swift */; };
+		19566012DCF3164AB777F91C /* GameModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D6FC9EBA0FBCBC9AE59705 /* GameModels.swift */; };
+		8A182D608B1CC988AD4C11EA /* GlobalSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF830027368356D50DEB2C /* GlobalSettings.swift */; };
+		436E2CD503D9ABC0D651ABDF /* ExecutionBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 482AA6348D19A4E059C2D888 /* ExecutionBackend.swift */; };
+		5B16423A23048166FDC98AA2 /* ProcessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A912A187632F622C2663CB /* ProcessManager.swift */; };
+		B37FE3247C2D137503852F49 /* RuntimeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23B609CEC9DE9137BCDBE67 /* RuntimeManager.swift */; };
+		6DED811667F16DA4A9E2488D /* RuntimeModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB8FF03D1C3FE8D3DDE93EF /* RuntimeModels.swift */; };
+		0F6EE5C1264446C45EE00656 /* Win32Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A8DC53CF7FC09C35C71BAA0 /* Win32Layer.swift */; };
+		D30C0FA3A7B16123D29E6888 /* AppSandbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECF21BBC6679292B66822EA /* AppSandbox.swift */; };
+		CE211D59E268B04CFFA08F37 /* ConfigurationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3831B0B409ACFEED388773 /* ConfigurationManager.swift */; };
+		37F79058A63A88C0C5EE0E8C /* LibraryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C510A12AC2FE936BA27E10C9 /* LibraryStore.swift */; };
+		73B73944A501076D7DFD94D2 /* SupportLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1851983F5D84FC875DA7DB9 /* SupportLevel.swift */; };
+		8AB105B5E090BD41E0B735C8 /* pr_asm.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F7C3B3BED6C00E96BBE04B9 /* pr_asm.c */; };
+		A6B53146B584EB2BE8B9D2B7 /* pr_audio.c in Sources */ = {isa = PBXBuildFile; fileRef = C120B02BF38291034BB89E9A /* pr_audio.c */; };
+		38FD5FEED4CB03789696C5C3 /* pr_cap.c in Sources */ = {isa = PBXBuildFile; fileRef = 29CA4B8FC15B0C1FE65A5FA8 /* pr_cap.c */; };
+		8EC8BB99487C6A49707753A9 /* pr_cpu.c in Sources */ = {isa = PBXBuildFile; fileRef = 3D6A9CE14B3DF8DC1D12BCE9 /* pr_cpu.c */; };
+		099202E4AFFE5E2FCE7CCB42 /* pr_cpu64.c in Sources */ = {isa = PBXBuildFile; fileRef = 25D4DA263DAFB7C79EFBCF6E /* pr_cpu64.c */; };
+		439472EF6B75E6FF907A0070 /* pr_gfx.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DF2E041EAFA99AFFFA4D94E /* pr_gfx.c */; };
+		05B6C9C12E018EC1C01FAA2D /* pr_gl.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A23CD0CD510070637DE9D46 /* pr_gl.c */; };
+		A8820C8589D124D832454A16 /* pr_host.c in Sources */ = {isa = PBXBuildFile; fileRef = E9C4B8C6521BEF258E870E4D /* pr_host.c */; };
+		9A3576349C5835103DF05605 /* pr_input.c in Sources */ = {isa = PBXBuildFile; fileRef = 594A837838B6E9FBBB146635 /* pr_input.c */; };
+		2DF6B4B14667C47E04903C40 /* pr_log.c in Sources */ = {isa = PBXBuildFile; fileRef = 9AD18E0D2837F36C0B783DF8 /* pr_log.c */; };
+		5A47C2D3B7E4A0C12B0B143D /* pr_pe.c in Sources */ = {isa = PBXBuildFile; fileRef = 9638E3D40BF9DE098A95202D /* pr_pe.c */; };
+		3204ECC128D88D49B3F9D53B /* pr_peproc.c in Sources */ = {isa = PBXBuildFile; fileRef = 0AA945091CD4B6229701B0D9 /* pr_peproc.c */; };
+		75B9030D91DD26222F5F4AEE /* pr_selftest.c in Sources */ = {isa = PBXBuildFile; fileRef = 207E41BE1C791C814C035DC7 /* pr_selftest.c */; };
+		D8F4A46DC015EEBDF8CF8653 /* pr_surf.c in Sources */ = {isa = PBXBuildFile; fileRef = B1BAFFAF02A11E5B836488E6 /* pr_surf.c */; };
+		0BA88F74F7C77BE010E06CBF /* pr_types.c in Sources */ = {isa = PBXBuildFile; fileRef = 313ECAC82D14C8DE75F614FB /* pr_types.c */; };
+		AD35EA88E4B0A80478D06D9C /* pr_unwind.c in Sources */ = {isa = PBXBuildFile; fileRef = E7EDB1536433E720FF97B3E1 /* pr_unwind.c */; };
+		57BDEF1AAF276EC0371FC041 /* pr_vm.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A53672A321D794C2E36460 /* pr_vm.c */; };
+		7FF592F35C6CB5AD9D213E91 /* pr_win32.c in Sources */ = {isa = PBXBuildFile; fileRef = BA71D34C8983D4B3F9A3CC2F /* pr_win32.c */; };
+		B77A85E2A1C3E9A407B1B637 /* pr_winhello.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FAD3756E3342FC51677A6FF /* pr_winhello.c */; };
+		CDA1A4F355AAE091E64ADC75 /* pr_zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 30E9BB9D04C4BB5C7DB1E092 /* pr_zip.c */; };
+		7376A3BBCA8D47EA252655BA /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845175776DA9B77AB4CAFC16 /* Metal.framework */; };
+		477139FC775BE436301C8F71 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FAB3EFC261338FCDA442B95 /* MetalKit.framework */; };
+		7F19A6F848475EECBA7D1DF4 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B58392B0683CF37E493DE0B2 /* AVFoundation.framework */; };
+		0F86F62BF6C330CE0CAD2C43 /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76E6407D70BFAF7376E20110 /* GameController.framework */; };
+		F2AF91C4F2666882609C8C9B /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 92DB7A71D3B15A69A5A049CD /* libz.tbd */; };
+		4D9FF1771811435989554E43 /* WinOSRealDesktopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FEDF7B36449470FBDB52992 /* WinOSRealDesktopView.swift */; };
+		DA85ADD5337C49EF97B6CB83 /* WinOSCompositor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C6316DC0534172B7D3B6F7 /* WinOSCompositor.swift */; };
+		71B6A1D8BD7E4A4DBF23D43A /* WinOSDesktopShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCFAF8BABA047358D063F7A /* WinOSDesktopShell.swift */; };
+		2025E64AE35F4AB1A24FA53F /* WinOSDesktopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A21F5AAAE34F7491D404EB /* WinOSDesktopTests.swift */; };
+		34C5245E089B4B6195C83CE3 /* WinOSFileManagerReal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E84E580D2AE4FA6ADCA290D /* WinOSFileManagerReal.swift */; };
+		431CAC85F4E64F8FB8A0283D /* WinOSInputBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D952329D22D43EB95EF5B95 /* WinOSInputBridge.swift */; };
+		E7ACA2A0782241BEB814EAE9 /* WinOSProcessManagerReal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A21115A0894C808AF01578 /* WinOSProcessManagerReal.swift */; };
+		C74B878E9F014E9A820B4FE8 /* WinOSRenderEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A49F50536642EBA9F3F34C /* WinOSRenderEngine.swift */; };
+		E67C0F91B7AA42808991DF88 /* WinOSWindowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D04AA5A0AD47E5BD34FBA8 /* WinOSWindowManager.swift */; };
 /* End PBXBuildFile section */
-/* Begin PBXContainerItemProxy section */
-		36A1A12706ED424BB5DB8939 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4DC844ABCCFC0D132D087C1C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 607EF030517049F49451CE82;
-			remoteInfo = PorticoCore;
-		};
-		4B216AE29DE1475C9FF39C54 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4DC844ABCCFC0D132D087C1C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 87AB843997844840815A816A;
-			remoteInfo = PorticoRuntime;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+            A1B2C3D4E5F60718293A4B5C /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+
+		9E33ACFF5E3944D3A0A48A6A /* WinOSDisplayMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSDisplayMetrics.swift; sourceTree = "<group>"; };
+		3E93DAE6EC9B48F59CB5AD15 /* WinOSMouseCursor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSMouseCursor.swift; sourceTree = "<group>"; };
+		D3F32DB633934280A30A3A09 /* WinOSCursorRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSCursorRenderer.swift; sourceTree = "<group>"; };
+		E309E076C56D40D0A9FD632F /* WinOSMouseStateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSMouseStateMachine.swift; sourceTree = "<group>"; };
+		ADFF9611886746B6B6E2FD7B /* WinOSDesktopInputHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSDesktopInputHandler.swift; sourceTree = "<group>"; };
+		C0149F180582416FAC6ABD5E /* WinOSOrientationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSOrientationManager.swift; sourceTree = "<group>"; };
+		CB579072B0F64A52913DDD14 /* WinOSDesktopResponsiveTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSDesktopResponsiveTests.swift; sourceTree = "<group>"; };
+		FA0182B792E54CF3B4407F49 /* pr_d3d.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_d3d.c; sourceTree = "<group>"; };
+		F986823952D1487DA6CC2A47 /* pr_waveout.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_waveout.c; sourceTree = "<group>"; };
+		982184F2CD914802BAB43152 /* pr_d3d.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_d3d.h; sourceTree = "<group>"; };
+		2066BBB063B74084AAE695DD /* pr_waveout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_waveout.h; sourceTree = "<group>"; };
+		45D11E08774E4304B947D765 /* WinOSGameDiagnostics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSGameDiagnostics.swift; sourceTree = "<group>"; };
+		29689CF7D72F4D88A2D16FE8 /* WinOSGameCompatibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSGameCompatibility.swift; sourceTree = "<group>"; };
+		F7248F186F014099804DC3F4 /* WinOSGraphicsDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSGraphicsDetector.swift; sourceTree = "<group>"; };
+		90FF559F25144D2EA99C20DA /* WinOSGraphicsTranslator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSGraphicsTranslator.swift; sourceTree = "<group>"; };
+		88BB0E61490C41759E44143A /* WinOSRenderLoop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSRenderLoop.swift; sourceTree = "<group>"; };
+		FFCFE802832346C7BE896759 /* WinOSInputPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSInputPipeline.swift; sourceTree = "<group>"; };
+		D58C305B4A1F4D35B53F823A /* WinOSAudioPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSAudioPipeline.swift; sourceTree = "<group>"; };
+		7B760317AF4C41C08984A0A9 /* WinOSGameHarness.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSGameHarness.swift; sourceTree = "<group>"; };
+		683CBBE13A1A4BEFB79ABF37 /* WinOSGameRuntime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSGameRuntime.swift; sourceTree = "<group>"; };
 		2FAD037C3DD3AA2F20C33801 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 		CD46AECE5E55393DAA53A376 /* AVAudioEngineBackend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVAudioEngineBackend.swift; sourceTree = "<group>"; };
-		693762FCF2DA9B5841452535 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ADFFA1746869E6DC1620BF07 /* GameControllerBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameControllerBridge.swift; sourceTree = "<group>"; };
 		A07358188C2465E1E40A03C5 /* VirtualControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualControlsView.swift; sourceTree = "<group>"; };
 		27D5431D040CF61AF782570B /* MTKGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTKGameView.swift; sourceTree = "<group>"; };
 		D1DD48AC96FA9F67ED729C4E /* MetalGameRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalGameRenderer.swift; sourceTree = "<group>"; };
-		FC367CF71F02448B917CB2AC /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		396985C66686FE7C05565B71 /* PorticoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PorticoApp.swift; sourceTree = "<group>"; };
+		9B0290126F141906599330A7 /* MinimalPETestGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinimalPETestGenerator.swift; sourceTree = "<group>"; };
 		2CD1806A43F747E635447776 /* CapabilitiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilitiesView.swift; sourceTree = "<group>"; };
 		68CB50AEDBB4A5DFCADFCA8D /* ControlEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlEditorView.swift; sourceTree = "<group>"; };
 		9128E434B58808121DC38347 /* EnvironmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentView.swift; sourceTree = "<group>"; };
@@ -182,12 +160,13 @@ E67C0F91B7AA42808991DF88 /* WinOSWindowManager.swift in Sources */ = {isa = PBXB
 		BD6B4E9E8BB7F909699227FE /* LogsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsView.swift; sourceTree = "<group>"; };
 		847088E87217A565172AB1C6 /* OverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
 		E0D357BC96ABD39F71CBF166 /* RuntimeSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeSessionView.swift; sourceTree = "<group>"; };
-		2B82DC66FF1847C0A8ECF53F /* WinOSBrand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSBrand.swift; sourceTree = "<group>"; };
-		B36893DF8B194472B7793C41 /* WinOSCreatePCView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSCreatePCView.swift; sourceTree = "<group>"; };
-		2EA848EA62FA4DC682EDE23A /* WinOSDesktopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSDesktopView.swift; sourceTree = "<group>"; };
-		09D8620CA03C43798720BD18 /* WinOSHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSHomeView.swift; sourceTree = "<group>"; };
-		701A9D0D1D6B44B58691E906 /* WinOSLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSLoadingView.swift; sourceTree = "<group>"; };
-		64F303DE74D44F77A29F4C07 /* WinOSOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSOverlayView.swift; sourceTree = "<group>"; };
+		537255928F42BF9B8DFB2BFD /* WinOSBrand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSBrand.swift; sourceTree = "<group>"; };
+		4EF61EE962D6EB33A44AA5A3 /* WinOSCreatePCView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSCreatePCView.swift; sourceTree = "<group>"; };
+		64E7F3A779028549BD9FCFAC /* WinOSDesktopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSDesktopView.swift; sourceTree = "<group>"; };
+		DE622EA507ADCA5C0EADDFE9 /* WinOSDiagnosticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSDiagnosticsView.swift; sourceTree = "<group>"; };
+		6175D38181FFC2685D08F431 /* WinOSHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSHomeView.swift; sourceTree = "<group>"; };
+		0DEE3000E5CB78C36074F88A /* WinOSLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSLoadingView.swift; sourceTree = "<group>"; };
+		481C4EB207DB884663A9B21E /* WinOSOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSOverlayView.swift; sourceTree = "<group>"; };
 		A8A879E54FC5AD8424879929 /* AudioCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCore.swift; sourceTree = "<group>"; };
 		B201E2264E8E24894E0E5930 /* CompatibilityLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompatibilityLayer.swift; sourceTree = "<group>"; };
 		262934608449C213F6DE6DF6 /* DiagnosticsReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticsReport.swift; sourceTree = "<group>"; };
@@ -198,9 +177,9 @@ E67C0F91B7AA42808991DF88 /* WinOSWindowManager.swift in Sources */ = {isa = PBXB
 		0848F8708C63089F301499D6 /* PEInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PEInspector.swift; sourceTree = "<group>"; };
 		99D72929FA5D0FF1876D4433 /* PELoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PELoader.swift; sourceTree = "<group>"; };
 		15696B206F66E8896FAB7A78 /* ZipReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZipReader.swift; sourceTree = "<group>"; };
-		D659428596674B21A94F354B /* GameControllerAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameControllerAdapter.swift; sourceTree = "<group>"; };
+		0C48EE16D349D1852CAEB6A9 /* GameControllerAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameControllerAdapter.swift; sourceTree = "<group>"; };
 		EAF73D23421A1D72774B39CB /* InputCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputCore.swift; sourceTree = "<group>"; };
-		4746A1276DE840EDA6C8DA3C /* TouchInputAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchInputAdapter.swift; sourceTree = "<group>"; };
+		BCA5994C7B4EC878D8033CC2 /* TouchInputAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchInputAdapter.swift; sourceTree = "<group>"; };
 		240AB51204825C547D57F7DE /* LogCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogCenter.swift; sourceTree = "<group>"; };
 		0475CE6E62FE22704F8ACD0C /* ControlLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlLayout.swift; sourceTree = "<group>"; };
 		1D305C8FE7584CD9F7E6222F /* EnvironmentModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentModels.swift; sourceTree = "<group>"; };
@@ -221,7 +200,7 @@ E67C0F91B7AA42808991DF88 /* WinOSWindowManager.swift in Sources */ = {isa = PBXB
 		3D6A9CE14B3DF8DC1D12BCE9 /* pr_cpu.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_cpu.c; sourceTree = "<group>"; };
 		25D4DA263DAFB7C79EFBCF6E /* pr_cpu64.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_cpu64.c; sourceTree = "<group>"; };
 		9DF2E041EAFA99AFFFA4D94E /* pr_gfx.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_gfx.c; sourceTree = "<group>"; };
-		396B1432811F47F3AD8ED72F /* pr_gl.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_gl.c; sourceTree = "<group>"; };
+		5A23CD0CD510070637DE9D46 /* pr_gl.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_gl.c; sourceTree = "<group>"; };
 		E9C4B8C6521BEF258E870E4D /* pr_host.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_host.c; sourceTree = "<group>"; };
 		594A837838B6E9FBBB146635 /* pr_input.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_input.c; sourceTree = "<group>"; };
 		9AD18E0D2837F36C0B783DF8 /* pr_log.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_log.c; sourceTree = "<group>"; };
@@ -230,7 +209,7 @@ E67C0F91B7AA42808991DF88 /* WinOSWindowManager.swift in Sources */ = {isa = PBXB
 		207E41BE1C791C814C035DC7 /* pr_selftest.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_selftest.c; sourceTree = "<group>"; };
 		B1BAFFAF02A11E5B836488E6 /* pr_surf.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_surf.c; sourceTree = "<group>"; };
 		313ECAC82D14C8DE75F614FB /* pr_types.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_types.c; sourceTree = "<group>"; };
-		08B9B7710912483E9C874089 /* pr_unwind.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_unwind.c; sourceTree = "<group>"; };
+		E7EDB1536433E720FF97B3E1 /* pr_unwind.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_unwind.c; sourceTree = "<group>"; };
 		B0A53672A321D794C2E36460 /* pr_vm.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_vm.c; sourceTree = "<group>"; };
 		BA71D34C8983D4B3F9A3CC2F /* pr_win32.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_win32.c; sourceTree = "<group>"; };
 		3FAD3756E3342FC51677A6FF /* pr_winhello.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_winhello.c; sourceTree = "<group>"; };
@@ -241,7 +220,7 @@ E67C0F91B7AA42808991DF88 /* WinOSWindowManager.swift in Sources */ = {isa = PBXB
 		70F27042365E1E65719FEB04 /* pr_cpu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_cpu.h; sourceTree = "<group>"; };
 		B2B7D752E0547481DB6B4F27 /* pr_cpu64.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_cpu64.h; sourceTree = "<group>"; };
 		2FBB2978FBD868C9E0F5F726 /* pr_gfx.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_gfx.h; sourceTree = "<group>"; };
-		2821339B42ED40E1AE0B3457 /* pr_gl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_gl.h; sourceTree = "<group>"; };
+		C3AD5AFAD83F62DC97E9979F /* pr_gl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_gl.h; sourceTree = "<group>"; };
 		DD8B4632E276206C65E09477 /* pr_host.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_host.h; sourceTree = "<group>"; };
 		493B2FA7976C2545A1B779BF /* pr_input.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_input.h; sourceTree = "<group>"; };
 		219B7D528CFE8A063D282B38 /* pr_log.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_log.h; sourceTree = "<group>"; };
@@ -249,149 +228,146 @@ E67C0F91B7AA42808991DF88 /* WinOSWindowManager.swift in Sources */ = {isa = PBXB
 		B50094914151944F354E1D6E /* pr_peproc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_peproc.h; sourceTree = "<group>"; };
 		BC8BA5886FE131AAD53A6675 /* pr_surf.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_surf.h; sourceTree = "<group>"; };
 		89103E831804636517C2AB10 /* pr_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_types.h; sourceTree = "<group>"; };
-		F4322BC9AC4B4B24B3D8BFA5 /* pr_unwind.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_unwind.h; sourceTree = "<group>"; };
+		0DFE4C5DF3ECDE2472121E88 /* pr_unwind.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_unwind.h; sourceTree = "<group>"; };
 		2F2B47924DD178CB9A119D01 /* pr_vm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_vm.h; sourceTree = "<group>"; };
 		8D487B81E5B7828DB6CC6BBD /* pr_win32.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_win32.h; sourceTree = "<group>"; };
 		D94B0CEC4FC0EB2699F30A11 /* pr_winhello.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_winhello.h; sourceTree = "<group>"; };
 		D24A9A10CCAA48D24967739C /* pr_zip.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_zip.h; sourceTree = "<group>"; };
-		90B1B2ACB9724A92A384EFA2 /* PorticoRuntime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PorticoRuntime.h; sourceTree = "<group>"; };
+		693762FCF2DA9B5841452535 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		845175776DA9B77AB4CAFC16 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		2FAB3EFC261338FCDA442B95 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		B58392B0683CF37E493DE0B2 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		76E6407D70BFAF7376E20110 /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
 		92DB7A71D3B15A69A5A049CD /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		C2F21D19759A81DAF56E042F /* Portico.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Portico.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		F6D79295F1764110985D75BB /* PorticoCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PorticoCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		866A9E14934942B7AC191584 /* PorticoRuntime.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PorticoRuntime.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		79C4344CDE739F111C433CB8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		DE622EA507ADCA5C0EADDFE9 /* WinOSDiagnosticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSDiagnosticsView.swift; sourceTree = "<group>"; };
-			6FEDF7B36449470FBDB52992 /* WinOSRealDesktopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSRealDesktopView.swift; sourceTree = "<group>"; };
-E2C6316DC0534172B7D3B6F7 /* WinOSCompositor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSCompositor.swift; sourceTree = "<group>"; };
-DDCFAF8BABA047358D063F7A /* WinOSDesktopShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSDesktopShell.swift; sourceTree = "<group>"; };
-58A21F5AAAE34F7491D404EB /* WinOSDesktopTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSDesktopTests.swift; sourceTree = "<group>"; };
-4E84E580D2AE4FA6ADCA290D /* WinOSFileManagerReal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSFileManagerReal.swift; sourceTree = "<group>"; };
-1D952329D22D43EB95EF5B95 /* WinOSInputBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSInputBridge.swift; sourceTree = "<group>"; };
-D3A21115A0894C808AF01578 /* WinOSProcessManagerReal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSProcessManagerReal.swift; sourceTree = "<group>"; };
-E8A49F50536642EBA9F3F34C /* WinOSRenderEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSRenderEngine.swift; sourceTree = "<group>"; };
-76D04AA5A0AD47E5BD34FBA8 /* WinOSWindowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSWindowManager.swift; sourceTree = "<group>"; };
-
-            9E33ACFF5E3944D3A0A48A6A /* WinOSDisplayMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSDisplayMetrics.swift; sourceTree = "<group>"; };
-            3E93DAE6EC9B48F59CB5AD15 /* WinOSMouseCursor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSMouseCursor.swift; sourceTree = "<group>"; };
-            D3F32DB633934280A30A3A09 /* WinOSCursorRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSCursorRenderer.swift; sourceTree = "<group>"; };
-            E309E076C56D40D0A9FD632F /* WinOSMouseStateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSMouseStateMachine.swift; sourceTree = "<group>"; };
-            ADFF9611886746B6B6E2FD7B /* WinOSDesktopInputHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSDesktopInputHandler.swift; sourceTree = "<group>"; };
-            C0149F180582416FAC6ABD5E /* WinOSOrientationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSOrientationManager.swift; sourceTree = "<group>"; };
-            CB579072B0F64A52913DDD14 /* WinOSDesktopResponsiveTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSDesktopResponsiveTests.swift; sourceTree = "<group>"; };
-
-            45D11E08774E4304B947D765 /* WinOSGameDiagnostics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSGameDiagnostics.swift; sourceTree = "<group>"; };
-            29689CF7D72F4D88A2D16FE8 /* WinOSGameCompatibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSGameCompatibility.swift; sourceTree = "<group>"; };
-            F7248F186F014099804DC3F4 /* WinOSGraphicsDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSGraphicsDetector.swift; sourceTree = "<group>"; };
-            90FF559F25144D2EA99C20DA /* WinOSGraphicsTranslator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSGraphicsTranslator.swift; sourceTree = "<group>"; };
-            88BB0E61490C41759E44143A /* WinOSRenderLoop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSRenderLoop.swift; sourceTree = "<group>"; };
-            FFCFE802832346C7BE896759 /* WinOSInputPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSInputPipeline.swift; sourceTree = "<group>"; };
-            D58C305B4A1F4D35B53F823A /* WinOSAudioPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSAudioPipeline.swift; sourceTree = "<group>"; };
-            7B760317AF4C41C08984A0A9 /* WinOSGameHarness.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSGameHarness.swift; sourceTree = "<group>"; };
-            683CBBE13A1A4BEFB79ABF37 /* WinOSGameRuntime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSGameRuntime.swift; sourceTree = "<group>"; };
-
-            FA0182B792E54CF3B4407F49 /* pr_d3d.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_d3d.c; sourceTree = "<group>"; };
-            F986823952D1487DA6CC2A47 /* pr_waveout.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pr_waveout.c; sourceTree = "<group>"; };
-            982184F2CD914802BAB43152 /* pr_d3d.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_d3d.h; sourceTree = "<group>"; };
-            2066BBB063B74084AAE695DD /* pr_waveout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pr_waveout.h; sourceTree = "<group>"; };
+		6FEDF7B36449470FBDB52992 /* WinOSRealDesktopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSRealDesktopView.swift; sourceTree = "<group>"; };
+		E2C6316DC0534172B7D3B6F7 /* WinOSCompositor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSCompositor.swift; sourceTree = "<group>"; };
+		DDCFAF8BABA047358D063F7A /* WinOSDesktopShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSDesktopShell.swift; sourceTree = "<group>"; };
+		58A21F5AAAE34F7491D404EB /* WinOSDesktopTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSDesktopTests.swift; sourceTree = "<group>"; };
+		4E84E580D2AE4FA6ADCA290D /* WinOSFileManagerReal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSFileManagerReal.swift; sourceTree = "<group>"; };
+		1D952329D22D43EB95EF5B95 /* WinOSInputBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSInputBridge.swift; sourceTree = "<group>"; };
+		D3A21115A0894C808AF01578 /* WinOSProcessManagerReal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSProcessManagerReal.swift; sourceTree = "<group>"; };
+		E8A49F50536642EBA9F3F34C /* WinOSRenderEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSRenderEngine.swift; sourceTree = "<group>"; };
+		76D04AA5A0AD47E5BD34FBA8 /* WinOSWindowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSWindowManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-/* Begin PBXResourcesBuildPhase section */
-		1A4D70BCDB0BF886810D55C3 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C037BF1E87892E5B4003B219 /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		804DB52E2955449D2F091C7E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7DEB68BD86E040ACB7481CC8 /* PorticoCore.framework in Frameworks */,
-				E42B71BEA1804A688D293F48 /* Metal.framework in Frameworks */,
-				9B73C8CCEE1144BAB4D2F0C9 /* MetalKit.framework in Frameworks */,
-				0350AC41C97B4889BDE18C0D /* AVFoundation.framework in Frameworks */,
-				82DC2A82D131470DBE367272 /* GameController.framework in Frameworks */,
-				179E27379A354A068DC4F3F6 /* libz.tbd in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		1C48B3B650FF402D8BFFB74C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				184EAE95570A4DCC91448971 /* PorticoRuntime.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2D789B9E75164688A0EF278C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				072A6DC7187C4549BC253DD9 /* libz.tbd in Frameworks */,
+				7376A3BBCA8D47EA252655BA /* fw */,
+				477139FC775BE436301C8F71 /* fw */,
+				7F19A6F848475EECBA7D1DF4 /* fw */,
+				0F86F62BF6C330CE0CAD2C43 /* fw */,
+				F2AF91C4F2666882609C8C9B /* fw */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		D84BD50BE1CF4E77A6E131BA /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				BD68A4343122432BA74EBD15 /* PorticoCore.framework in Embed Frameworks */,
-				BDDC844D42B647DB9452CEB6 /* PorticoRuntime.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXGroup section */
-		B9340614599AB78F485950C7 = {
+		0C3FEB8A801641067AE4C9AA /* PorticoCore */ = {
 			isa = PBXGroup;
 			children = (
-				55FF7DACA07C4941A6FA4661 /* Sources */,
-				2094F8DB6BDF4D99AC463E04 /* Frameworks */,
-				184D22A0CCDA478BA7F484DA /* Products */,
-			);
+				171CE60A03C6BDB447511500 /* Import */,
+				32B8B3AB0BE77833C1824330 /* Models */,
+				609065A52F4548824594DBDE /* Desktop */,
+				644E1A49BD95875D5A0DBF63 /* Store */,
+				7B7E7B7CDAF7E8CD2040F052 /* Graphics */,
+				8B6B36D97D015C3ED4B08466 /* Compatibility */,
+				8BB646A767F9782E4AFE9A80 /* Logging */,
+				A0A815E534E9B4518B19FC51 /* Environment */,
+				A9F1726F4089629653FB690A /* Diagnostics */,
+				C408E1C1B347612F17AB8F5D /* Input */,
+				C87B64D0524BA67768F0D98F /* Runtime */,
+				CAC3D4442B41D82159EFB461 /* Audio */,
+				ECCA96BE540C4CE8C1D14A94 /* Support */,
+
+				D87B619874834227AAF1A881 /* GameRuntime */,);
+			path = PorticoCore;
 			sourceTree = "<group>";
 		};
-		55FF7DACA07C4941A6FA4661 /* Sources */ = {
+		0EAE018493E7F3B8272D64ED /* src */ = {
 			isa = PBXGroup;
 			children = (
-				A73E9FD3A93E42C39267A316 /* PorticoApp */,
-				3436546EF8AB4F59B25C6A1A /* PorticoCore */,
-				CD2ED37F2C0B44CDA43AC588 /* PorticoRuntime */,
+				0AA945091CD4B6229701B0D9 /* pr_peproc.c */,
+				207E41BE1C791C814C035DC7 /* pr_selftest.c */,
+				25D4DA263DAFB7C79EFBCF6E /* pr_cpu64.c */,
+				29CA4B8FC15B0C1FE65A5FA8 /* pr_cap.c */,
+				30E9BB9D04C4BB5C7DB1E092 /* pr_zip.c */,
+				313ECAC82D14C8DE75F614FB /* pr_types.c */,
+				3D6A9CE14B3DF8DC1D12BCE9 /* pr_cpu.c */,
+				3F7C3B3BED6C00E96BBE04B9 /* pr_asm.c */,
+				3FAD3756E3342FC51677A6FF /* pr_winhello.c */,
+				594A837838B6E9FBBB146635 /* pr_input.c */,
+				5A23CD0CD510070637DE9D46 /* pr_gl.c */,
+				9638E3D40BF9DE098A95202D /* pr_pe.c */,
+				9AD18E0D2837F36C0B783DF8 /* pr_log.c */,
+				9DF2E041EAFA99AFFFA4D94E /* pr_gfx.c */,
+				B0A53672A321D794C2E36460 /* pr_vm.c */,
+				B1BAFFAF02A11E5B836488E6 /* pr_surf.c */,
+				BA71D34C8983D4B3F9A3CC2F /* pr_win32.c */,
+				C120B02BF38291034BB89E9A /* pr_audio.c */,
+				E7EDB1536433E720FF97B3E1 /* pr_unwind.c */,
+				E9C4B8C6521BEF258E870E4D /* pr_host.c */,
+
+				FA0182B792E54CF3B4407F49 /* pr_d3d.c */,
+				F986823952D1487DA6CC2A47 /* pr_waveout.c */,);
+			path = src;
+			sourceTree = "<group>";
+		};
+		171CE60A03C6BDB447511500 /* Import */ = {
+			isa = PBXGroup;
+			children = (
+				0848F8708C63089F301499D6 /* PEInspector.swift */,
+				15696B206F66E8896FAB7A78 /* ZipReader.swift */,
+				3870F8A1A0552A3B2096DB13 /* ImportService.swift */,
+				99D72929FA5D0FF1876D4433 /* PELoader.swift */,
+			);
+			path = Import;
+			sourceTree = "<group>";
+		};
+		2DFEB98B4C9F5E02691FC2C8 /* Metal */ = {
+			isa = PBXGroup;
+			children = (
+				27D5431D040CF61AF782570B /* MTKGameView.swift */,
+				D1DD48AC96FA9F67ED729C4E /* MetalGameRenderer.swift */,
+                                A1B2C3D4E5F60718293A4B5C /* Shaders.metal */,
+			);
+			path = Metal;
+			sourceTree = "<group>";
+		};
+		32B8B3AB0BE77833C1824330 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				0475CE6E62FE22704F8ACD0C /* ControlLayout.swift */,
+				1D305C8FE7584CD9F7E6222F /* EnvironmentModels.swift */,
+				66DF830027368356D50DEB2C /* GlobalSettings.swift */,
+				E6D6FC9EBA0FBCBC9AE59705 /* GameModels.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		420CFB359C2A33DC60BFB328 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				0C3FEB8A801641067AE4C9AA /* PorticoCore */,
+				AD480CD4E27C0ABDB5E40C77 /* PorticoRuntime */,
+				C53C1B5576460F7F9698D3C8 /* PorticoApp */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
 		};
-		A73E9FD3A93E42C39267A316 /* PorticoApp */ = {
+		46EF375AE851C942730B27A6 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
-				9E095F3608F44FE9A51FE5D7 /* Audio */,
-				7E187C2F344043C08CC963F9 /* Input */,
-				522AB87E713A424BBD1F7C2D /* Metal */,
-				6A875AD187924172924FD28B /* UI */,
-				2FAD037C3DD3AA2F20C33801 /* AppModel.swift */,
-				693762FCF2DA9B5841452535 /* Info.plist */,
-				396985C66686FE7C05565B71 /* PorticoApp.swift */,
-				79C4344CDE739F111C433CB8 /* Assets.xcassets */,
+				9B0290126F141906599330A7 /* MinimalPETestGenerator.swift */,
 			);
-			path = PorticoApp;
+			path = Tools;
 			sourceTree = "<group>";
 		};
-		9E095F3608F44FE9A51FE5D7 /* Audio */ = {
+		499D4CCF9EAFEE67D6AA38FF /* Audio */ = {
 			isa = PBXGroup;
 			children = (
 				CD46AECE5E55393DAA53A376 /* AVAudioEngineBackend.swift */,
@@ -399,168 +375,56 @@ E8A49F50536642EBA9F3F34C /* WinOSRenderEngine.swift */ = {isa = PBXFileReference
 			path = Audio;
 			sourceTree = "<group>";
 		};
-		7E187C2F344043C08CC963F9 /* Input */ = {
+		5AC99B9EF7C04A2A5AC290C2 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				ADFFA1746869E6DC1620BF07 /* GameControllerBridge.swift */,
-				A07358188C2465E1E40A03C5 /* VirtualControlsView.swift */,
-			);
-			path = Input;
-			sourceTree = "<group>";
-		};
-		522AB87E713A424BBD1F7C2D /* Metal */ = {
-			isa = PBXGroup;
-			children = (
-				27D5431D040CF61AF782570B /* MTKGameView.swift */,
-				D1DD48AC96FA9F67ED729C4E /* MetalGameRenderer.swift */,
-				FC367CF71F02448B917CB2AC /* Shaders.metal */,
-			);
-			path = Metal;
-			sourceTree = "<group>";
-		};
-		6A875AD187924172924FD28B /* UI */ = {
-			isa = PBXGroup;
-			children = (
-				2CD1806A43F747E635447776 /* CapabilitiesView.swift */,
-				68CB50AEDBB4A5DFCADFCA8D /* ControlEditorView.swift */,
-				9128E434B58808121DC38347 /* EnvironmentView.swift */,
-				3636E97F7E9C254BFE4B58D9 /* GameDetailView.swift */,
-				3CB5E14773AAED5BDA36112D /* GameEditorView.swift */,
+				0DEE3000E5CB78C36074F88A /* WinOSLoadingView.swift */,
 				273ACCD7A0D2A4CE62256807 /* GameSettingsView.swift */,
-				B4882B14CAA17625FF698D10 /* GlobalSettingsView.swift */,
+				2CD1806A43F747E635447776 /* CapabilitiesView.swift */,
+				3636E97F7E9C254BFE4B58D9 /* GameDetailView.swift */,
 				37C2205592991D7E20905D34 /* ImportFlowView.swift */,
+				3CB5E14773AAED5BDA36112D /* GameEditorView.swift */,
+				481C4EB207DB884663A9B21E /* WinOSOverlayView.swift */,
 				4AFD3194FF8D2DEBD2E1E815 /* LibraryView.swift */,
-				BD6B4E9E8BB7F909699227FE /* LogsView.swift */,
+				4EF61EE962D6EB33A44AA5A3 /* WinOSCreatePCView.swift */,
+				537255928F42BF9B8DFB2BFD /* WinOSBrand.swift */,
+				6175D38181FFC2685D08F431 /* WinOSHomeView.swift */,
+				64E7F3A779028549BD9FCFAC /* WinOSDesktopView.swift */,
+				68CB50AEDBB4A5DFCADFCA8D /* ControlEditorView.swift */,
 				847088E87217A565172AB1C6 /* OverlayView.swift */,
-				E0D357BC96ABD39F71CBF166 /* RuntimeSessionView.swift */,
-				2B82DC66FF1847C0A8ECF53F /* WinOSBrand.swift */,
-				B36893DF8B194472B7793C41 /* WinOSCreatePCView.swift */,
-				2EA848EA62FA4DC682EDE23A /* WinOSDesktopView.swift */,
-			6FEDF7B36449470FBDB52992 /* WinOSRealDesktopView.swift */,
-				09D8620CA03C43798720BD18 /* WinOSHomeView.swift */,
-				701A9D0D1D6B44B58691E906 /* WinOSLoadingView.swift */,
-				64F303DE74D44F77A29F4C07 /* WinOSOverlayView.swift */,
+				9128E434B58808121DC38347 /* EnvironmentView.swift */,
+				B4882B14CAA17625FF698D10 /* GlobalSettingsView.swift */,
+				BD6B4E9E8BB7F909699227FE /* LogsView.swift */,
 				DE622EA507ADCA5C0EADDFE9 /* WinOSDiagnosticsView.swift */,
+				E0D357BC96ABD39F71CBF166 /* RuntimeSessionView.swift */,
+				6FEDF7B36449470FBDB52992 /* WinOSRealDesktopView.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
 		};
-		3436546EF8AB4F59B25C6A1A /* PorticoCore */ = {
+		609065A52F4548824594DBDE /* Desktop */ = {
 			isa = PBXGroup;
 			children = (
-				76DE78AF624F452BB58C6773 /* Audio */,
-				B167922E3F2446038F444255 /* Compatibility */,
-				6714C3E678814A628884CAAC /* Diagnostics */,
-				4A7C345E02D244259196E199 /* Environment */,
-				06441B2D216548AFB2068C4F /* Graphics */,
-				A7535AB6239E4C35958C1D3C /* Import */,
-				63CDD140957D478AAB9DB8CB /* Input */,
-				28F9089E9BEC4C609821F444 /* Logging */,
-				4761F86BA02547A48471C607 /* Models */,
-                            609065A52F4548824594DBDE /* Desktop */,
-                            D87B619874834227AAF1A881 /* GameRuntime */,
-				826EA91CA1754F9B95F36484 /* Runtime */,
-				0362EB699C434BA4882BE00D /* Store */,
-                                609065A52F4548824594DBDE /* Desktop */,
-				1AB11DC0CA9D460289B3097B /* Support */,
-			);
-			path = PorticoCore;
+				E2C6316DC0534172B7D3B6F7 /* WinOSCompositor.swift */,
+				DDCFAF8BABA047358D063F7A /* WinOSDesktopShell.swift */,
+				58A21F5AAAE34F7491D404EB /* WinOSDesktopTests.swift */,
+				4E84E580D2AE4FA6ADCA290D /* WinOSFileManagerReal.swift */,
+				1D952329D22D43EB95EF5B95 /* WinOSInputBridge.swift */,
+				D3A21115A0894C808AF01578 /* WinOSProcessManagerReal.swift */,
+				E8A49F50536642EBA9F3F34C /* WinOSRenderEngine.swift */,
+				76D04AA5A0AD47E5BD34FBA8 /* WinOSWindowManager.swift */,
+
+				9E33ACFF5E3944D3A0A48A6A /* WinOSDisplayMetrics.swift */,
+				3E93DAE6EC9B48F59CB5AD15 /* WinOSMouseCursor.swift */,
+				D3F32DB633934280A30A3A09 /* WinOSCursorRenderer.swift */,
+				E309E076C56D40D0A9FD632F /* WinOSMouseStateMachine.swift */,
+				ADFF9611886746B6B6E2FD7B /* WinOSDesktopInputHandler.swift */,
+				C0149F180582416FAC6ABD5E /* WinOSOrientationManager.swift */,
+				CB579072B0F64A52913DDD14 /* WinOSDesktopResponsiveTests.swift */,);
+			path = Desktop;
 			sourceTree = "<group>";
 		};
-		76DE78AF624F452BB58C6773 /* Audio */ = {
-			isa = PBXGroup;
-			children = (
-				A8A879E54FC5AD8424879929 /* AudioCore.swift */,
-			);
-			path = Audio;
-			sourceTree = "<group>";
-		};
-		B167922E3F2446038F444255 /* Compatibility */ = {
-			isa = PBXGroup;
-			children = (
-				B201E2264E8E24894E0E5930 /* CompatibilityLayer.swift */,
-			);
-			path = Compatibility;
-			sourceTree = "<group>";
-		};
-		6714C3E678814A628884CAAC /* Diagnostics */ = {
-			isa = PBXGroup;
-			children = (
-				262934608449C213F6DE6DF6 /* DiagnosticsReport.swift */,
-			);
-			path = Diagnostics;
-			sourceTree = "<group>";
-		};
-		4A7C345E02D244259196E199 /* Environment */ = {
-			isa = PBXGroup;
-			children = (
-				62708F7476BC718054B73CC5 /* EnvironmentManager.swift */,
-			);
-			path = Environment;
-			sourceTree = "<group>";
-		};
-		06441B2D216548AFB2068C4F /* Graphics */ = {
-			isa = PBXGroup;
-			children = (
-				BAB9E782C2CF58CD30DA5777 /* GraphicsBackend.swift */,
-				FC0135C47A7D3497F4A59E22 /* SurfaceBridge.swift */,
-			);
-			path = Graphics;
-			sourceTree = "<group>";
-		};
-		A7535AB6239E4C35958C1D3C /* Import */ = {
-			isa = PBXGroup;
-			children = (
-				3870F8A1A0552A3B2096DB13 /* ImportService.swift */,
-				0848F8708C63089F301499D6 /* PEInspector.swift */,
-				99D72929FA5D0FF1876D4433 /* PELoader.swift */,
-				15696B206F66E8896FAB7A78 /* ZipReader.swift */,
-			);
-			path = Import;
-			sourceTree = "<group>";
-		};
-		63CDD140957D478AAB9DB8CB /* Input */ = {
-			isa = PBXGroup;
-			children = (
-				D659428596674B21A94F354B /* GameControllerAdapter.swift */,
-				EAF73D23421A1D72774B39CB /* InputCore.swift */,
-				4746A1276DE840EDA6C8DA3C /* TouchInputAdapter.swift */,
-			);
-			path = Input;
-			sourceTree = "<group>";
-		};
-		28F9089E9BEC4C609821F444 /* Logging */ = {
-			isa = PBXGroup;
-			children = (
-				240AB51204825C547D57F7DE /* LogCenter.swift */,
-			);
-			path = Logging;
-			sourceTree = "<group>";
-		};
-		4761F86BA02547A48471C607 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				0475CE6E62FE22704F8ACD0C /* ControlLayout.swift */,
-				1D305C8FE7584CD9F7E6222F /* EnvironmentModels.swift */,
-				E6D6FC9EBA0FBCBC9AE59705 /* GameModels.swift */,
-				66DF830027368356D50DEB2C /* GlobalSettings.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		826EA91CA1754F9B95F36484 /* Runtime */ = {
-			isa = PBXGroup;
-			children = (
-				482AA6348D19A4E059C2D888 /* ExecutionBackend.swift */,
-				12A912A187632F622C2663CB /* ProcessManager.swift */,
-				D23B609CEC9DE9137BCDBE67 /* RuntimeManager.swift */,
-				BFB8FF03D1C3FE8D3DDE93EF /* RuntimeModels.swift */,
-				6A8DC53CF7FC09C35C71BAA0 /* Win32Layer.swift */,
-			);
-			path = Runtime;
-			sourceTree = "<group>";
-		};
-		0362EB699C434BA4882BE00D /* Store */ = {
+		644E1A49BD95875D5A0DBF63 /* Store */ = {
 			isa = PBXGroup;
 			children = (
 				5ECF21BBC6679292B66822EA /* AppSandbox.swift */,
@@ -570,7 +434,147 @@ E8A49F50536642EBA9F3F34C /* WinOSRenderEngine.swift */ = {isa = PBXFileReference
 			path = Store;
 			sourceTree = "<group>";
 		};
-		1AB11DC0CA9D460289B3097B /* Support */ = {
+		67D301BDF361D1C10D19F5B9 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				7F129F6449E99C9418B25BFC /* portico */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		7B7E7B7CDAF7E8CD2040F052 /* Graphics */ = {
+			isa = PBXGroup;
+			children = (
+				BAB9E782C2CF58CD30DA5777 /* GraphicsBackend.swift */,
+				FC0135C47A7D3497F4A59E22 /* SurfaceBridge.swift */,
+			);
+			path = Graphics;
+			sourceTree = "<group>";
+		};
+		7F129F6449E99C9418B25BFC /* portico */ = {
+			isa = PBXGroup;
+			children = (
+				0DFE4C5DF3ECDE2472121E88 /* pr_unwind.h */,
+				1FABD96CD907641F93D0B5B1 /* pr_pe.h */,
+				219B7D528CFE8A063D282B38 /* pr_log.h */,
+				2F2B47924DD178CB9A119D01 /* pr_vm.h */,
+				2FBB2978FBD868C9E0F5F726 /* pr_gfx.h */,
+				493B2FA7976C2545A1B779BF /* pr_input.h */,
+				70F27042365E1E65719FEB04 /* pr_cpu.h */,
+				89103E831804636517C2AB10 /* pr_types.h */,
+				8D487B81E5B7828DB6CC6BBD /* pr_win32.h */,
+				B2B7D752E0547481DB6B4F27 /* pr_cpu64.h */,
+				B50094914151944F354E1D6E /* pr_peproc.h */,
+				BC8BA5886FE131AAD53A6675 /* pr_surf.h */,
+				C3AD5AFAD83F62DC97E9979F /* pr_gl.h */,
+				C5861D9AAE251CD428C2FE7E /* pr_asm.h */,
+				D24A9A10CCAA48D24967739C /* pr_zip.h */,
+				D94B0CEC4FC0EB2699F30A11 /* pr_winhello.h */,
+				DD8B4632E276206C65E09477 /* pr_host.h */,
+				E03ECF965746C9420A1B56F0 /* pr_cap.h */,
+				EC4189457BE7AEDE728B8673 /* pr_audio.h */,
+
+				982184F2CD914802BAB43152 /* pr_d3d.h */,
+				2066BBB063B74084AAE695DD /* pr_waveout.h */,);
+			path = portico;
+			sourceTree = "<group>";
+		};
+		8B6B36D97D015C3ED4B08466 /* Compatibility */ = {
+			isa = PBXGroup;
+			children = (
+				B201E2264E8E24894E0E5930 /* CompatibilityLayer.swift */,
+			);
+			path = Compatibility;
+			sourceTree = "<group>";
+		};
+		8BB646A767F9782E4AFE9A80 /* Logging */ = {
+			isa = PBXGroup;
+			children = (
+				240AB51204825C547D57F7DE /* LogCenter.swift */,
+			);
+			path = Logging;
+			sourceTree = "<group>";
+		};
+		A0A815E534E9B4518B19FC51 /* Environment */ = {
+			isa = PBXGroup;
+			children = (
+				62708F7476BC718054B73CC5 /* EnvironmentManager.swift */,
+			);
+			path = Environment;
+			sourceTree = "<group>";
+		};
+		A9F1726F4089629653FB690A /* Diagnostics */ = {
+			isa = PBXGroup;
+			children = (
+				262934608449C213F6DE6DF6 /* DiagnosticsReport.swift */,
+			);
+			path = Diagnostics;
+			sourceTree = "<group>";
+		};
+		AD480CD4E27C0ABDB5E40C77 /* PorticoRuntime */ = {
+			isa = PBXGroup;
+			children = (
+				0EAE018493E7F3B8272D64ED /* src */,
+				67D301BDF361D1C10D19F5B9 /* include */,
+			);
+			path = PorticoRuntime;
+			sourceTree = "<group>";
+		};
+		AE30FF9AECD046A8C628416F /* Input */ = {
+			isa = PBXGroup;
+			children = (
+				A07358188C2465E1E40A03C5 /* VirtualControlsView.swift */,
+				ADFFA1746869E6DC1620BF07 /* GameControllerBridge.swift */,
+			);
+			path = Input;
+			sourceTree = "<group>";
+		};
+		C408E1C1B347612F17AB8F5D /* Input */ = {
+			isa = PBXGroup;
+			children = (
+				0C48EE16D349D1852CAEB6A9 /* GameControllerAdapter.swift */,
+				BCA5994C7B4EC878D8033CC2 /* TouchInputAdapter.swift */,
+				EAF73D23421A1D72774B39CB /* InputCore.swift */,
+			);
+			path = Input;
+			sourceTree = "<group>";
+		};
+		C53C1B5576460F7F9698D3C8 /* PorticoApp */ = {
+			isa = PBXGroup;
+			children = (
+				2DFEB98B4C9F5E02691FC2C8 /* Metal */,
+				2FAD037C3DD3AA2F20C33801 /* AppModel.swift */,
+				396985C66686FE7C05565B71 /* PorticoApp.swift */,
+				46EF375AE851C942730B27A6 /* Tools */,
+				499D4CCF9EAFEE67D6AA38FF /* Audio */,
+				5AC99B9EF7C04A2A5AC290C2 /* UI */,
+				693762FCF2DA9B5841452535 /* Info.plist */,
+				AE30FF9AECD046A8C628416F /* Input */,
+			);
+			path = PorticoApp;
+			sourceTree = "<group>";
+		};
+		C87B64D0524BA67768F0D98F /* Runtime */ = {
+			isa = PBXGroup;
+			children = (
+				12A912A187632F622C2663CB /* ProcessManager.swift */,
+				482AA6348D19A4E059C2D888 /* ExecutionBackend.swift */,
+				6A8DC53CF7FC09C35C71BAA0 /* Win32Layer.swift */,
+				BFB8FF03D1C3FE8D3DDE93EF /* RuntimeModels.swift */,
+				D23B609CEC9DE9137BCDBE67 /* RuntimeManager.swift */,
+			);
+			path = Runtime;
+			sourceTree = "<group>";
+		};
+		CAC3D4442B41D82159EFB461 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				A8A879E54FC5AD8424879929 /* AudioCore.swift */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
+		ECCA96BE540C4CE8C1D14A94 /* Support */ = {
 			isa = PBXGroup;
 			children = (
 				C1851983F5D84FC875DA7DB9 /* SupportLevel.swift */,
@@ -578,82 +582,7 @@ E8A49F50536642EBA9F3F34C /* WinOSRenderEngine.swift */ = {isa = PBXFileReference
 			path = Support;
 			sourceTree = "<group>";
 		};
-		CD2ED37F2C0B44CDA43AC588 /* PorticoRuntime */ = {
-			isa = PBXGroup;
-			children = (
-				821F8CB35D88425E9324F4DA /* include */,
-				96253215D4E5462696578B1C /* src */,
-			);
-			path = PorticoRuntime;
-			sourceTree = "<group>";
-		};
-		821F8CB35D88425E9324F4DA /* include */ = {
-			isa = PBXGroup;
-			children = (
-				A61F992BA4734E1C8B5A30C2 /* portico */,
-				90B1B2ACB9724A92A384EFA2 /* PorticoRuntime.h */,
-                            982184F2CD914802BAB43152 /* pr_d3d.h */,
-                            2066BBB063B74084AAE695DD /* pr_waveout.h */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		A61F992BA4734E1C8B5A30C2 /* portico */ = {
-			isa = PBXGroup;
-			children = (
-				C5861D9AAE251CD428C2FE7E /* pr_asm.h */,
-				EC4189457BE7AEDE728B8673 /* pr_audio.h */,
-				E03ECF965746C9420A1B56F0 /* pr_cap.h */,
-				70F27042365E1E65719FEB04 /* pr_cpu.h */,
-				B2B7D752E0547481DB6B4F27 /* pr_cpu64.h */,
-				2FBB2978FBD868C9E0F5F726 /* pr_gfx.h */,
-				2821339B42ED40E1AE0B3457 /* pr_gl.h */,
-				DD8B4632E276206C65E09477 /* pr_host.h */,
-				493B2FA7976C2545A1B779BF /* pr_input.h */,
-				219B7D528CFE8A063D282B38 /* pr_log.h */,
-				1FABD96CD907641F93D0B5B1 /* pr_pe.h */,
-				B50094914151944F354E1D6E /* pr_peproc.h */,
-				BC8BA5886FE131AAD53A6675 /* pr_surf.h */,
-				89103E831804636517C2AB10 /* pr_types.h */,
-				F4322BC9AC4B4B24B3D8BFA5 /* pr_unwind.h */,
-				2F2B47924DD178CB9A119D01 /* pr_vm.h */,
-				8D487B81E5B7828DB6CC6BBD /* pr_win32.h */,
-				D94B0CEC4FC0EB2699F30A11 /* pr_winhello.h */,
-				D24A9A10CCAA48D24967739C /* pr_zip.h */,                            982184F2CD914802BAB43152 /* pr_d3d.h */,
-                            2066BBB063B74084AAE695DD /* pr_waveout.h */,
-			);
-			path = portico;
-			sourceTree = "<group>";
-		};
-		96253215D4E5462696578B1C /* src */ = {
-			isa = PBXGroup;
-			children = (
-				3F7C3B3BED6C00E96BBE04B9 /* pr_asm.c */,
-				C120B02BF38291034BB89E9A /* pr_audio.c */,
-				29CA4B8FC15B0C1FE65A5FA8 /* pr_cap.c */,
-				3D6A9CE14B3DF8DC1D12BCE9 /* pr_cpu.c */,
-				25D4DA263DAFB7C79EFBCF6E /* pr_cpu64.c */,
-				9DF2E041EAFA99AFFFA4D94E /* pr_gfx.c */,
-				396B1432811F47F3AD8ED72F /* pr_gl.c */,
-				E9C4B8C6521BEF258E870E4D /* pr_host.c */,
-				594A837838B6E9FBBB146635 /* pr_input.c */,
-				9AD18E0D2837F36C0B783DF8 /* pr_log.c */,
-				9638E3D40BF9DE098A95202D /* pr_pe.c */,
-				0AA945091CD4B6229701B0D9 /* pr_peproc.c */,
-				207E41BE1C791C814C035DC7 /* pr_selftest.c */,
-				B1BAFFAF02A11E5B836488E6 /* pr_surf.c */,
-				313ECAC82D14C8DE75F614FB /* pr_types.c */,
-				08B9B7710912483E9C874089 /* pr_unwind.c */,
-				B0A53672A321D794C2E36460 /* pr_vm.c */,
-				BA71D34C8983D4B3F9A3CC2F /* pr_win32.c */,
-				3FAD3756E3342FC51677A6FF /* pr_winhello.c */,
-				30E9BB9D04C4BB5C7DB1E092 /* pr_zip.c */,                            FA0182B792E54CF3B4407F49 /* pr_d3d.c */,
-                            F986823952D1487DA6CC2A47 /* pr_waveout.c */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
-		2094F8DB6BDF4D99AC463E04 /* Frameworks */ = {
+		B687106895D06AA330DAFED5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				845175776DA9B77AB4CAFC16 /* Metal.framework */,
@@ -665,101 +594,41 @@ E8A49F50536642EBA9F3F34C /* WinOSRenderEngine.swift */ = {isa = PBXFileReference
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		184D22A0CCDA478BA7F484DA /* Products */ = {
+		2F3A6B1E78F896718625FF06 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				C2F21D19759A81DAF56E042F /* Portico.app */,
-				F6D79295F1764110985D75BB /* PorticoCore.framework */,
-				866A9E14934942B7AC191584 /* PorticoRuntime.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		609065A52F4548824594DBDE /* Desktop */ = {
-                        isa = PBXGroup;
-                        children = (
-			E2C6316DC0534172B7D3B6F7 /* WinOSCompositor.swift */,
-			DDCFAF8BABA047358D063F7A /* WinOSDesktopShell.swift */,
-			58A21F5AAAE34F7491D404EB /* WinOSDesktopTests.swift */,
-			4E84E580D2AE4FA6ADCA290D /* WinOSFileManagerReal.swift */,
-			1D952329D22D43EB95EF5B95 /* WinOSInputBridge.swift */,
-			D3A21115A0894C808AF01578 /* WinOSProcessManagerReal.swift */,
-			E8A49F50536642EBA9F3F34C /* WinOSRenderEngine.swift */,
-			76D04AA5A0AD47E5BD34FBA8 /* WinOSWindowManager.swift */,
-                        );
-                        path = Desktop;
-                        sourceTree = "<group>";
-                };
-
-            609065A52F4548824594DBDE /* Desktop */ = {
-                    isa = PBXGroup;
-                    children = (
-                            DDCFAF8BABA047358D063F7A /* WinOSDesktopShell.swift */,
-                            58A21F5AAAE34F7491D404EB /* WinOSDesktopTests.swift */,
-                            4E84E580D2AE4FA6ADCA290D /* WinOSFileManagerReal.swift */,
-                            1D952329D22D43EB95EF5B95 /* WinOSInputBridge.swift */,
-                            D3A21115A0894C808AF01578 /* WinOSProcessManagerReal.swift */,
-                            E8A49F50536642EBA9F3F34C /* WinOSRenderEngine.swift */,
-                            76D04AA5A0AD47E5BD34FBA8 /* WinOSWindowManager.swift */,
-                            E2C6316DC0534172B7D3B6F7 /* WinOSCompositor.swift */,
-                            9E33ACFF5E3944D3A0A48A6A /* WinOSDisplayMetrics.swift */,
-                            3E93DAE6EC9B48F59CB5AD15 /* WinOSMouseCursor.swift */,
-                            D3F32DB633934280A30A3A09 /* WinOSCursorRenderer.swift */,
-                            E309E076C56D40D0A9FD632F /* WinOSMouseStateMachine.swift */,
-                            ADFF9611886746B6B6E2FD7B /* WinOSDesktopInputHandler.swift */,
-                            C0149F180582416FAC6ABD5E /* WinOSOrientationManager.swift */,
-                            CB579072B0F64A52913DDD14 /* WinOSDesktopResponsiveTests.swift */,
-                    );
-                    path = Desktop;
-                    sourceTree = "<group>";
-            };
-            D87B619874834227AAF1A881 /* GameRuntime */ = {
-                    isa = PBXGroup;
-                    children = (
-                            45D11E08774E4304B947D765 /* WinOSGameDiagnostics.swift */,
-                            29689CF7D72F4D88A2D16FE8 /* WinOSGameCompatibility.swift */,
-                            F7248F186F014099804DC3F4 /* WinOSGraphicsDetector.swift */,
-                            90FF559F25144D2EA99C20DA /* WinOSGraphicsTranslator.swift */,
-                            88BB0E61490C41759E44143A /* WinOSRenderLoop.swift */,
-                            FFCFE802832346C7BE896759 /* WinOSInputPipeline.swift */,
-                            D58C305B4A1F4D35B53F823A /* WinOSAudioPipeline.swift */,
-                            7B760317AF4C41C08984A0A9 /* WinOSGameHarness.swift */,
-                            683CBBE13A1A4BEFB79ABF37 /* WinOSGameRuntime.swift */,
-                    );
-                    path = GameRuntime;
-                    sourceTree = "<group>";
-            };
-/* End PBXGroup section */
-
-/* Begin PBXHeadersBuildPhase section */
-		EBD3AEC89561425EBF51EF5F /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3B67C89F10574BD88A763159 /* pr_asm.h in Headers */,
-				68C9AA4355EB4DD6A3BEC6B0 /* pr_audio.h in Headers */,
-				EA91248F6FD448EEA1AA90F4 /* pr_cap.h in Headers */,
-				ECA262028980440CA1D3513C /* pr_cpu.h in Headers */,
-				7D49A970CE0F4CDA9FE9C625 /* pr_cpu64.h in Headers */,
-				18F9DF69E78E467DBDC38985 /* pr_gfx.h in Headers */,
-				D07BC70665604C689F72C4A4 /* pr_gl.h in Headers */,
-				21E38B17566A42798AA3E050 /* pr_host.h in Headers */,
-				F03E421F160544588250C01B /* pr_input.h in Headers */,
-				C3A63DD138024109A794054C /* pr_log.h in Headers */,
-				789F6A1F165746D4AA957583 /* pr_pe.h in Headers */,
-				0A7E823F5A1D4DDF974F1192 /* pr_peproc.h in Headers */,
-				CB899366D65640479FF6AFC2 /* pr_surf.h in Headers */,
-				6D3FCD98209F4708A493D67D /* pr_types.h in Headers */,
-				8271F9CC536C41908D37315C /* pr_unwind.h in Headers */,
-				C41272CDCD56492DB8A1B770 /* pr_vm.h in Headers */,
-				59CFE4747F86474E812A4B3A /* pr_win32.h in Headers */,
-				87CCD3F9D39E4303880A76DE /* pr_winhello.h in Headers */,
-				177D658812714AE8AAB59A83 /* pr_zip.h in Headers */,
-				F6B7346289884BD9A1DE165B /* PorticoRuntime.h in Headers */,
+		B9340614599AB78F485950C7 = {
+			isa = PBXGroup;
+			children = (
+				420CFB359C2A33DC60BFB328 /* Sources */,
+				74C0354F987B4FC0FDE2C044 /* Portico.xcodeproj */,
+				B687106895D06AA330DAFED5 /* Frameworks */,
+				2F3A6B1E78F896718625FF06 /* Products */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			sourceTree = "<group>";
 		};
-/* End PBXHeadersBuildPhase section */
+		D87B619874834227AAF1A881 /* GameRuntime */ = {
+			isa = PBXGroup;
+			children = (
+				45D11E08774E4304B947D765 /* WinOSGameDiagnostics.swift */,
+				29689CF7D72F4D88A2D16FE8 /* WinOSGameCompatibility.swift */,
+				F7248F186F014099804DC3F4 /* WinOSGraphicsDetector.swift */,
+				90FF559F25144D2EA99C20DA /* WinOSGraphicsTranslator.swift */,
+				88BB0E61490C41759E44143A /* WinOSRenderLoop.swift */,
+				FFCFE802832346C7BE896759 /* WinOSInputPipeline.swift */,
+				D58C305B4A1F4D35B53F823A /* WinOSAudioPipeline.swift */,
+				7B760317AF4C41C08984A0A9 /* WinOSGameHarness.swift */,
+				683CBBE13A1A4BEFB79ABF37 /* WinOSGameRuntime.swift */,
+			);
+			path = GameRuntime;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
 		641004946ADDF49A07272EF5 /* Portico */ = {
@@ -768,52 +637,15 @@ E8A49F50536642EBA9F3F34C /* WinOSRenderEngine.swift */ = {isa = PBXFileReference
 			buildPhases = (
 				D8E2B34C6803A5DAEDA2CB7E /* Sources */,
 				804DB52E2955449D2F091C7E /* Frameworks */,
-				1A4D70BCDB0BF886810D55C3 /* Resources */,
-				D84BD50BE1CF4E77A6E131BA /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				E94417D147AB47B193012103 /* PBXTargetDependency */,
 			);
 			name = Portico;
 			productName = Portico;
 			productReference = C2F21D19759A81DAF56E042F /* Portico.app */;
 			productType = "com.apple.product-type.application";
-		};
-		607EF030517049F49451CE82 /* PorticoCore */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 31BA537A652F4062A5B9156E /* Build configuration list for PBXNativeTarget "PorticoCore" */;
-			buildPhases = (
-				40F3438D8A5E420C95D44362 /* Sources */,
-				1C48B3B650FF402D8BFFB74C /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				CEDEA32790404686A1ED5B2F /* PBXTargetDependency */,
-			);
-			name = PorticoCore;
-			productName = PorticoCore;
-			productReference = F6D79295F1764110985D75BB /* PorticoCore.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		87AB843997844840815A816A /* PorticoRuntime */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 7ABAB9EE7D7A44EF94BE292C /* Build configuration list for PBXNativeTarget "PorticoRuntime" */;
-			buildPhases = (
-				EBD3AEC89561425EBF51EF5F /* Headers */,
-				A4C7DC8A431847C4A453C8D3 /* Sources */,
-				2D789B9E75164688A0EF278C /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = PorticoRuntime;
-			productName = PorticoRuntime;
-			productReference = 866A9E14934942B7AC191584 /* PorticoRuntime.framework */;
-			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
@@ -833,13 +665,11 @@ E8A49F50536642EBA9F3F34C /* WinOSRenderEngine.swift */ = {isa = PBXFileReference
 				Base,
 			);
 			mainGroup = B9340614599AB78F485950C7;
-			productRefGroup = 184D22A0CCDA478BA7F484DA /* Products */;
+			productRefGroup = 2F3A6B1E78F896718625FF06 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				641004946ADDF49A07272EF5 /* Portico */,
-				607EF030517049F49451CE82 /* PorticoCore */,
-				87AB843997844840815A816A /* PorticoRuntime */,
 			);
 		};
 /* End PBXProject section */
@@ -849,139 +679,112 @@ E8A49F50536642EBA9F3F34C /* WinOSRenderEngine.swift */ = {isa = PBXFileReference
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C926BA1CE48E468E881892E1 /* AppModel.swift in Sources */,
-				CBD0C65AE69D4B9899AEA579 /* AVAudioEngineBackend.swift in Sources */,
-				434CEFAAD9B2413EB07358BA /* GameControllerBridge.swift in Sources */,
-				F0AB037C1E114245AA55AE64 /* VirtualControlsView.swift in Sources */,
-				FC09EBFEE26E4A8098B821DE /* MTKGameView.swift in Sources */,
-				4A136084FCF340CE82318C1D /* MetalGameRenderer.swift in Sources */,
-				D9B1CE08A5654933AB20FF2F /* Shaders.metal in Sources */,
-				322DE67C76C64BECB9C5E761 /* PorticoApp.swift in Sources */,
-				0678C6EF9C8B4AD8BEF1530E /* CapabilitiesView.swift in Sources */,
-				49947D7EA5684E368A5CE5BE /* ControlEditorView.swift in Sources */,
-				0CB8772517054A95AE12E29A /* EnvironmentView.swift in Sources */,
-				820D67F4E85C4A42B4946C6C /* GameDetailView.swift in Sources */,
-				0063C28C4E1349C1A61BB9BB /* GameEditorView.swift in Sources */,
-				66CBE5DAB70648FAB47206F0 /* GameSettingsView.swift in Sources */,
-				DEF8C37E9C0B4407B1686B4B /* GlobalSettingsView.swift in Sources */,
-				4F26802BDF1E480F9A75C9B0 /* ImportFlowView.swift in Sources */,
-				6CA731E145604142B0F699FC /* LibraryView.swift in Sources */,
-				4962FB4F425048AB8D26C13C /* LogsView.swift in Sources */,
-				935A594530EC41B181592D28 /* OverlayView.swift in Sources */,
-				B03E90FAB7C84B6BA4889C91 /* RuntimeSessionView.swift in Sources */,
-				61E41FCEBDE34FAE9507D8FD /* WinOSBrand.swift in Sources */,
-				2A7F56D9F719413C9D607981 /* WinOSCreatePCView.swift in Sources */,
-				99B2F6427D8F41F882F35AD0 /* WinOSDesktopView.swift in Sources */,
-			4D9FF1771811435989554E43 /* WinOSRealDesktopView.swift in Sources */,
-			DA85ADD5337C49EF97B6CB83 /* WinOSCompositor.swift in Sources */,
-			71B6A1D8BD7E4A4DBF23D43A /* WinOSDesktopShell.swift in Sources */,
-			2025E64AE35F4AB1A24FA53F /* WinOSDesktopTests.swift in Sources */,
-			34C5245E089B4B6195C83CE3 /* WinOSFileManagerReal.swift in Sources */,
-			431CAC85F4E64F8FB8A0283D /* WinOSInputBridge.swift in Sources */,
-			E7ACA2A0782241BEB814EAE9 /* WinOSProcessManagerReal.swift in Sources */,
-			C74B878E9F014E9A820B4FE8 /* WinOSRenderEngine.swift in Sources */,
-			E67C0F91B7AA42808991DF88 /* WinOSWindowManager.swift in Sources */,
-				7B6AF5B6E21C49BFBC8E626A /* WinOSHomeView.swift in Sources */,
-				D9205347360940FD96F1E022 /* WinOSLoadingView.swift in Sources */,
-				7D39C96C66C74916B6401B8A /* WinOSOverlayView.swift in Sources */,
+				CD93DAC8104828492727025D /* AppModel.swift in Sources */,
+				199916C2A1988153D1EB0B20 /* AVAudioEngineBackend.swift in Sources */,
+				33D6682768D6F35074C566B2 /* GameControllerBridge.swift in Sources */,
+				EB491F0BCB362EC61A62CB86 /* VirtualControlsView.swift in Sources */,
+				BCFD031D389F16B580D49FE3 /* MTKGameView.swift in Sources */,
+                            C1D2E3F40516273849A5B6C7 /* Shaders.metal in Sources */,
+				E2B00E79F8895815DFE0E7CD /* MetalGameRenderer.swift in Sources */,
+				BB4564DB7DE721BC304790BA /* PorticoApp.swift in Sources */,
+				0C5236EB458F4B61027BBA10 /* MinimalPETestGenerator.swift in Sources */,
+				FF3F37C93A529CE1B7096DAB /* CapabilitiesView.swift in Sources */,
+				BCC3326DF7024F4E14F5BC77 /* ControlEditorView.swift in Sources */,
+				CC23B510065908BDBAC3506D /* EnvironmentView.swift in Sources */,
+				15B63C3D5D2F2E893C71972B /* GameDetailView.swift in Sources */,
+				44DF83092BBB9B6D4C473ADC /* GameEditorView.swift in Sources */,
+				4FC4B68A59EFDB941419B84E /* GameSettingsView.swift in Sources */,
+				26CA2C507838B6E17461825C /* GlobalSettingsView.swift in Sources */,
+				2C3DB4064782A707BCA9CEBB /* ImportFlowView.swift in Sources */,
+				FC7C0F1D484F4C54FC2E5422 /* LibraryView.swift in Sources */,
+				A84F84AD8914F997BF18F3D7 /* LogsView.swift in Sources */,
+				971F89AC316C8D21ED2A069D /* OverlayView.swift in Sources */,
+				7C0D9842D88BD5E709DCE822 /* RuntimeSessionView.swift in Sources */,
+				31DD871E346A8914615A99EC /* WinOSBrand.swift in Sources */,
+				A717A3509388A89003DB1F38 /* WinOSCreatePCView.swift in Sources */,
+				BD26839E8C596F0433CBF65D /* WinOSDesktopView.swift in Sources */,
 				27D034CA8040CCA146C51A6F /* WinOSDiagnosticsView.swift in Sources */,
-                            464E1442638148CD93ABF48C /* WinOSDisplayMetrics.swift in Sources */,
-                            C6F525C5FC3D4C71B71F36C1 /* WinOSMouseCursor.swift in Sources */,
-                            101F8DAB2DAF4A3CA5669CAF /* WinOSCursorRenderer.swift in Sources */,
-                            272853E4B4D34161953A01E8 /* WinOSMouseStateMachine.swift in Sources */,
-                            8AE00E82A65E4AD9AF1884CE /* WinOSDesktopInputHandler.swift in Sources */,
-                            3F95C0E721594E6BBA9C0219 /* WinOSOrientationManager.swift in Sources */,
-                            7288E074BCB64D3D8F5BDFA6 /* WinOSDesktopResponsiveTests.swift in Sources */,
-                            155FC3A3F30F406CB40466DE /* WinOSGameDiagnostics.swift in Sources */,
-                            085B816F226D40A5ABFFFC14 /* WinOSGameCompatibility.swift in Sources */,
-                            6CC390EAD7B04505BA187377 /* WinOSGraphicsDetector.swift in Sources */,
-                            16F6045AF5FF45B990EF1AC0 /* WinOSGraphicsTranslator.swift in Sources */,
-                            55412E3C577F405CBA818DA4 /* WinOSRenderLoop.swift in Sources */,
-                            EAFE63EACA6A4E09BA0C18C0 /* WinOSInputPipeline.swift in Sources */,
-                            DED9E71FA4244C13BA312A08 /* WinOSAudioPipeline.swift in Sources */,
-                            07AD791FD8544B808FEE2655 /* WinOSGameHarness.swift in Sources */,
-                            BD32874376644F18BC90AD6C /* WinOSGameRuntime.swift in Sources */,
+				34CC67A98920076B49BB34FF /* WinOSHomeView.swift in Sources */,
+				FFBAA15F6A8F6E0BFD895D6A /* WinOSLoadingView.swift in Sources */,
+				654DEE7499789FCB74B29B14 /* WinOSOverlayView.swift in Sources */,
+				35ADCD4E23EC2288A6BAA41E /* AudioCore.swift in Sources */,
+				DF7155748E3A26E6DF879A4E /* CompatibilityLayer.swift in Sources */,
+				546EEA4C0D0CC7894E8295EE /* DiagnosticsReport.swift in Sources */,
+				FB12EAFD0F76A8148AFC6A5D /* EnvironmentManager.swift in Sources */,
+				9E964F1096BC4280E0DA8D16 /* GraphicsBackend.swift in Sources */,
+				52CB0139BD60A31A32BB2C91 /* SurfaceBridge.swift in Sources */,
+				12A5293FF1BD5CAB34F72493 /* ImportService.swift in Sources */,
+				F34F37AE78AAE4728B70FF11 /* PEInspector.swift in Sources */,
+				B86F759A7939ABB955E0BA54 /* PELoader.swift in Sources */,
+				B5D3561F1A6FCA7309FCA9B5 /* ZipReader.swift in Sources */,
+				76150E470D069EAE447B091B /* GameControllerAdapter.swift in Sources */,
+				72C5D7F32AC10DF467A6C5D3 /* InputCore.swift in Sources */,
+				FCB3F991D457965C83FD36B8 /* TouchInputAdapter.swift in Sources */,
+				52EEE8BC06DCC0561CF56944 /* LogCenter.swift in Sources */,
+				85433CDAFCA5FE9F1CE447EF /* ControlLayout.swift in Sources */,
+				5DCB1209DF0AF60D20BB33BB /* EnvironmentModels.swift in Sources */,
+				19566012DCF3164AB777F91C /* GameModels.swift in Sources */,
+				8A182D608B1CC988AD4C11EA /* GlobalSettings.swift in Sources */,
+				436E2CD503D9ABC0D651ABDF /* ExecutionBackend.swift in Sources */,
+				5B16423A23048166FDC98AA2 /* ProcessManager.swift in Sources */,
+				B37FE3247C2D137503852F49 /* RuntimeManager.swift in Sources */,
+				6DED811667F16DA4A9E2488D /* RuntimeModels.swift in Sources */,
+				0F6EE5C1264446C45EE00656 /* Win32Layer.swift in Sources */,
+				D30C0FA3A7B16123D29E6888 /* AppSandbox.swift in Sources */,
+				CE211D59E268B04CFFA08F37 /* ConfigurationManager.swift in Sources */,
+				37F79058A63A88C0C5EE0E8C /* LibraryStore.swift in Sources */,
+				73B73944A501076D7DFD94D2 /* SupportLevel.swift in Sources */,
+				8AB105B5E090BD41E0B735C8 /* pr_asm.c in Sources */,
+				A6B53146B584EB2BE8B9D2B7 /* pr_audio.c in Sources */,
+				38FD5FEED4CB03789696C5C3 /* pr_cap.c in Sources */,
+				8EC8BB99487C6A49707753A9 /* pr_cpu.c in Sources */,
+				099202E4AFFE5E2FCE7CCB42 /* pr_cpu64.c in Sources */,
+				439472EF6B75E6FF907A0070 /* pr_gfx.c in Sources */,
+				05B6C9C12E018EC1C01FAA2D /* pr_gl.c in Sources */,
+				A8820C8589D124D832454A16 /* pr_host.c in Sources */,
+				9A3576349C5835103DF05605 /* pr_input.c in Sources */,
+				2DF6B4B14667C47E04903C40 /* pr_log.c in Sources */,
+				5A47C2D3B7E4A0C12B0B143D /* pr_pe.c in Sources */,
+				3204ECC128D88D49B3F9D53B /* pr_peproc.c in Sources */,
+				75B9030D91DD26222F5F4AEE /* pr_selftest.c in Sources */,
+				D8F4A46DC015EEBDF8CF8653 /* pr_surf.c in Sources */,
+				0BA88F74F7C77BE010E06CBF /* pr_types.c in Sources */,
+				AD35EA88E4B0A80478D06D9C /* pr_unwind.c in Sources */,
+				57BDEF1AAF276EC0371FC041 /* pr_vm.c in Sources */,
+				7FF592F35C6CB5AD9D213E91 /* pr_win32.c in Sources */,
+				B77A85E2A1C3E9A407B1B637 /* pr_winhello.c in Sources */,
+				CDA1A4F355AAE091E64ADC75 /* pr_zip.c in Sources */,
+				4D9FF1771811435989554E43 /* WinOSRealDesktopView.swift in Sources */,
+				DA85ADD5337C49EF97B6CB83 /* WinOSCompositor.swift in Sources */,
+				71B6A1D8BD7E4A4DBF23D43A /* WinOSDesktopShell.swift in Sources */,
+				2025E64AE35F4AB1A24FA53F /* WinOSDesktopTests.swift in Sources */,
+				34C5245E089B4B6195C83CE3 /* WinOSFileManagerReal.swift in Sources */,
+				431CAC85F4E64F8FB8A0283D /* WinOSInputBridge.swift in Sources */,
+				E7ACA2A0782241BEB814EAE9 /* WinOSProcessManagerReal.swift in Sources */,
+				C74B878E9F014E9A820B4FE8 /* WinOSRenderEngine.swift in Sources */,
+				E67C0F91B7AA42808991DF88 /* WinOSWindowManager.swift in Sources */,
 
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		40F3438D8A5E420C95D44362 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				EB447D9DFEFC440983C23542 /* AudioCore.swift in Sources */,
-				917C0DA895B5417DB171F7D4 /* CompatibilityLayer.swift in Sources */,
-				42E15DCABA094B42BE088415 /* DiagnosticsReport.swift in Sources */,
-				9A297B6F304D401DB6E465AD /* EnvironmentManager.swift in Sources */,
-				1E2D78768372400EAD51224F /* GraphicsBackend.swift in Sources */,
-				F1B99321E826407A869092A0 /* SurfaceBridge.swift in Sources */,
-				D71F4ED8BD4E43F2802CB3B9 /* ImportService.swift in Sources */,
-				5C5A3EAC4E224C0EBE964C5A /* PEInspector.swift in Sources */,
-				04B7C01E79E54D72B3B7941C /* PELoader.swift in Sources */,
-				3B274743CED1418481865EF0 /* ZipReader.swift in Sources */,
-				0196E86BD7E14FA0AA2A941F /* GameControllerAdapter.swift in Sources */,
-				7B0C12059B20493FB9C8EB0D /* InputCore.swift in Sources */,
-				A926D29C4987487E9C115C87 /* TouchInputAdapter.swift in Sources */,
-				313D897F8AB64BFCBC9B962D /* LogCenter.swift in Sources */,
-				01A0732F3CDD49E9A04E130C /* ControlLayout.swift in Sources */,
-				5BC3DD3B1ED24631A18403E4 /* EnvironmentModels.swift in Sources */,
-				FFE4D28F4A3841C383A09133 /* GameModels.swift in Sources */,
-				88AB6402B6E04D64B9D2D228 /* GlobalSettings.swift in Sources */,
-				CEF9EFBDBA6549BCA63E443D /* ExecutionBackend.swift in Sources */,
-				A0FFD1B92F0D4F2A936D15D9 /* ProcessManager.swift in Sources */,
-				7341B52A7ABF4D79A1903F52 /* RuntimeManager.swift in Sources */,
-				85B5683654734FB1AA98C873 /* RuntimeModels.swift in Sources */,
-				4F46839D3576416ABC92404E /* Win32Layer.swift in Sources */,
-				DBA2268B7BAB4B04849110D4 /* AppSandbox.swift in Sources */,
-				520D8E163A9D4A4A95C6ABC1 /* ConfigurationManager.swift in Sources */,
-				8D86090EB4F54C37B1F1F91F /* LibraryStore.swift in Sources */,
-				EDBD573A8DFB4ED5B62ABF57 /* SupportLevel.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A4C7DC8A431847C4A453C8D3 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7717379767224568933CCDA7 /* pr_asm.c in Sources */,
-				526E10B1647D48F788A44ABD /* pr_audio.c in Sources */,
-				A160ADCB4300445DA7C1187D /* pr_cap.c in Sources */,
-				B2A4DCD195314F789DAA1E81 /* pr_cpu.c in Sources */,
-				17BDC2EA8287460EA8836CE1 /* pr_cpu64.c in Sources */,
-				51B843167B4444B18A651B7C /* pr_gfx.c in Sources */,
-				456D9A76F3C343109DD0D97E /* pr_gl.c in Sources */,
-				EDA09D91C3974AEE99F3BE61 /* pr_host.c in Sources */,
-				80F05FDD678F421A959AD98A /* pr_input.c in Sources */,
-				9CED773F4A2949A9B638CB64 /* pr_log.c in Sources */,
-				10763980BA9A4331966BF526 /* pr_pe.c in Sources */,
-				872903A2A89A44B386280F76 /* pr_peproc.c in Sources */,
-				7E6F5D5830EC443EBBA76A00 /* pr_selftest.c in Sources */,
-				688F3B17B26E43E9BCF8EE4F /* pr_surf.c in Sources */,
-				2B4C893662D945B887DBFC13 /* pr_types.c in Sources */,
-				8B6C8FBB19684C66B93EC64D /* pr_unwind.c in Sources */,
-				45FCEDC7958B4CD380EF511E /* pr_vm.c in Sources */,
-				FF1DA04D210B45248D518DE5 /* pr_win32.c in Sources */,
-                            DCF03E743F4741B4BDE34EA9 /* pr_d3d.c in Sources */,
-                            5642B589573549EDBBDE986A /* pr_waveout.c in Sources */,
-				AA7C591E40FD49FA9F4CD220 /* pr_winhello.c in Sources */,
-				F2BC62FD0E3B40B89AFD4C49 /* pr_zip.c in Sources */,
-			);
+				155FC3A3F30F406CB40466DE /* WinOSGameDiagnostics.swift in Sources */,
+				085B816F226D40A5ABFFFC14 /* WinOSGameCompatibility.swift in Sources */,
+				6CC390EAD7B04505BA187377 /* WinOSGraphicsDetector.swift in Sources */,
+				16F6045AF5FF45B990EF1AC0 /* WinOSGraphicsTranslator.swift in Sources */,
+				55412E3C577F405CBA818DA4 /* WinOSRenderLoop.swift in Sources */,
+				EAFE63EACA6A4E09BA0C18C0 /* WinOSInputPipeline.swift in Sources */,
+				DED9E71FA4244C13BA312A08 /* WinOSAudioPipeline.swift in Sources */,
+				07AD791FD8544B808FEE2655 /* WinOSGameHarness.swift in Sources */,
+				BD32874376644F18BC90AD6C /* WinOSGameRuntime.swift in Sources */,
+				DCF03E743F4741B4BDE34EA9 /* pr_d3d.c in Sources */,
+				5642B589573549EDBBDE986A /* pr_waveout.c in Sources */,
+				464E1442638148CD93ABF48C /* WinOSDisplayMetrics.swift in Sources */,
+				C6F525C5FC3D4C71B71F36C1 /* WinOSMouseCursor.swift in Sources */,
+				101F8DAB2DAF4A3CA5669CAF /* WinOSCursorRenderer.swift in Sources */,
+				272853E4B4D34161953A01E8 /* WinOSMouseStateMachine.swift in Sources */,
+				8AE00E82A65E4AD9AF1884CE /* WinOSDesktopInputHandler.swift in Sources */,
+				3F95C0E721594E6BBA9C0219 /* WinOSOrientationManager.swift in Sources */,
+				7288E074BCB64D3D8F5BDFA6 /* WinOSDesktopResponsiveTests.swift in Sources */,);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		E94417D147AB47B193012103 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 607EF030517049F49451CE82 /* PorticoCore */;
-			targetProxy = 36A1A12706ED424BB5DB8939 /* PBXContainerItemProxy */;
-		};
-		CEDEA32790404686A1ED5B2F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 87AB843997844840815A816A /* PorticoRuntime */;
-			targetProxy = 4B216AE29DE1475C9FF39C54 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		06125DCB1954C4F7EEE69894 /* Debug */ = {
@@ -994,6 +797,7 @@ E8A49F50536642EBA9F3F34C /* WinOSRenderEngine.swift */ = {isa = PBXFileReference
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
+
 				ONLY_ACTIVE_ARCH = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1014,6 +818,7 @@ E8A49F50536642EBA9F3F34C /* WinOSRenderEngine.swift */ = {isa = PBXFileReference
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
+
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				GCC_OPTIMIZATION_LEVEL = s;
 			};
@@ -1036,20 +841,12 @@ E8A49F50536642EBA9F3F34C /* WinOSRenderEngine.swift */ = {isa = PBXFileReference
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.portico.Portico;
 				PRODUCT_NAME = Portico;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				PRODUCT_MODULE_NAME = Portico;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/Sources/PorticoRuntime/include",
 				);
-				SWIFT_VERSION = 5.0;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				CLANG_ENABLE_MODULES = YES;
-				DEFINES_MODULE = YES;
+
 			};
 			name = Debug;
 		};
@@ -1070,160 +867,12 @@ E8A49F50536642EBA9F3F34C /* WinOSRenderEngine.swift */ = {isa = PBXFileReference
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.portico.Portico;
 				PRODUCT_NAME = Portico;
-				PRODUCT_MODULE_NAME = Portico;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/Sources/PorticoRuntime/include",
 				);
-				SWIFT_VERSION = 5.0;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				CLANG_ENABLE_MODULES = YES;
-				DEFINES_MODULE = YES;
-			};
-			name = Release;
-		};
-		39666A586441490B96056753 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GENERATE_INFOPLIST_FILE = YES;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = io.portico.PorticoCore;
-				PRODUCT_NAME = PorticoCore;
-				PRODUCT_MODULE_NAME = PorticoCore;
-				SWIFT_VERSION = 5.0;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				CLANG_ENABLE_MODULES = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/Sources/PorticoRuntime/include",
-				);
-				OTHER_CFLAGS = (
-					"-DPR_ENABLE_ZLIB=1",
-				);
-				SKIP_INSTALL = NO;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-			};
-			name = Debug;
-		};
-		94383548D97842B3A8D89664 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GENERATE_INFOPLIST_FILE = YES;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = io.portico.PorticoCore;
-				PRODUCT_NAME = PorticoCore;
-				PRODUCT_MODULE_NAME = PorticoCore;
-				SWIFT_VERSION = 5.0;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				CLANG_ENABLE_MODULES = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/Sources/PorticoRuntime/include",
-				);
-				OTHER_CFLAGS = (
-					"-DPR_ENABLE_ZLIB=1",
-				);
-				SKIP_INSTALL = NO;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				GCC_OPTIMIZATION_LEVEL = s;
-			};
-			name = Release;
-		};
-		A84630E3177747B796CAF32F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GENERATE_INFOPLIST_FILE = YES;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = io.portico.PorticoRuntime;
-				PRODUCT_NAME = PorticoRuntime;
-				PRODUCT_MODULE_NAME = PorticoRuntime;
-				CLANG_ENABLE_MODULES = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/Sources/PorticoRuntime/include",
-				);
-				OTHER_CFLAGS = (
-					"-DPR_ENABLE_ZLIB=1",
-				);
-				SKIP_INSTALL = NO;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		137F46CFB1DE46DDB3727892 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GENERATE_INFOPLIST_FILE = YES;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = io.portico.PorticoRuntime;
-				PRODUCT_NAME = PorticoRuntime;
-				PRODUCT_MODULE_NAME = PorticoRuntime;
-				CLANG_ENABLE_MODULES = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/Sources/PorticoRuntime/include",
-				);
-				OTHER_CFLAGS = (
-					"-DPR_ENABLE_ZLIB=1",
-				);
-				SKIP_INSTALL = NO;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				SWIFT_VERSION = 5.0;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				GCC_OPTIMIZATION_LEVEL = s;
+
 			};
 			name = Release;
 		};
@@ -1244,24 +893,6 @@ E8A49F50536642EBA9F3F34C /* WinOSRenderEngine.swift */ = {isa = PBXFileReference
 			buildConfigurations = (
 				E07B8131BAB0D598AD460C2C /* Debug */,
 				AB3F0C1C96C3F4D3D4AB9249 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		31BA537A652F4062A5B9156E /* Build configuration list for PBXNativeTarget "PorticoCore" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				39666A586441490B96056753 /* Debug */,
-				94383548D97842B3A8D89664 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		7ABAB9EE7D7A44EF94BE292C /* Build configuration list for PBXNativeTarget "PorticoRuntime" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				A84630E3177747B796CAF32F /* Debug */,
-				137F46CFB1DE46DDB3727892 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

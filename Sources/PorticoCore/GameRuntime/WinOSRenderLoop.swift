@@ -1,5 +1,4 @@
 import Foundation
-import PorticoCore
 #if canImport(Metal)
 import Metal
 import MetalKit
@@ -68,7 +67,7 @@ public final class WinOSRenderLoop: ObservableObject {
         presentCount = 0
         droppedFrames = 0
         frameTimes.removeAll()
-        lastFrameTime = ProcessInfo.processInfo.systemUptime
+        lastFrameTime = CACurrentMediaTime()
         
         displayLink = CADisplayLink(target: self, selector: #selector(displayLinkFired))
         displayLink?.preferredFrameRateRange = CAFrameRateRange(minimum: 30, maximum: Float(targetFPS), preferred: Float(targetFPS))
@@ -89,7 +88,7 @@ public final class WinOSRenderLoop: ObservableObject {
     }
     
     @objc private func displayLinkFired() {
-        let now = ProcessInfo.processInfo.systemUptime
+        let now = CACurrentMediaTime()
         let dt = now - lastFrameTime
         lastFrameTime = now
         

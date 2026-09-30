@@ -40,18 +40,16 @@ public final class WinOSDesktopInputHandler: ObservableObject {
         self.inputBridge = inputBridge
         self.compositor = compositor
         self.config = config
-
-        let initialMetrics = displayManager.metrics
-        self.displayMetrics = initialMetrics
+        self.displayMetrics = displayManager.metrics
         
         // Managers
-        self.cursorManager = WinOSMouseCursorManager(initialX: initialMetrics.desktopWidth/2, initialY: initialMetrics.desktopHeight/2, displayMetrics: initialMetrics)
+        self.cursorManager = WinOSMouseCursorManager(initialX: displayMetrics.desktopWidth/2, initialY: displayMetrics.desktopHeight/2, displayMetrics: displayMetrics)
         self.stateMachine = WinOSMouseStateMachine(config: config)
         self.cursor = cursorManager.cursor
         
         // Cursor renderer (acima das janelas)
         if let comp = compositor {
-            self.cursorRenderer = WinOSCursorRenderer(displayMetrics: initialMetrics, compositor: comp)
+            self.cursorRenderer = WinOSCursorRenderer(displayMetrics: displayMetrics, compositor: comp)
         }
         
         setupCallbacks()

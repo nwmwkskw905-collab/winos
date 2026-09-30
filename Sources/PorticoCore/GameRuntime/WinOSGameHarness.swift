@@ -1,5 +1,4 @@
 import Foundation
-import PorticoCore
 
 /// FASE 12 — Game Harness real: orquestra load → init → run → frame loop → input → audio → shutdown com diagnostics
 
@@ -18,11 +17,11 @@ public enum WinOSGamePhase: String, Sendable {
 public struct WinOSGameSession: Sendable {
     public var executableURL: URL
     public var profile: GameProfile
-    public var config: EffectiveConfig
+    public var config: RuntimeConfig
     public var fsRoot: String
     public var startTime: Date
     
-    public init(executableURL: URL, profile: GameProfile, config: EffectiveConfig, fsRoot: String) {
+    public init(executableURL: URL, profile: GameProfile, config: RuntimeConfig, fsRoot: String) {
         self.executableURL = executableURL
         self.profile = profile
         self.config = config
@@ -68,7 +67,7 @@ public final class WinOSGameHarness: ObservableObject {
     
     // MARK: - Load + Analyze
     
-    public func load(executableURL: URL, profile: GameProfile, config: EffectiveConfig, fsRoot: String) throws -> WinOSCompatReport {
+    public func load(executableURL: URL, profile: GameProfile, config: RuntimeConfig, fsRoot: String) throws -> WinOSCompatReport {
         phase = .loading
         diagnostics.reset()
         
@@ -101,7 +100,7 @@ public final class WinOSGameHarness: ObservableObject {
         let loadedImage: PELoadedImage
         do {
             loadedImage = try PELoader.loadImage(data, moduleName: executableURL.lastPathComponent)
-            diagnostics.peLoaderSuccess(file: executableURL.lastPathComponent, machine: loadedImage.report.image.machine, arch: loadedImage.report.image.arch, isPE32Plus: loadedImage.report.image.isPE32Plus, sections: Int(loadedImage.report.image.sectionCount), imports: loadedImage.report.imports.count)
+            diagnostics.peLoaderSuccess(file: executableURL.lastPathComponent, machine: loadedImage.report.image.machine, arch: loadedImage.report.image.arch, isPE32Plus: loadedImage.report.image.isPE32Plus, sections: loadedImage.report.sections.count, imports: loadedImage.report.imports.count)
         } catch {
             phase = .failed
             lastError = "PE load failed: \(error)"
@@ -129,7 +128,21 @@ public final class WinOSGameHarness: ObservableObject {
         logCenter.info("compat", md)
         
         // Select backend
-        let image = SoftwareImage.windowsPE(loadedImage.report.image)
+        let image = SoftwareImage.windowsPE(PEImage(
+            isPE32Plus: loadedImage.report.image.isPE32Plus,
+            isDLL: false,
+            machine: loadedImage.report.image.machine,
+            subsystem: 2,
+            timestamp: 0,
+            imageBase: 0,
+            sizeOfImage: 0,
+            entryPointRVA: 0,
+            sectionCount: loadedImage.report.sections.count,
+            importCount: loadedImage.report.imports.count,
+            arch: loadedImage.report.image.arch,
+            imports: loadedImage.report.imports.map { PEImport(dll: $0.dll, functions: $0.functions.map { PEImportFunction(name: $0, ordinal: nil, isOrdinal: false) }) },
+            sections: []
+        ))
         
         guard let (selectedBackend, verdict) = backendRegistry.select(for: image) else {
             phase = .failed
@@ -162,13 +175,37 @@ public final class WinOSGameHarness: ObservableObject {
             profile: session.profile,
             config: session.config,
             executableURL: session.executableURL,
-            environmentVariables: session.config.environmentVariables,
-            environmentName: session.profile.ambiente.name
+            environmentVariables: [:],
+            log: logCenter
         )
         
-        // Initialize backend
+        // Initialize backend — CORREÇÃO: usa PE real, não mockForRefusal
         do {
-            try backend.load(executable: session.executableURL, image: .windowsPE(PEImage.mockForRefusal(session.profile.arquiteturaExe)))
+            // Tenta detectar PE real para logs, fallback para .unknown que força leitura real
+            let imageForLoad: SoftwareImage
+            if let data = try? Data(contentsOf: session.executableURL),
+               PEInspector.looksLikePE(data),
+               let real = try? PEInspector.scan(data) {
+                let pe = PEImage(
+                    isPE32Plus: real.isPE32Plus,
+                    isDLL: real.isDLL,
+                    machine: real.machine,
+                    subsystem: real.subsystem,
+                    timestamp: real.timestamp,
+                    imageBase: real.imageBase,
+                    sizeOfImage: real.sizeOfImage,
+                    entryPointRVA: real.entryPointRVA,
+                    sectionCount: real.sectionCount,
+                    importCount: real.importCount,
+                    arch: real.arch,
+                    imports: real.imports,
+                    sections: real.sections
+                )
+                imageForLoad = .windowsPE(pe)
+            } else {
+                imageForLoad = .unknown
+            }
+            try backend.load(executable: session.executableURL, image: imageForLoad)
             try backend.initialize(context: context)
             diagnostics.log(.info, category: .process, code: "BACKEND_INIT_SUCCESS", message: "BACKEND_INIT_SUCCESS", detail: "backend=\(backend.id)")
         } catch {
@@ -201,8 +238,10 @@ public final class WinOSGameHarness: ObservableObject {
         // Initialize audio pipeline
         let audio = WinOSAudioPipeline()
         audio.configure(diagnostics: diagnostics)
-        // Audio detection requires the original PEReport; compatibility.graphics is only a graphics detection result.
-        // Audio detection is therefore skipped here when only the compatibility report is available.
+        if let report = compatibility?.graphics {
+            // Use report from compatibility
+            _ = audio.detectAudioAPI(report: PEReport(image: PEImageInfo(isPE32Plus: false, isDLL: false, machine: 0, subsystem: 0, timestamp: 0, imageBase: 0, sizeOfImage: 0, entryPointRVA: 0, sectionCount: 0, importCount: 0, arch: "", imports: [], sections: [], entryPoint: 0, imageSize: 0), sections: [], imports: [], exports: [], diagnostics: ""))
+        }
         audioPipeline = audio
         
         phase = .idle

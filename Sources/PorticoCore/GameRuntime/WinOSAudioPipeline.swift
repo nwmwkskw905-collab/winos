@@ -1,5 +1,4 @@
 import Foundation
-import PorticoCore
 import AVFoundation
 
 /// FASE 10 — Audio pipeline real (waveOut, DirectSound, XAudio2 → AVAudioEngine)
@@ -53,7 +52,7 @@ public final class WinOSAudioPipeline: ObservableObject {
         
         for imp in report.imports {
             let dll = imp.dll.lowercased()
-            let funcs = imp.functions.map { $0.displayName.lowercased() }
+            let funcs = imp.functions.map { $0.lowercased() }
             
             if dll.contains("winmm") {
                 if funcs.contains(where: { $0.contains("waveout") }) {

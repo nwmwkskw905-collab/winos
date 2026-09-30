@@ -1,5 +1,4 @@
 import Foundation
-import PorticoCore
 
 /// FASE 11 — Diagnostics real para game runtime
 /// Categorias: INFO, WARNING, UNIMPLEMENTED, MISSING_DLL, GRAPHICS, AUDIO, INPUT, PROCESS, FILESYSTEM, PE_LOADER

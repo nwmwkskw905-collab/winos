@@ -20,34 +20,8 @@
                ReferencedContainer = "container:Portico.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "NO"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "607EF030517049F49451CE82"
-               BuildableName = "PorticoCore.framework"
-               BlueprintName = "PorticoCore"
-               ReferencedContainer = "container:Portico.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "NO"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "87AB843997844840815A816A"
-               BuildableName = "PorticoRuntime.framework"
-               BlueprintName = "PorticoRuntime"
-               ReferencedContainer = "container:Portico.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
+
+
       </BuildActionEntries>
    </BuildAction>
    <TestAction

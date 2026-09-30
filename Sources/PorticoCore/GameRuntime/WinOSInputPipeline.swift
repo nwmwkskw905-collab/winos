@@ -1,5 +1,4 @@
 import Foundation
-import PorticoCore
 import GameController
 
 /// FASE 9 — Input pipeline real (touch → mouse/keyboard/gamepad → Win32 messages)
@@ -29,7 +28,7 @@ public struct WinOSGameInputState: Sendable {
     public var timestamp: Double = 0
     
     public init() {
-        timestamp = ProcessInfo.processInfo.systemUptime
+        timestamp = CACurrentMediaTime()
     }
 }
 
@@ -80,7 +79,7 @@ public final class WinOSInputPipeline: ObservableObject {
         currentState.mouseLeftDown = true
         currentState.mouseDeltaX = deltaX
         currentState.mouseDeltaY = deltaY
-        currentState.timestamp = ProcessInfo.processInfo.systemUptime
+        currentState.timestamp = CACurrentMediaTime()
         
         inputBridge?.handleTouchBegan(x: x, y: y, windowID: windowID)
         diagnostics?.inputEvent(type: "TOUCH_BEGAN", x: lx, y: ly, keyCode: 0)
@@ -105,7 +104,7 @@ public final class WinOSInputPipeline: ObservableObject {
         currentState.mouseY = ly
         currentState.mouseDeltaX = deltaX
         currentState.mouseDeltaY = deltaY
-        currentState.timestamp = ProcessInfo.processInfo.systemUptime
+        currentState.timestamp = CACurrentMediaTime()
         
         inputBridge?.handleTouchMoved(x: x, y: y, windowID: windowID)
         onInputState?(currentState)
@@ -122,7 +121,7 @@ public final class WinOSInputPipeline: ObservableObject {
         currentState.mouseX = lx
         currentState.mouseY = ly
         currentState.mouseLeftDown = false
-        currentState.timestamp = ProcessInfo.processInfo.systemUptime
+        currentState.timestamp = CACurrentMediaTime()
         
         inputBridge?.handleTouchEnded(x: x, y: y, windowID: windowID)
         diagnostics?.inputEvent(type: "TOUCH_ENDED", x: lx, y: ly, keyCode: 0)
@@ -138,7 +137,7 @@ public final class WinOSInputPipeline: ObservableObject {
         eventCount += 1
         currentState.keysDown.insert(keyCode)
         currentState.lastChar = char
-        currentState.timestamp = ProcessInfo.processInfo.systemUptime
+        currentState.timestamp = CACurrentMediaTime()
         
         inputBridge?.handleKeyDown(keyCode: keyCode, char: char, windowID: windowID)
         diagnostics?.inputEvent(type: "KEY_DOWN", x: 0, y: 0, keyCode: keyCode)
@@ -154,7 +153,7 @@ public final class WinOSInputPipeline: ObservableObject {
     public func handleKeyUp(keyCode: UInt32, windowID: UInt32) {
         eventCount += 1
         currentState.keysDown.remove(keyCode)
-        currentState.timestamp = ProcessInfo.processInfo.systemUptime
+        currentState.timestamp = CACurrentMediaTime()
         
         inputBridge?.handleKeyUp(keyCode: keyCode, windowID: windowID)
         diagnostics?.inputEvent(type: "KEY_UP", x: 0, y: 0, keyCode: keyCode)
@@ -182,7 +181,7 @@ public final class WinOSInputPipeline: ObservableObject {
         currentState.gamepadButtons = buttons
         currentState.gamepadAxes = axes
         currentState.gamepadTriggers = triggers
-        currentState.timestamp = ProcessInfo.processInfo.systemUptime
+        currentState.timestamp = CACurrentMediaTime()
         onInputState?(currentState)
     }
     

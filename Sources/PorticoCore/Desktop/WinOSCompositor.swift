@@ -1,5 +1,4 @@
 import Foundation
-import PorticoCore
 
 /// Compositor central — combina desktop background + window surfaces + cursor + taskbar + overlays → single final framebuffer
 /// Prioriza dirty rectangles, partial redraw, texture reuse, triple buffering, frame pacing
@@ -161,7 +160,7 @@ public final class WinOSCompositor: ObservableObject {
     }
     
     public func composite() -> [UInt32] {
-        let start = ProcessInfo.processInfo.systemUptime
+        let start = CACurrentMediaTime()
         
         // Se não há dirty rects, não redesenha tudo — retorna front buffer
         if dirtyRects.isEmpty && frameCount > 0 {
@@ -221,7 +220,7 @@ public final class WinOSCompositor: ObservableObject {
         
         finalFramebuffer = frontBuffer
         frameCount += 1
-        let end = ProcessInfo.processInfo.systemUptime
+        let end = CACurrentMediaTime()
         lastCompositeTimeMs = (end - start) * 1000.0
         
         // Limpa dirty rects após composite

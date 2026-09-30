@@ -191,7 +191,7 @@ public final class WinOSCursorRenderer: ObservableObject {
         
         lastCursorX = cursor.x
         lastCursorY = cursor.y
-        lastRenderTime = ProcessInfo.processInfo.systemUptime
+        lastRenderTime = CACurrentMediaTime()
         
         // Log apenas quando move muito ou a cada 60 frames para não spammar
         // NSLog("[WINOS-CURSOR-RENDER] render x=%d y=%d type=%@ z=9999", x, y, cursor.type.rawValue)

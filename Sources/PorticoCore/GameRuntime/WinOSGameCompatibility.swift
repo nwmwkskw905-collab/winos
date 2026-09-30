@@ -1,5 +1,4 @@
 import Foundation
-import PorticoCore
 
 /// FASE 3,4,5 — Game Compatibility Layer
 /// Analisa PE + Win32 + Filesystem + Graphics para gerar relatório de compatibilidade honesto
@@ -71,7 +70,7 @@ public final class WinOSGameCompatibility: Sendable {
         let arch = report.image.arch
         let machine = report.image.machine
         let isPE32Plus = report.image.isPE32Plus
-        let sectionCount = report.image.sectionCount
+        let sectionCount = report.sections.count
         let importCount = report.imports.count
         
         // APIs
@@ -168,7 +167,7 @@ public final class WinOSGameCompatibility: Sendable {
             arch: arch,
             machine: machine,
             isPE32Plus: isPE32Plus,
-            sectionCount: Int(sectionCount),
+            sectionCount: sectionCount,
             importCount: importCount,
             totalAPIs: totalAPIs,
             resolvedAPIs: resolved,
