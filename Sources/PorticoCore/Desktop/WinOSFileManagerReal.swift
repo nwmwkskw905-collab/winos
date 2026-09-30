@@ -1,4 +1,6 @@
 import Foundation
+import PorticoCore
+import Combine
 
 /// FileManager REAL — usa VFS/Sandbox REAL, não lista fictícia
 /// Mapeia Windows path → VFS → AppSandbox → iOS filesystem

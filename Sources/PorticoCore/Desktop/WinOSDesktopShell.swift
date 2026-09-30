@@ -1,4 +1,6 @@
 import Foundation
+import PorticoCore
+import Combine
 
 /// Desktop Shell REAL — sobre o runtime, não sistema fictício separado
 /// WinOSDesktop → Shell → WindowManager → FileManager → Taskbar → StartMenu → DesktopIcons → ProcessManager → RuntimeBridge → InputBridge → RenderSurface
