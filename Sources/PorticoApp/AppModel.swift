@@ -30,6 +30,7 @@ final class AppModel: ObservableObject {
     @Published var logBadge = 0
     @Published var selectedPC: EnvironmentProfile?
     @Published var showDesktop = false
+    @Published var showRealDesktop = false
     @Published var runtimeStage: String = "idle"
     @Published var lastRuntimeError: String = ""
     @Published var lastLoadedExecutable: String = ""
@@ -69,16 +70,22 @@ final class AppModel: ObservableObject {
             try config.load()
             try environments.load()
             try library.load()
-            try ensureSelfTestGame()
+            // Self-test NÃO deve aparecer na biblioteca normal — é ferramenta de diagnóstico
+            // Preserva capacidade de diagnóstico mas remove registro automático na biblioteca
+            // Gera payload em RuntimeTests/ para uso em Diagnostics → Runtime Tests
+            try ensureRuntimeTestsPayload()
+            // Remove self-test antigo da biblioteca se existir (migração)
+            try removeSelfTestFromLibraryIfPresent()
             refreshGames()
-            log.info("app", "Portico iniciado")
+            log.info("app", "Portico iniciado — biblioteca normal sem self-test, runtime tests em Diagnostics")
         } catch {
             present(title: "Falha ao iniciar", message: "\(error)")
         }
     }
 
     func refreshGames() {
-        games = library.games.sorted { $0.nome < $1.nome }
+        // Filtra selfTest da biblioteca normal — só mostra windowsPE e pxpNative de usuário
+        games = library.games.filter { $0.tipo != .selfTest }.sorted { $0.nome < $1.nome }
     }
 
     func present(title: String, message: String) {
@@ -124,14 +131,15 @@ final class AppModel: ObservableObject {
         config.effective(for: game)
     }
 
-    // MARK: - Self-Test embutido (payload nativo PXP, honestamente rotulado)
+    // MARK: - Runtime Tests (diagnóstico, não biblioteca normal)
 
-    func ensureSelfTestGame() throws {
-        guard library.game(named: "Portico Self-Test") == nil else { return }
-        let rel = "Games/game-selftest.portico"
+    /// Garante que payloads de teste de runtime existem em RuntimeTests/ (não Games/)
+    /// Para uso em Diagnostics → Runtime Tests, sem poluir biblioteca do usuário
+    func ensureRuntimeTestsPayload() throws {
+        let rel = "RuntimeTests"
         let dir = try sandbox.resolveInside(rel)
         try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
-
+        
         var payload: UnsafeMutableRawPointer?
         var plen = 0
         let st = pr_selftest_payload_build(&payload, &plen)
@@ -140,20 +148,43 @@ final class AppModel: ObservableObject {
         }
         let data = Data(bytes: p, count: plen)
         free(p)
-        try data.write(to: dir.appendingPathComponent("selftest.pxp"), options: .atomic)
+        
+        let pxpURL = dir.appendingPathComponent("selftest.pxp")
+        if !FileManager.default.fileExists(atPath: pxpURL.path) {
+            try data.write(to: pxpURL, options: .atomic)
+            NSLog("[WINOS-SELFTEST] Payload PXP gerado em RuntimeTests/selftest.pxp size=%d", plen)
+        }
+        
+        // Também garante que diretório de testes existe para futuros PE Loader, Win32, Graphics, Input tests
+        NSLog("[WINOS-SELFTEST] RuntimeTests payloads prontos em %@", dir.path)
+    }
+    
+    /// Remove self-test antigo da biblioteca se existir (migração para Diagnostics)
+    func removeSelfTestFromLibraryIfPresent() throws {
+        if let old = library.game(named: "Portico Self-Test") {
+            try library.remove(id: old.id, deleteFiles: false)
+            NSLog("[WINOS-SELFTEST] Removido Portico Self-Test da biblioteca normal (movido para Diagnostics)")
+        }
+        // Também remove variações de nome
+        for name in ["Port Self Test", "Portico Self Test", "Self Test", "selftest"] {
+            if let g = library.game(named: name) {
+                try? library.remove(id: g.id, deleteFiles: false)
+                NSLog("[WINOS-SELFTEST] Removido '%@' da biblioteca normal", name)
+            }
+        }
+        // Remove games com tipo selfTest que possam ter sido criados com outros nomes
+        let selfTests = library.games.filter { $0.tipo == .selfTest }
+        for st in selfTests {
+            try? library.remove(id: st.id, deleteFiles: false)
+            NSLog("[WINOS-SELFTEST] Removido selfTest tipo da biblioteca: %@", st.nome)
+        }
+    }
 
-        var g = GameProfile(
-            nome: "Portico Self-Test",
-            caminho: rel,
-            executavel: "selftest.pxp",
-            resolucao: Resolution(width: 640, height: 360),
-            fps: .cap(60),
-            notas: "Payload nativo PXP (IA-32 interpretado) que exercita o pipeline completo. NÃO é um jogo Windows.",
-            arquiteturaExe: "x86 (interpretado)",
-            tipo: .selfTest,
-            tamanhoInstalacao: Int64(plen)
-        )
-        g.ambiente = .defaultEnv
-        _ = try library.add(g)
+    // MARK: - Self-Test legado (preservado para compatibilidade, mas não usado na biblioteca normal)
+
+    func ensureSelfTestGame() throws {
+        // LEGADO: mantido para compatibilidade, mas agora chama ensureRuntimeTestsPayload
+        // Não adiciona mais à biblioteca normal
+        try ensureRuntimeTestsPayload()
     }
 }

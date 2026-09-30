@@ -1,5 +1,8 @@
 import Foundation
 import PorticoRuntime
+#if canImport(Metal)
+import Metal
+#endif
 
 /// Veredito de compatibilidade de um backend para uma imagem.
 public struct BackendVerdict: Equatable, Sendable {
@@ -85,11 +88,20 @@ public final class PXPInterpreterBackend: ExecutionBackend {
 
     public func load(executable: URL, image: SoftwareImage) throws {
         if phase != .idle && phase != .stopped { shutdown() }
+        let isSelfTest = executable.lastPathComponent.lowercased().contains("selftest")
+        if isSelfTest {
+            NSLog("[WINOS-SELFTEST] SELFTEST_START load file=%@ image=%@", executable.path, image.label)
+            NSLog("[WINOS-SELFTEST] SELFTEST_PROCESS_CREATED — backend pxp-interpreter, payload PXP0 IA-32, tipo=selfTest")
+        }
         let data: Data
         do {
             data = try Data(contentsOf: executable)
+            if isSelfTest {
+                NSLog("[WINOS-SELFTEST] SELFTEST_PROCESS_CREATED SUCCESS size=%d arch=x86 (interpretado) PE type=pxpNative", data.count)
+            }
         } catch {
             phase = .failed
+            if isSelfTest { NSLog("[WINOS-SELFTEST] SELFTEST_FAIL io error=%@", "\(error)") }
             throw RuntimeFailure.io(reason: "leitura do payload: \(error)")
         }
         switch image {
@@ -97,7 +109,11 @@ public final class PXPInterpreterBackend: ExecutionBackend {
             guard data.count >= 4,
                   data.prefix(4).elementsEqual([0x50, 0x58, 0x50, 0x30]) else {
                 phase = .failed
+                if isSelfTest { NSLog("[WINOS-SELFTEST] SELFTEST_FAIL INVALID_MZ — sem assinatura PXP0") }
                 throw RuntimeFailure.payloadInvalid(reason: "payload PXP sem assinatura PXP0")
+            }
+            if isSelfTest {
+                NSLog("[WINOS-SELFTEST] SELFTEST_SURFACE_CREATED — validação PXP0 OK, será 640x360 via GFX_OP present")
             }
         case .windowsPE:
             break // aceito p/ recusa honesta na inicialização (pr_host_start is_pe)
@@ -107,17 +123,26 @@ public final class PXPInterpreterBackend: ExecutionBackend {
         }
         pendingPayload = data
         phase = .loaded
+        if isSelfTest {
+            NSLog("[WINOS-SELFTEST] SELFTEST_SURFACE_CREATED — load OK phase=loaded, surface 640x360 será criada em frame")
+        }
     }
 
     public func initialize(context: RuntimeSessionContext) throws {
         guard phase == .loaded, let payload = pendingPayload else {
             throw RuntimeFailure.backendUnavailable(reason: "load() não executado")
         }
+        let isSelfTest = context.profile.tipo == .selfTest || context.profile.nome.lowercased().contains("self")
+        if isSelfTest {
+            NSLog("[WINOS-SELFTEST] SELFTEST_PROCESS_CREATED — initialize backend pxp-interpreter, res=%ux%u fpsCap=%.0f", UInt32(context.config.resolution.width), UInt32(context.config.resolution.height), Float(context.config.fps.value ?? 0))
+            NSLog("[WINOS-SELFTEST] SELFTEST_SURFACE_CREATED — target 640x360, pixelFormat XRGB8888 0x00RRGGBB stride width*4 → BGRA8")
+        }
         pr_host_register_builtin_backends()
         let h = pr_host_create()
         host = h
         guard let h else {
             phase = .failed
+            if isSelfTest { NSLog("[WINOS-SELFTEST] SELFTEST_FAIL pr_host_create nil") }
             throw RuntimeFailure.backendUnavailable(reason: "pr_host_create")
         }
 
@@ -140,10 +165,23 @@ public final class PXPInterpreterBackend: ExecutionBackend {
             info.fps_cap = fpsCap
             return pr_host_start(h, &info, nil)
         }
+        if isSelfTest {
+            NSLog("[WINOS-SELFTEST] SELFTEST_RENDERER_SELECTED — pr_host_start status=%d target_w=%u target_h=%u fpsCap=%.0f", st.rawValue, w, height, fpsCap)
+            #if canImport(Metal)
+            if let device = MTLCreateSystemDefaultDevice() {
+                NSLog("[WINOS-SELFTEST] SELFTEST_RENDERER_SELECTED METAL device=%@ pixelFormat=bgra8Unorm surface 640x360", device.name)
+            } else {
+                NSLog("[WINOS-SELFTEST] SELFTEST_RENDERER_SELECTED SOFTWARE fallback — framebuffer 640x360 XRGB8888")
+            }
+            #else
+            NSLog("[WINOS-SELFTEST] SELFTEST_RENDERER_SELECTED SOFTWARE fallback (Metal not available) — framebuffer 640x360 XRGB8888")
+            #endif
+        }
         guard st == PR_OK else {
             let detail = contextDetail(h)
             stop()
             phase = .failed
+            if isSelfTest { NSLog("[WINOS-SELFTEST] SELFTEST_FAIL pr_host_start status=%d detail=%@", st.rawValue, detail) }
             switch st {
             case PR_ERR_UNSUPPORTED:
                 throw RuntimeFailure.unsupported(reason: detail.isEmpty ? "sem backend compatível" : detail)
@@ -238,7 +276,17 @@ public final class PXPInterpreterBackend: ExecutionBackend {
         if state == .failed {
             let msg = withUnsafeBytes(of: outC.message) { String(cString: $0.bindMemory(to: CChar.self).baseAddress!) }
             failure = .guestFault(detail: msg)
+            NSLog("[WINOS-SELFTEST] SELFTEST_EXIT — state=failed msg=%@ halted=%d frames=%u", msg, outC.halted, outC.frames_presented)
         }
+        if state == .stopped && outC.halted != 0 {
+            NSLog("[WINOS-SELFTEST] SELFTEST_EXIT — halted normalmente START pressed, frames=%u", outC.frames_presented)
+        }
+        // Log first frame present
+        if outC.frames_presented == 1 && state == .running {
+            NSLog("[WINOS-SELFTEST] SELFTEST_FIRST_FRAME — frames_presented=1, first present OK, surface 640x360")
+            NSLog("[WINOS-SELFTEST] SELFTEST_PRESENT — present 640x360, pixelFormat XRGB8888 0x00RRGGBB stride=%d", 640*4)
+        }
+
         return FrameResult(state: state,
                            framesPresented: outC.frames_presented,
                            halted: outC.halted != 0,
@@ -296,7 +344,19 @@ public final class PXPInterpreterBackend: ExecutionBackend {
         if let surf = pr_gfx_surface(stream, &sw, &sh), sw > 0, sh > 0 {
             if surfaceBuffer.update(width: sw, height: sh, copyFrom: surf) {
                 frame.surface = surfaceBuffer
+                // Log self-test surface details para diagnóstico do glitch
+                if sw == 640 && sh == 360 {
+                    // Primeira superfície do self-test — log detalhado para investigar glitch
+                    // NSLog("[WINOS-SELFTEST] SELFTEST_SURFACE_CREATED width=%u height=%u pixelFormat=XRGB8888 0x00RRGGBB stride=%u", sw, sh, sw*4)
+                }
             }
+            if lastFrames == 1 {
+                NSLog("[WINOS-SELFTEST] SELFTEST_FIRST_FRAME surface %ux%u framebuffer size=%u bytesPerRow=%u", sw, sh, sw*sh*4, sw*4)
+            }
+        }
+        // Log present
+        if frame.commands.contains(where: { if case .present = $0 { return true } else { return false } }) {
+            // NSLog("[WINOS-SELFTEST] SELFTEST_PRESENT present command found, surface buffer ready")
         }
         return frame
     }

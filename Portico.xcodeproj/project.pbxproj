@@ -112,8 +112,16 @@
 		BDDC844D42B647DB9452CEB6 /* PorticoRuntime.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 866A9E14934942B7AC191584 /* PorticoRuntime.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C037BF1E87892E5B4003B219 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79C4344CDE739F111C433CB8 /* Assets.xcassets */; };
 		27D034CA8040CCA146C51A6F /* WinOSDiagnosticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE622EA507ADCA5C0EADDFE9 /* WinOSDiagnosticsView.swift */; };
+			4D9FF1771811435989554E43 /* WinOSRealDesktopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FEDF7B36449470FBDB52992 /* WinOSRealDesktopView.swift */; };
+DA85ADD5337C49EF97B6CB83 /* WinOSCompositor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C6316DC0534172B7D3B6F7 /* WinOSCompositor.swift */; };
+71B6A1D8BD7E4A4DBF23D43A /* WinOSDesktopShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCFAF8BABA047358D063F7A /* WinOSDesktopShell.swift */; };
+2025E64AE35F4AB1A24FA53F /* WinOSDesktopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A21F5AAAE34F7491D404EB /* WinOSDesktopTests.swift */; };
+34C5245E089B4B6195C83CE3 /* WinOSFileManagerReal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E84E580D2AE4FA6ADCA290D /* WinOSFileManagerReal.swift */; };
+431CAC85F4E64F8FB8A0283D /* WinOSInputBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D952329D22D43EB95EF5B95 /* WinOSInputBridge.swift */; };
+E7ACA2A0782241BEB814EAE9 /* WinOSProcessManagerReal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A21115A0894C808AF01578 /* WinOSProcessManagerReal.swift */; };
+C74B878E9F014E9A820B4FE8 /* WinOSRenderEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A49F50536642EBA9F3F34C /* WinOSRenderEngine.swift */; };
+E67C0F91B7AA42808991DF88 /* WinOSWindowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D04AA5A0AD47E5BD34FBA8 /* WinOSWindowManager.swift */; };
 /* End PBXBuildFile section */
-
 /* Begin PBXContainerItemProxy section */
 		36A1A12706ED424BB5DB8939 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -236,8 +244,16 @@
 		866A9E14934942B7AC191584 /* PorticoRuntime.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PorticoRuntime.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		79C4344CDE739F111C433CB8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DE622EA507ADCA5C0EADDFE9 /* WinOSDiagnosticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSDiagnosticsView.swift; sourceTree = "<group>"; };
+			6FEDF7B36449470FBDB52992 /* WinOSRealDesktopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSRealDesktopView.swift; sourceTree = "<group>"; };
+E2C6316DC0534172B7D3B6F7 /* WinOSCompositor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSCompositor.swift; sourceTree = "<group>"; };
+DDCFAF8BABA047358D063F7A /* WinOSDesktopShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSDesktopShell.swift; sourceTree = "<group>"; };
+58A21F5AAAE34F7491D404EB /* WinOSDesktopTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSDesktopTests.swift; sourceTree = "<group>"; };
+4E84E580D2AE4FA6ADCA290D /* WinOSFileManagerReal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSFileManagerReal.swift; sourceTree = "<group>"; };
+1D952329D22D43EB95EF5B95 /* WinOSInputBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSInputBridge.swift; sourceTree = "<group>"; };
+D3A21115A0894C808AF01578 /* WinOSProcessManagerReal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSProcessManagerReal.swift; sourceTree = "<group>"; };
+E8A49F50536642EBA9F3F34C /* WinOSRenderEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSRenderEngine.swift; sourceTree = "<group>"; };
+76D04AA5A0AD47E5BD34FBA8 /* WinOSWindowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOSWindowManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
 /* Begin PBXResourcesBuildPhase section */
 		1A4D70BCDB0BF886810D55C3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
@@ -376,6 +392,7 @@
 				2B82DC66FF1847C0A8ECF53F /* WinOSBrand.swift */,
 				B36893DF8B194472B7793C41 /* WinOSCreatePCView.swift */,
 				2EA848EA62FA4DC682EDE23A /* WinOSDesktopView.swift */,
+			6FEDF7B36449470FBDB52992 /* WinOSRealDesktopView.swift */,
 				09D8620CA03C43798720BD18 /* WinOSHomeView.swift */,
 				701A9D0D1D6B44B58691E906 /* WinOSLoadingView.swift */,
 				64F303DE74D44F77A29F4C07 /* WinOSOverlayView.swift */,
@@ -398,6 +415,7 @@
 				4761F86BA02547A48471C607 /* Models */,
 				826EA91CA1754F9B95F36484 /* Runtime */,
 				0362EB699C434BA4882BE00D /* Store */,
+                                609065A52F4548824594DBDE /* Desktop */,
 				1AB11DC0CA9D460289B3097B /* Support */,
 			);
 			path = PorticoCore;
@@ -607,6 +625,22 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		609065A52F4548824594DBDE /* Desktop */ = {
+                        isa = PBXGroup;
+                        children = (
+			E2C6316DC0534172B7D3B6F7 /* WinOSCompositor.swift */,
+			DDCFAF8BABA047358D063F7A /* WinOSDesktopShell.swift */,
+			58A21F5AAAE34F7491D404EB /* WinOSDesktopTests.swift */,
+			4E84E580D2AE4FA6ADCA290D /* WinOSFileManagerReal.swift */,
+			1D952329D22D43EB95EF5B95 /* WinOSInputBridge.swift */,
+			D3A21115A0894C808AF01578 /* WinOSProcessManagerReal.swift */,
+			E8A49F50536642EBA9F3F34C /* WinOSRenderEngine.swift */,
+			76D04AA5A0AD47E5BD34FBA8 /* WinOSWindowManager.swift */,
+                        );
+                        path = Desktop;
+                        sourceTree = "<group>";
+                };
+
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -750,6 +784,15 @@
 				61E41FCEBDE34FAE9507D8FD /* WinOSBrand.swift in Sources */,
 				2A7F56D9F719413C9D607981 /* WinOSCreatePCView.swift in Sources */,
 				99B2F6427D8F41F882F35AD0 /* WinOSDesktopView.swift in Sources */,
+			4D9FF1771811435989554E43 /* WinOSRealDesktopView.swift in Sources */,
+			DA85ADD5337C49EF97B6CB83 /* WinOSCompositor.swift in Sources */,
+			71B6A1D8BD7E4A4DBF23D43A /* WinOSDesktopShell.swift in Sources */,
+			2025E64AE35F4AB1A24FA53F /* WinOSDesktopTests.swift in Sources */,
+			34C5245E089B4B6195C83CE3 /* WinOSFileManagerReal.swift in Sources */,
+			431CAC85F4E64F8FB8A0283D /* WinOSInputBridge.swift in Sources */,
+			E7ACA2A0782241BEB814EAE9 /* WinOSProcessManagerReal.swift in Sources */,
+			C74B878E9F014E9A820B4FE8 /* WinOSRenderEngine.swift in Sources */,
+			E67C0F91B7AA42808991DF88 /* WinOSWindowManager.swift in Sources */,
 				7B6AF5B6E21C49BFBC8E626A /* WinOSHomeView.swift in Sources */,
 				D9205347360940FD96F1E022 /* WinOSLoadingView.swift in Sources */,
 				7D39C96C66C74916B6401B8A /* WinOSOverlayView.swift in Sources */,

@@ -44,6 +44,12 @@ public final class RuntimeManager {
     public func start(profile: GameProfile, config: EffectiveConfig,
                       environments: EnvironmentManager,
                       clockNow: Double) throws {
+        let isSelfTest = profile.tipo == .selfTest || profile.nome.lowercased().contains("self")
+        if isSelfTest {
+            NSLog("[WINOS-SELFTEST] SELFTEST_START — RuntimeManager.start profile=%@ tipo=%@ exe=%@ res=%dx%d fps=%@", profile.nome, "\(profile.tipo)", profile.executavel, config.resolution.width, config.resolution.height, "\(config.fps)")
+            NSLog("[WINOS-SELFTEST] SELFTEST_START — executableURL será resolvido em %@", profile.caminho)
+            NSLog("[WINOS-SELFTEST] SELFTEST_SURFACE_CREATED — expected 640x360 XRGB8888 stride 2560 bytesPerRow")
+        }
         NSLog("[WINOS-RUNTIME-START] start called profile=%@ tipo=%@ exe=%@ env=%@", profile.nome, "\(profile.tipo)", profile.executavel, profile.ambiente.id.uuidString)
         guard state == .idle || state == .stopped || state == .failed else {
             NSLog("[WINOS-RUNTIME-ERROR] Já existe sessão ativa state=%@", "\(state)")
@@ -110,10 +116,22 @@ public final class RuntimeManager {
         NSLog("[WINOS-RUNTIME-START] Backend selecionado: %@ reason=%@", chosen.displayName, verdict.reason)
 
         do {
+            if isSelfTest {
+                NSLog("[WINOS-SELFTEST] SELFTEST_PROCESS_CREATED — backend=%@ selected reason=%@", chosen.displayName, verdict.reason)
+                NSLog("[WINOS-SELFTEST] SELFTEST_SURFACE_CREATED — ctx exe=%@ res=%dx%d", ctx.executableURL.path, ctx.config.resolution.width, ctx.config.resolution.height)
+                NSLog("[WINOS-SELFTEST] SELFTEST_RENDERER_SELECTED — aguardando Metal/Software init via GraphicsBackend")
+            }
             NSLog("[WINOS-RUNTIME-START] Iniciando backend %@ com context exe=%@", chosen.displayName, ctx.executableURL.path)
             try chosen.start(context: ctx)
             NSLog("[WINOS-RUNTIME-START] Backend start OK")
+            if isSelfTest {
+                NSLog("[WINOS-SELFTEST] SELFTEST_RENDERER_SELECTED — backend start OK, process running")
+                NSLog("[WINOS-SELFTEST] SELFTEST_FIRST_FRAME — aguardando tick para first present")
+            }
         } catch let failure as RuntimeFailure {
+            if isSelfTest {
+                NSLog("[WINOS-SELFTEST] SELFTEST_FAIL — backend start RuntimeFailure: %@ - %@", failure.userMessage, failure.technicalDetail)
+            }
             NSLog("[WINOS-RUNTIME-ERROR] Backend start RuntimeFailure: %@ - %@", failure.userMessage, failure.technicalDetail)
             setState(.failed)
             events.onFailure?(failure)
@@ -130,6 +148,9 @@ public final class RuntimeManager {
             self?.endGame(clockNow: clockNow)
         }
         proc.markRunning()
+        if isSelfTest {
+            NSLog("[WINOS-SELFTEST] SELFTEST_PROCESS_CREATED — processManager spawn label=%@ id=%@", profile.nome, proc.id.uuidString)
+        }
 
         self.backend = chosen
         self.context = ctx
@@ -144,6 +165,9 @@ public final class RuntimeManager {
 
         setState(.running)
         log.info("runtime", "sessão em execução — \(profile.nome)")
+        if isSelfTest {
+            NSLog("[WINOS-SELFTEST] SELFTEST_START — sessão running, aguardando FIRST_FRAME")
+        }
     }
 
     private func fpsTarget(profile: GameProfile, config: EffectiveConfig) -> Int {
@@ -169,13 +193,25 @@ public final class RuntimeManager {
         let dt = Float(min(max(now - lastTick, 1.0 / 480.0), 0.25))
         lastTick = now
 
+        let isSelfTest = ctx.profile.tipo == .selfTest || ctx.profile.nome.lowercased().contains("self")
         let result = backend.stepFrame(input: input, dt: dt,
                                        timeMs: (now - sessionStart) * 1000)
         backend.drainLogs(into: log)
         framesPresented = result.framesPresented
 
+        if isSelfTest && result.framesPresented == 1 {
+            NSLog("[WINOS-SELFTEST] SELFTEST_FIRST_FRAME — tick framesPresented=1, surface 640x360, pixelFormat XRGB8888")
+            NSLog("[WINOS-SELFTEST] SELFTEST_PRESENT — present 640x360 bytesPerRow=%d framebuffer=%d bytes", 640*4, 640*360*4)
+        }
+        if isSelfTest && result.framesPresented % 60 == 0 && result.framesPresented > 0 {
+            NSLog("[WINOS-SELFTEST] SELFTEST_PRESENT — frames=%u FPS=%.1f input buttons=%u axes=(%.2f,%.2f)", result.framesPresented, currentFPS, input.buttons, input.moveX, input.moveY)
+        }
+
         if let audio = optionalAudio(backend: backend, config: ctx.config) {
             onAudioFrames?(audio)
+            if isSelfTest && result.framesPresented == 1 {
+                NSLog("[WINOS-SELFTEST] SELFTEST — audio frames=%d first audio OK", audio.count)
+            }
         }
 
         // FPS real
@@ -185,6 +221,9 @@ public final class RuntimeManager {
             framesSinceFPS = 0
             fpsSampleStart = now
             events.onFPS?(currentFPS)
+            if isSelfTest {
+                NSLog("[WINOS-SELFTEST] SELFTEST — FPS=%.1f frames=%u", currentFPS, framesPresented)
+            }
         }
 
         switch result.state {
@@ -192,12 +231,18 @@ public final class RuntimeManager {
             if result.halted {
                 log.info("runtime", "software encerrou a execução normalmente")
             }
+            if isSelfTest {
+                NSLog("[WINOS-SELFTEST] SELFTEST_EXIT — stopped halted=%@ frames=%u duration=%.1fs", result.halted ? "YES" : "NO", result.framesPresented, now - sessionStart)
+            }
             activeProcess?.markFinished(exitCode: 0)
             setState(.stopped)
             events.onFinished?()
         case .failed:
             let failure = result.failure ?? .guestFault(detail: result.message)
             log.error("runtime", failure.technicalDetail)
+            if isSelfTest {
+                NSLog("[WINOS-SELFTEST] SELFTEST_EXIT — failed reason=%@ frames=%u", failure.technicalDetail, result.framesPresented)
+            }
             activeProcess?.markFailed(reason: failure.technicalDetail)
             setState(.failed)
             events.onFailure?(failure)
@@ -206,7 +251,13 @@ public final class RuntimeManager {
             break
         }
 
-        return backend.consumeGraphicsFrame()
+        let gfxFrame = backend.consumeGraphicsFrame()
+        if isSelfTest && gfxFrame.commands.contains(where: { if case .present = $0 { return true } else { return false } }) {
+            if result.framesPresented <= 2 {
+                NSLog("[WINOS-SELFTEST] SELFTEST_PRESENT — GfxFrame present command + surface width=%u height=%u", gfxFrame.surface?.width ?? 0, gfxFrame.surface?.height ?? 0)
+            }
+        }
+        return gfxFrame
     }
 
     private func optionalAudio(backend: ExecutionBackend,

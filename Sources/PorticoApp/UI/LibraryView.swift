@@ -84,7 +84,7 @@ struct LibraryView: View {
             Text("Sua biblioteca está vazia")
                 .font(.title3.bold())
             Text("Importe jogos compatíveis (ZIP ou pasta) pelo botão +.\n"
-                 + "O \"Portico Self-Test\" é criado automaticamente para validar o runtime.")
+                 + "Ferramentas de diagnóstico como Port Self Test estão em Diagnósticos → Testes do Runtime.")
                 .font(.footnote)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)

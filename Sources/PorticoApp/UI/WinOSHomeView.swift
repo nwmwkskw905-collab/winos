@@ -67,6 +67,15 @@ struct WinOSHomeView: View {
                     .environmentObject(model)
             }
         }
+        .fullScreenCover(isPresented: $model.showRealDesktop) {
+            if let pc = model.selectedPC {
+                WinOSRealDesktopView(pc: pc)
+                    .environmentObject(model)
+            } else {
+                WinOSRealDesktopView(pc: nil)
+                    .environmentObject(model)
+            }
+        }
         .sheet(item: $selectedGame) { game in
             NavigationStack {
                 GameDetailView(game: game)
@@ -275,7 +284,7 @@ struct WinOSHomeView: View {
                         Text("Biblioteca vazia")
                             .font(.headline)
                             .foregroundStyle(.white)
-                        Text("Importe programas Windows x64 ou use o Self-Test para validar o runtime")
+                        Text("Importe programas Windows x64. Ferramentas de diagnóstico em Diagnósticos → Testes do Runtime")
                             .font(.footnote)
                             .foregroundStyle(WinOSBrand.textSecondary)
                             .multilineTextAlignment(.center)
@@ -360,16 +369,16 @@ struct WinOSHomeView: View {
             // Marca como em uso
             model.environments.markInUse(id: env.id, inUse: true)
             NSLog("[WINOS-RUNTIME] RUNTIME_START para PC: %@", env.nome)
-            // NOVA LÓGICA: Abrir Desktop diretamente, não self-test infinito
-            // O Desktop é a sessão Windows virtual mínima — runtime básico pronto sem exigir EXE
+            // NOVA ARQUITETURA REAL: Desktop → Win32 → processo → VFS/Sandbox → renderização → tela
+            // Usa WinOSRealDesktopView com WindowManager + FileManagerReal + ProcessManagerReal + RenderEngine + Compositor + InputBridge
             NSLog("[WINOS-RUNTIME] GRAPHICS_INIT para PC: %@", env.nome)
             NSLog("[WINOS-RUNTIME] DESKTOP_INIT para PC: %@", env.nome)
-            // Navega para desktop específico deste PC
+            // Navega para desktop REAL específico deste PC
             model.selectedPC = env
-            model.showDesktop = true
-            NSLog("[WINOS-RUNTIME] SESSION_READY PC=%@ - mostrando desktop", env.nome)
-            NSLog("[WINOS-RUNTIME] RUNNING PC=%@ desktop", env.nome)
-            model.log.info("winos", "PC aberto: \(env.nome) → Desktop")
+            model.showRealDesktop = true // REAL DESKTOP
+            NSLog("[WINOS-RUNTIME] SESSION_READY PC=%@ - mostrando REAL desktop", env.nome)
+            NSLog("[WINOS-RUNTIME] RUNNING PC=%@ real desktop", env.nome)
+            model.log.info("winos", "PC aberto: \(env.nome) → Real Desktop (WindowManager+FileManager+VFS+Metal)")
         } catch {
             NSLog("[WINOS-RUNTIME] ENV_READY FAIL ERROR: %@", "\(error)")
             NSLog("[WINOS-PC-OPEN] ERROR: %@", "\(error)")
