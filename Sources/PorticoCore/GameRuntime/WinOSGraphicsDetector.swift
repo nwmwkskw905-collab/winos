@@ -83,12 +83,12 @@ public final class WinOSGraphicsDetector: Sendable {
         
         for imp in report.imports {
             let dll = imp.dll.lowercased()
-            let funcs = imp.functions.map { $0.lowercased() }
+            let funcs = imp.functions.map { $0.displayName.lowercased() }
             allDLLs.append(imp.dll)
-            allFuncs.append(contentsOf: imp.functions)
+            allFuncs.append(contentsOf: imp.functions.map { $0.displayName })
             
             // Acumula evidência
-            evidence[imp.dll] = imp.functions
+            evidence[imp.dll] = imp.functions.map { $0.displayName }
             
             // D3D12
             if dll.contains("d3d12") {

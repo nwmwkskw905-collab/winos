@@ -1,5 +1,5 @@
 import Foundation
-
+import QuartzCore
 /// CURSOR VISUAL — renderizado pelo compositor, acima das janelas
 /// Ordem: background → windows → overlays → taskbar → cursor
 

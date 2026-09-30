@@ -38,7 +38,9 @@ public final class WinOSOrientationManager: ObservableObject {
         
         displayManager.onOrientationChanged = { [weak self] orient, metrics in
             Task { @MainActor in
-                self?.handleOrientationChanged(orient, metrics: metrics)
+                self?.currentOrientation = orient
+                self?.displayMetrics = metrics
+                self?.onOrientationChanged?(orient, metrics)
             }
         }
     }

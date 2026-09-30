@@ -1,4 +1,5 @@
 import Foundation
+import QuartzCore
 #if canImport(Metal)
 import Metal
 #endif

@@ -1,5 +1,5 @@
 import Foundation
-
+import QuartzCore
 /// INPUT STATE MACHINE determinística para mouse/touch
 /// IDLE → PRESSED → CLICK / DOUBLE_CLICK / HELD → DRAGGING → DROP → IDLE
 

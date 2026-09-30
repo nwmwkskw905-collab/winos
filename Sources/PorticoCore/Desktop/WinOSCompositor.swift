@@ -1,5 +1,5 @@
 import Foundation
-
+import QuartzCore
 /// Compositor central — combina desktop background + window surfaces + cursor + taskbar + overlays → single final framebuffer
 /// Prioriza dirty rectangles, partial redraw, texture reuse, triple buffering, frame pacing
 /// Não redesenha desktop inteiro quando apenas uma janela mudou

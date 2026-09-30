@@ -1,5 +1,5 @@
 import Foundation
-
+import QuartzCore
 /// TESTES OBRIGATÓRIOS para desktop responsivo + cursor + mouse real
 /// 18 testes conforme módulo adicional
 

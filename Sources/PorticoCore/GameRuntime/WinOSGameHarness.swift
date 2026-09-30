@@ -100,7 +100,7 @@ public final class WinOSGameHarness: ObservableObject {
         let loadedImage: PELoadedImage
         do {
             loadedImage = try PELoader.loadImage(data, moduleName: executableURL.lastPathComponent)
-            diagnostics.peLoaderSuccess(file: executableURL.lastPathComponent, machine: loadedImage.report.image.machine, arch: loadedImage.report.image.arch, isPE32Plus: loadedImage.report.image.isPE32Plus, sections: loadedImage.report.sections.count, imports: loadedImage.report.imports.count)
+            diagnostics.peLoaderSuccess(file: executableURL.lastPathComponent, machine: loadedImage.report.image.machine, arch: loadedImage.report.image.arch, isPE32Plus: loadedImage.report.image.isPE32Plus, sections: Int(loadedImage.report.image.sectionCount), imports: loadedImage.report.imports.count)
         } catch {
             phase = .failed
             lastError = "PE load failed: \(error)"
@@ -137,10 +137,10 @@ public final class WinOSGameHarness: ObservableObject {
             imageBase: 0,
             sizeOfImage: 0,
             entryPointRVA: 0,
-            sectionCount: loadedImage.report.sections.count,
-            importCount: loadedImage.report.imports.count,
+            sectionCount: loadedImage.report.image.sectionCount,
+            importCount: UInt32(loadedImage.report.imports.count),
             arch: loadedImage.report.image.arch,
-            imports: loadedImage.report.imports.map { PEImport(dll: $0.dll, functions: $0.functions.map { PEImportFunction(name: $0, ordinal: nil, isOrdinal: false) }) },
+            imports: loadedImage.report.image.imports,
             sections: []
         ))
         
@@ -175,8 +175,8 @@ public final class WinOSGameHarness: ObservableObject {
             profile: session.profile,
             config: session.config,
             executableURL: session.executableURL,
-            environmentVariables: [:],
-            log: logCenter
+            environmentVariables: session.config.environmentVariables,
+            environmentName: session.profile.ambiente.name
         )
         
         // Initialize backend — CORREÇÃO: usa PE real, não mockForRefusal
@@ -238,10 +238,6 @@ public final class WinOSGameHarness: ObservableObject {
         // Initialize audio pipeline
         let audio = WinOSAudioPipeline()
         audio.configure(diagnostics: diagnostics)
-        if let report = compatibility?.graphics {
-            // Use report from compatibility
-            _ = audio.detectAudioAPI(report: PEReport(image: PEImageInfo(isPE32Plus: false, isDLL: false, machine: 0, subsystem: 0, timestamp: 0, imageBase: 0, sizeOfImage: 0, entryPointRVA: 0, sectionCount: 0, importCount: 0, arch: "", imports: [], sections: [], entryPoint: 0, imageSize: 0), sections: [], imports: [], exports: [], diagnostics: ""))
-        }
         audioPipeline = audio
         
         phase = .idle
