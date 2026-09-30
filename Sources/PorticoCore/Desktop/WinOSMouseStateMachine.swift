@@ -110,7 +110,7 @@ public final class WinOSMouseStateMachine: ObservableObject {
     // MARK: - Touch/Mouse events
     
     public func touchBegan(x: Double, y: Double, windowID: WinOSWindowID?, button: WinOSMouseButton = .left) {
-        let now = CACurrentMediaTime()
+        let now = ProcessInfo.processInfo.systemUptime
         let oldState = currentState
         
         startX = x
@@ -138,7 +138,7 @@ public final class WinOSMouseStateMachine: ObservableObject {
     }
     
     public func touchMoved(x: Double, y: Double, windowID: WinOSWindowID?) {
-        let now = CACurrentMediaTime()
+        let now = ProcessInfo.processInfo.systemUptime
         let oldState = currentState
         
         currentX = x
@@ -186,7 +186,7 @@ public final class WinOSMouseStateMachine: ObservableObject {
     }
     
     public func touchEnded(x: Double, y: Double, windowID: WinOSWindowID?) {
-        let now = CACurrentMediaTime()
+        let now = ProcessInfo.processInfo.systemUptime
         let oldState = currentState
         
         currentX = x
@@ -291,7 +291,7 @@ public final class WinOSMouseStateMachine: ObservableObject {
     
     private func handleLongPressTimer() {
         guard currentState == .pressed else { return }
-        let now = CACurrentMediaTime()
+        let now = ProcessInfo.processInfo.systemUptime
         let duration = now - startTime
         let deltaX = currentX - startX
         let deltaY = currentY - startY

@@ -71,7 +71,7 @@ public final class WinOSGameCompatibility: Sendable {
         let arch = report.image.arch
         let machine = report.image.machine
         let isPE32Plus = report.image.isPE32Plus
-        let sectionCount = report.sections.count
+        let sectionCount = report.image.sectionCount
         let importCount = report.imports.count
         
         // APIs

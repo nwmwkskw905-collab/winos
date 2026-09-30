@@ -68,7 +68,7 @@ public final class WinOSRenderLoop: ObservableObject {
         presentCount = 0
         droppedFrames = 0
         frameTimes.removeAll()
-        lastFrameTime = CACurrentMediaTime()
+        lastFrameTime = ProcessInfo.processInfo.systemUptime
         
         displayLink = CADisplayLink(target: self, selector: #selector(displayLinkFired))
         displayLink?.preferredFrameRateRange = CAFrameRateRange(minimum: 30, maximum: Float(targetFPS), preferred: Float(targetFPS))
@@ -89,7 +89,7 @@ public final class WinOSRenderLoop: ObservableObject {
     }
     
     @objc private func displayLinkFired() {
-        let now = CACurrentMediaTime()
+        let now = ProcessInfo.processInfo.systemUptime
         let dt = now - lastFrameTime
         lastFrameTime = now
         

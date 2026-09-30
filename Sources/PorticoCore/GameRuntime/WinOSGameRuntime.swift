@@ -164,10 +164,10 @@ public final class WinOSGameRuntime: ObservableObject {
         // Frame loop — teste completo (FASE 14)
         let startTime = Date()
         var frames: UInt64 = 0
-        var lastTime = CACurrentMediaTime()
+        var lastTime = ProcessInfo.processInfo.systemUptime
         
         while phase == .running {
-            let now = CACurrentMediaTime()
+            let now = ProcessInfo.processInfo.systemUptime
             let dt = Float(now - lastTime)
             lastTime = now
             let timeMs = now * 1000.0

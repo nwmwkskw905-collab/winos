@@ -116,6 +116,22 @@ public final class WinOSOrientationManager: ObservableObject {
         ensureWindowsVisible()
     }
     
+    private func handleOrientationChanged(_ orientation: WinOSOrientation, metrics: WinOSDisplayMetrics) {
+        let oldMetrics = displayMetrics
+        let oldOrientation = currentOrientation
+
+        currentOrientation = orientation
+        displayMetrics = metrics
+
+        preserveWindowPositions(oldMetrics: oldMetrics, newMetrics: metrics)
+        ensureWindowsVisible()
+
+        NSLog("[WINOS-ORIENTATION] display callback %@ -> %@ | metrics %@", oldOrientation.rawValue, orientation.rawValue, metrics.description)
+
+        onOrientationChanged?(orientation, metrics)
+        onDidRotate?(orientation)
+    }
+
     private func preserveWindowPositions(oldMetrics: WinOSDisplayMetrics, newMetrics: WinOSDisplayMetrics) {
         guard let wm = windowManager else { return }
         

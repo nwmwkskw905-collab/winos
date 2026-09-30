@@ -178,7 +178,7 @@ public final class WinOSGraphicsTranslator: ObservableObject {
             let count = width * height
             let ptr = pixels.bindMemory(to: UInt32.self, capacity: count)
             let array = Array(UnsafeBufferPointer(start: ptr, count: count))
-            let frame = WinOSGraphicsFrame(width: width, height: height, pixels: array, timestamp: CACurrentMediaTime(), drawCalls: 1)
+            let frame = WinOSGraphicsFrame(width: width, height: height, pixels: array, timestamp: ProcessInfo.processInfo.systemUptime, drawCalls: 1)
             onFrame(frame)
         }
     }

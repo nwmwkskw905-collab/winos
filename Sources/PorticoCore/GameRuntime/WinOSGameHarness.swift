@@ -101,7 +101,7 @@ public final class WinOSGameHarness: ObservableObject {
         let loadedImage: PELoadedImage
         do {
             loadedImage = try PELoader.loadImage(data, moduleName: executableURL.lastPathComponent)
-            diagnostics.peLoaderSuccess(file: executableURL.lastPathComponent, machine: loadedImage.report.image.machine, arch: loadedImage.report.image.arch, isPE32Plus: loadedImage.report.image.isPE32Plus, sections: loadedImage.report.sections.count, imports: loadedImage.report.imports.count)
+            diagnostics.peLoaderSuccess(file: executableURL.lastPathComponent, machine: loadedImage.report.image.machine, arch: loadedImage.report.image.arch, isPE32Plus: loadedImage.report.image.isPE32Plus, sections: Int(loadedImage.report.image.sectionCount), imports: loadedImage.report.imports.count)
         } catch {
             phase = .failed
             lastError = "PE load failed: \(error)"
@@ -129,21 +129,7 @@ public final class WinOSGameHarness: ObservableObject {
         logCenter.info("compat", md)
         
         // Select backend
-        let image = SoftwareImage.windowsPE(PEImage(
-            isPE32Plus: loadedImage.report.image.isPE32Plus,
-            isDLL: false,
-            machine: loadedImage.report.image.machine,
-            subsystem: 2,
-            timestamp: 0,
-            imageBase: 0,
-            sizeOfImage: 0,
-            entryPointRVA: 0,
-            sectionCount: loadedImage.report.sections.count,
-            importCount: loadedImage.report.imports.count,
-            arch: loadedImage.report.image.arch,
-            imports: loadedImage.report.imports.map { PEImport(dll: $0.dll, functions: $0.functions.map { PEImportFunction(name: $0, ordinal: nil, isOrdinal: false) }) },
-            sections: []
-        ))
+        let image = SoftwareImage.windowsPE(loadedImage.report.image)
         
         guard let (selectedBackend, verdict) = backendRegistry.select(for: image) else {
             phase = .failed

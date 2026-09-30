@@ -53,7 +53,7 @@ public final class WinOSAudioPipeline: ObservableObject {
         
         for imp in report.imports {
             let dll = imp.dll.lowercased()
-            let funcs = imp.functions.map { $0.lowercased() }
+            let funcs = imp.functions.map { -e.displayName.lowercased() }
             
             if dll.contains("winmm") {
                 if funcs.contains(where: { $0.contains("waveout") }) {
