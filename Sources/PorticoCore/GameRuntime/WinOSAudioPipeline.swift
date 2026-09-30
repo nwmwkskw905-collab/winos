@@ -1,4 +1,5 @@
 import Foundation
+import PorticoCore
 import AVFoundation
 
 /// FASE 10 — Audio pipeline real (waveOut, DirectSound, XAudio2 → AVAudioEngine)

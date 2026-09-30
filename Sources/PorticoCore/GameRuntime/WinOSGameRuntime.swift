@@ -1,4 +1,5 @@
 import Foundation
+import PorticoCore
 
 /// FASE 13-18 — Game Runtime central: gerencia primeiro jogo real, teste completo, autocorreção loop
 
@@ -66,28 +67,48 @@ public final class WinOSGameRuntime: ObservableObject {
         
         // Build profile
         let profile = GameProfile(
-            id: UUID().uuidString,
+            id: UUID(),
             nome: config.executableURL.deletingPathExtension().lastPathComponent,
+            caminho: config.fsRoot,
             executavel: config.executableURL.lastPathComponent,
             argumentos: "",
-            caminho: config.fsRoot,
-            arquiteturaExe: "x86", // Assume x86, will be detected from PE
-            tipo: .windowsPE,
-            capa: nil,
-            dataCriacao: Date(),
-            ultimaExecucao: nil,
-            tempoTotal: 0,
-            favorito: false,
-            tags: []
+            resolucao: Resolution(
+                width: config.resolution.0,
+                height: config.resolution.1
+            ),
+            fps: .cap(config.targetFPS),
+            renderer: .metal,
+            audio: AudioProfile(
+                enabled: config.enableAudio,
+                volume: 0.8
+            ),
+            controles: ControlProfile(
+                physicalControllersEnabled: config.enableInput,
+                showTouchControls: config.enableInput
+            ),
+            ambiente: .defaultEnv,
+            opcoes: AdvancedOptions(
+                environmentVariables: [:],
+                debugLogging: true,
+                maxInstructionsPerFrame: 200_000
+            ),
+            arquiteturaExe: "x86",
+            tipo: .windowsPE
         )
         
-        let runtimeConfig = RuntimeConfig(
-            resolution: ResolutionPreset.custom(width: config.resolution.0, height: config.resolution.1),
-            fps: FPSPreset.custom(config.targetFPS),
-            graphics: GraphicsPreset.balanced,
-            audio: AudioPreset.stereo,
-            input: InputPreset.gamepad,
-            maxInstructionsPerFrame: 200_000
+        let runtimeConfig = EffectiveConfig(
+            resolution: profile.resolucao,
+            fps: profile.fps,
+            renderer: profile.renderer,
+            audioEnabled: profile.audio.enabled,
+            gameVolume: profile.audio.volume,
+            masterVolume: 0.8,
+            quality: .high,
+            showTouchControls: profile.controles.showTouchControls,
+            physicalControllersEnabled: profile.controles.physicalControllersEnabled,
+            environmentVariables: profile.opcoes.environmentVariables,
+            debugLogging: profile.opcoes.debugLogging,
+            maxInstructionsPerFrame: profile.opcoes.maxInstructionsPerFrame
         )
         
         // Load + Analyze

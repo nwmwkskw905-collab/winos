@@ -1,4 +1,5 @@
 import Foundation
+import PorticoCore
 
 /// FASE 12 — Game Harness real: orquestra load → init → run → frame loop → input → audio → shutdown com diagnostics
 
@@ -17,11 +18,11 @@ public enum WinOSGamePhase: String, Sendable {
 public struct WinOSGameSession: Sendable {
     public var executableURL: URL
     public var profile: GameProfile
-    public var config: RuntimeConfig
+    public var config: EffectiveConfig
     public var fsRoot: String
     public var startTime: Date
     
-    public init(executableURL: URL, profile: GameProfile, config: RuntimeConfig, fsRoot: String) {
+    public init(executableURL: URL, profile: GameProfile, config: EffectiveConfig, fsRoot: String) {
         self.executableURL = executableURL
         self.profile = profile
         self.config = config
@@ -67,7 +68,7 @@ public final class WinOSGameHarness: ObservableObject {
     
     // MARK: - Load + Analyze
     
-    public func load(executableURL: URL, profile: GameProfile, config: RuntimeConfig, fsRoot: String) throws -> WinOSCompatReport {
+    public func load(executableURL: URL, profile: GameProfile, config: EffectiveConfig, fsRoot: String) throws -> WinOSCompatReport {
         phase = .loading
         diagnostics.reset()
         
@@ -175,8 +176,8 @@ public final class WinOSGameHarness: ObservableObject {
             profile: session.profile,
             config: session.config,
             executableURL: session.executableURL,
-            environmentVariables: [:],
-            log: logCenter
+            environmentVariables: session.config.environmentVariables,
+            environmentName: session.profile.ambiente.name
         )
         
         // Initialize backend

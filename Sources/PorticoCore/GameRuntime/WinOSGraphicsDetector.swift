@@ -1,4 +1,5 @@
 import Foundation
+import PorticoCore
 
 /// FASE 6 — Graphics detection real
 /// Detecta qual API gráfica o jogo usa via imports PE

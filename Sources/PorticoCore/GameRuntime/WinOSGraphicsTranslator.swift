@@ -1,4 +1,5 @@
 import Foundation
+import PorticoCore
 #if canImport(Metal)
 import Metal
 #endif

@@ -14,6 +14,35 @@ public struct EffectiveConfig: Equatable, Sendable {
     public var environmentVariables: [String: String]
     public var debugLogging: Bool
     public var maxInstructionsPerFrame: UInt32
+
+
+    public init(
+        resolution: Resolution,
+        fps: FPSLimit,
+        renderer: RendererChoice,
+        audioEnabled: Bool,
+        gameVolume: Double,
+        masterVolume: Double,
+        quality: QualityChoice,
+        showTouchControls: Bool,
+        physicalControllersEnabled: Bool,
+        environmentVariables: [String: String],
+        debugLogging: Bool,
+        maxInstructionsPerFrame: UInt32
+    ) {
+        self.resolution = resolution
+        self.fps = fps
+        self.renderer = renderer
+        self.audioEnabled = audioEnabled
+        self.gameVolume = gameVolume
+        self.masterVolume = masterVolume
+        self.quality = quality
+        self.showTouchControls = showTouchControls
+        self.physicalControllersEnabled = physicalControllersEnabled
+        self.environmentVariables = environmentVariables
+        self.debugLogging = debugLogging
+        self.maxInstructionsPerFrame = maxInstructionsPerFrame
+    }
 }
 
 /// Valida e mescla configurações globais com as individuais de cada jogo.

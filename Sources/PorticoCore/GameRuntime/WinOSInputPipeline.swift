@@ -1,4 +1,5 @@
 import Foundation
+import PorticoCore
 import GameController
 
 /// FASE 9 — Input pipeline real (touch → mouse/keyboard/gamepad → Win32 messages)

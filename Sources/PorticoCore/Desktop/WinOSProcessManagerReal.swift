@@ -1,4 +1,5 @@
 import Foundation
+import PorticoCore
 
 /// ProcessManager REAL — conectado ao runtime, não simulação
 /// Cada processo tem PID, exe, cmdline, wd, env, parent, state, exit, windows, threads, mem stats

@@ -1,4 +1,5 @@
 import Foundation
+import PorticoCore
 
 /// InputBridge REAL — mapeia Touch → Desktop coords → WindowManager hit testing → Win32 message
 /// Fluxo: input iOS → InputBridge → Win32 message queue → GetMessage/PeekMessage → TranslateMessage → DispatchMessage → Window proc → Window state → Render invalidation

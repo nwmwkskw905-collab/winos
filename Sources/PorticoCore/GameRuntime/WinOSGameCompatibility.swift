@@ -1,4 +1,5 @@
 import Foundation
+import PorticoCore
 
 /// FASE 3,4,5 — Game Compatibility Layer
 /// Analisa PE + Win32 + Filesystem + Graphics para gerar relatório de compatibilidade honesto

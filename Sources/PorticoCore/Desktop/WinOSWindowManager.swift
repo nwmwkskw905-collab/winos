@@ -1,4 +1,5 @@
 import Foundation
+import PorticoCore
 
 /// WindowManager REAL — central, controla z-order, foco, lifecycle
 /// Cada janela tem ID, PID, title, geometria, estado, surface
