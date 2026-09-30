@@ -1,4 +1,5 @@
 import Foundation
+import QuartzCore
 import PorticoCore
 
 /// InputBridge REAL — mapeia Touch → Desktop coords → WindowManager hit testing → Win32 message
