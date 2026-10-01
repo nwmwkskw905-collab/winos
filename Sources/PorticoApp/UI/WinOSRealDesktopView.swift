@@ -11,6 +11,7 @@ struct WinOSRealDesktopView: View {
     var pc: EnvironmentProfile? = nil
     
     @StateObject private var shell: WinOSDesktopShell
+    @ObservedObject private var cursorManager: WinOSMouseCursorManager
     @State private var showingFileManager = false
     @State private var selectedWindowID: WinOSWindowID? = nil
     @State private var showingStartMenu = false
@@ -22,7 +23,9 @@ struct WinOSRealDesktopView: View {
         // Cria shell com sandbox real
         let sandbox = AppSandbox.standard()
         let log = LogCenter()
-        _shell = StateObject(wrappedValue: WinOSDesktopShell(sandbox: sandbox, log: log, pcPath: pc?.caminho ?? "Environments"))
+        let shell = WinOSDesktopShell(sandbox: sandbox, log: log, pcPath: pc?.caminho ?? "Environments")
+        _shell = StateObject(wrappedValue: shell)
+        _cursorManager = ObservedObject(wrappedValue: shell.mouseCursorManager)
     }
     
     @State private var orientation: UIDeviceOrientation = .portrait
@@ -67,9 +70,9 @@ struct WinOSRealDesktopView: View {
                 
                 // Cursor visual REAL — acima das janelas (zIndex 9999)
                 // Ordem: background -> windows -> overlays -> taskbar -> cursor
-                if shell.mouseCursorManager.cursor.visible {
-                    let cursorScreen = shell.displayManager.desktopToScreen(desktopX: shell.mouseCursorManager.cursor.x, desktopY: shell.mouseCursorManager.cursor.y)
-                    WinOSCursorView(cursor: shell.mouseCursorManager.cursor, displayMetrics: shell.displayManager.metrics)
+                if cursorManager.cursor.visible {
+                    let cursorScreen = shell.displayManager.desktopToScreen(desktopX: cursorManager.cursor.x, desktopY: cursorManager.cursor.y)
+                    WinOSCursorView(cursor: cursorManager.cursor, displayMetrics: shell.displayManager.metrics)
                         .position(x: CGFloat(cursorScreen.x), y: CGFloat(cursorScreen.y))
                         .zIndex(9999)
                 }
