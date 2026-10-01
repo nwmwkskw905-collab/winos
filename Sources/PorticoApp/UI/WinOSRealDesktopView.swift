@@ -183,7 +183,6 @@ struct WinOSRealDesktopView: View {
         }
     }
     
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
 
     private func desktopIcon(icon: String, title: String, subtitle: String, action: @escaping () -> Void) -> some View {
         Button(action: action) {
