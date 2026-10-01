@@ -71,7 +71,7 @@ public final class WinOSGameRuntime: ObservableObject {
             caminho: config.executableURL.deletingLastPathComponent().path,
             executavel: config.executableURL.lastPathComponent,
             argumentos: "",
-            resolucao: .custom(
+            resolucao: Resolution(
                 width: config.resolution.0,
                 height: config.resolution.1
             ),
