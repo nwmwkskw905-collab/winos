@@ -437,7 +437,7 @@ struct WinOSFileManagerRealContentView: View {
                                 shell.fileManager.navigateToWindowsPath(item.windowsPath)
                             } else if item.isExecutable {
                                 // File Manager → identifica PE → PELoader → WindowsPEBackend → Win32 process → WindowManager
-                                shell.createWindowForExecutable(item)
+                                if let game = model.games.first(where: { $0.executavel.caseInsensitiveCompare(item.name) == .orderedSame && item.path.hasPrefix($0.caminho) }) { model.launch(game) } else { NSLog("[WINOS-EXE] perfil nao encontrado para %@", item.path) }
                             }
                         }
                         .onTapGesture {
