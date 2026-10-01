@@ -663,8 +663,8 @@ public final class WindowsPEBackend: ExecutionBackend {
                     try? FileManager.default.createDirectory(atPath: fsRoot, withIntermediateDirectories: true)
                 }
                 context.profile.caminho.withCString { _ = pr_win32_set_cwd(w, $0) }
-                context.profile.caminho.withCString { _ = pr_peproc_set_fs_root(p, $0) }
-                NSLog("[WINOS-RUNTIME] WIN32_INIT fs_root set to: %@ file=%@", context.profile.caminho, context.executableURL.lastPathComponent)
+                fsRoot.withCString { _ = pr_peproc_set_fs_root(p, $0) }
+                NSLog("[WINOS-RUNTIME] WIN32_INIT fs_root host=%@ cwd=%@ file=%@", fsRoot, context.profile.caminho, context.executableURL.lastPathComponent)
             } else {
                 NSLog("[WINOS-RUNTIME] WIN32_INIT WARNING caminho vazio, usando fallback file=%@", context.executableURL.lastPathComponent)
             }
