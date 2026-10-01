@@ -21,7 +21,7 @@ public struct PEImage: Equatable, Sendable {
 
     /// Veredito honesto de execução no iOS atual.
     public var executionVerdict: String {
-        "PE \(arch): execução Windows requer camada Win32 (não integrada neste build)"
+        "PE \(arch): WindowsPEBackend disponível com camada Win32 parcial"
     }
 }
 

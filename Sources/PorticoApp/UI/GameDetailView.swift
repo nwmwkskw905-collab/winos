@@ -30,7 +30,7 @@ struct GameDetailView: View {
                             .font(.caption)
                             .foregroundStyle(.secondary)
                         if game.tipo == .windowsPE {
-                            Label("Requer camada Win32 (não integrada)",
+                            Label("Win32 parcial disponível (WindowsPEBackend)",
                                   systemImage: "exclamationmark.triangle")
                                 .font(.caption2)
                                 .foregroundStyle(.orange)

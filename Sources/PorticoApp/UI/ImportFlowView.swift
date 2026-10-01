@@ -162,8 +162,8 @@ struct ImportFlowView: View {
             } header: {
                 Text("Escolha o executável principal")
             } footer: {
-                Text("PEs Windows serão registrados, mas exigem a camada Win32 "
-                     + "(ainda não integrada) para executar.")
+                Text("PEs Windows usam o WindowsPEBackend com camada Win32 "
+                     + "(parcial; compatibilidade depende das APIs importadas) para executar.")
             }
 
             if let scan, !scan.executables.isEmpty {

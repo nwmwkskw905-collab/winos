@@ -78,10 +78,13 @@ struct WinOSRealDesktopView: View {
                 }
                 
                 // Taskbar funcional — sempre visível, fora da área escalada (ou dentro, mas com z alto)
-                VStack {
-                    Spacer()
+                VStack(spacing: 0) {
+                    Spacer(minLength: 0)
                     WinOSTaskbarRealView(shell: shell, showingStartMenu: $showingStartMenu, currentTime: currentTime, pc: pc)
+                        .frame(maxWidth: .infinity)
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+                .ignoresSafeArea(edges: .bottom)
                 .zIndex(1000)
                 
                 // Start Menu
@@ -92,18 +95,15 @@ struct WinOSRealDesktopView: View {
                 }
             }
             .onAppear {
+                // IMPORTANTE: viewport/orientacao devem existir antes do runtime
+                updateDisplayMetrics(geo: geo)
+                lastGeoSize = geo.size
                 startDesktop()
                 startClock()
-                updateDisplayMetrics(geo: geo)
-                // Observa orientação
-                NotificationCenter.default.addObserver(forName: UIDevice.orientationDidChangeNotification, object: nil, queue: .main) { _ in
-                    updateDisplayMetrics(geo: geo)
-                }
             }
             .onDisappear {
                 shell.shutdown()
                 timer?.invalidate()
-                NotificationCenter.default.removeObserver(self, name: UIDevice.orientationDidChangeNotification, object: nil)
             }
             .onChange(of: geo.size) { oldSize, newSize in
                 if newSize != lastGeoSize {

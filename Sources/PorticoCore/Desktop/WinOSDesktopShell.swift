@@ -87,6 +87,10 @@ public final class WinOSDesktopShell: ObservableObject {
     }
     
     public func initialize(pcPath: String) {
+        guard state != .ready && state != .running && state != .initializing else {
+            NSLog("[WINOS-SHELL] initialize ignored state=%@ pc=%@", state.rawValue, pcPath)
+            return
+        }
         self.pcPath = pcPath
         state = .initializing
         NSLog("[WINOS-RUNTIME] RUNTIME_START shell pc=%@", pcPath)

@@ -25,7 +25,7 @@ struct GameEditorView: View {
                         .textInputAutocapitalization(.never)
                 }
                 Section(footer: Text("O tipo define o backend usado na execução. "
-                    + "PEs Windows exigem a camada Win32 (não integrada).")) {
+                    + "PEs Windows usam o WindowsPEBackend com camada Win32 parcial.")) {
                     Picker("Tipo", selection: $game.tipo) {
                         Text("Windows PE").tag(GameKind.windowsPE)
                         Text("PXP nativo").tag(GameKind.pxpNative)
