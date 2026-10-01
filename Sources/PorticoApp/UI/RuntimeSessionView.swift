@@ -193,13 +193,15 @@ final class SessionController: ObservableObject {
     @Published var framesPresented: UInt32 = 0
     @Published var isPaused = false
     @Published var volume: Double = 0.8
+    private var effectiveConfig: EffectiveConfig?
+
     @Published var muted = false
 
     private weak var renderer: MetalGameRenderer?
     private var displayTimer: Timer?
     private var started = false
 
-    var showTouchControls: Bool { game.controles.showTouchControls }
+    var showTouchControls: Bool { effectiveConfig?.showTouchControls ?? game.controles.showTouchControls }
     var renderScale: Double { 1.0 }
     var resolutionText: String { game.resolucao.description }
 
@@ -230,6 +232,8 @@ final class SessionController: ObservableObject {
             return
         }
         let config = model.effectiveConfig(for: game)
+        self.effectiveConfig = config
+        NSLog("[WINOS-INPUT-CONFIG] touch=%@ physical=%@", config.showTouchControls ? "ON" : "OFF", config.physicalControllersEnabled ? "ON" : "OFF")
         NSLog("[WINOS-RUNTIME-START] effectiveConfig res=%@ fps=%@ renderer=%@", "\(config.resolution)", "\(config.fps)", "\(config.renderer)")
 
         model.runtime.events.onFPS = { [weak self] v in

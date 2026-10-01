@@ -63,7 +63,7 @@ public final class WinOSDesktopShell: ObservableObject {
         self.mouseCursorManager = WinOSMouseCursorManager(initialX: initialMetrics.desktopWidth/2, initialY: initialMetrics.desktopHeight/2, displayMetrics: initialMetrics)
         self.cursorRenderer = WinOSCursorRenderer(displayMetrics: initialMetrics, compositor: compositor)
         self.mouseStateMachine = WinOSMouseStateMachine()
-        self.desktopInputHandler = WinOSDesktopInputHandler(displayManager: displayManager, windowManager: windowManager, inputBridge: inputBridge, compositor: compositor)
+        self.desktopInputHandler = WinOSDesktopInputHandler(displayManager: displayManager, windowManager: windowManager, inputBridge: inputBridge, compositor: compositor, cursorManager: mouseCursorManager)
         self.responsiveTests = WinOSDesktopResponsiveTests()
         
         // Conecta cursor manager ao renderer
