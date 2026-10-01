@@ -64,6 +64,7 @@ jobs:
             -sdk iphoneos \
             -destination generic/platform=iOS \
             CODE_SIGNING_ALLOWED=NO \
+            -derivedDataPath build/DerivedData \
             clean build
 
       - name: Locate Portico.app (iOS device)
@@ -73,15 +74,9 @@ jobs:
           find ~/Library/Developer/Xcode/DerivedData -name "*.app" -type d 2>/dev/null | head -n 20
           echo ""
           # Prefer Debug-iphoneos/Portico.app (device ARM64)
-          APP_PATH=$(find ~/Library/Developer/Xcode/DerivedData -path "*/Build/Products/Debug-iphoneos/Portico.app" -type d 2>/dev/null | head -n 1)
-          if [ -z "$APP_PATH" ]; then
-            echo "Debug-iphoneos not found, searching any Portico.app"
-            APP_PATH=$(find ~/Library/Developer/Xcode/DerivedData -name "Portico.app" -type d 2>/dev/null | head -n 1)
-          fi
-          if [ -z "$APP_PATH" ]; then
-            echo "ERROR: Portico.app not found!"
-            echo "Listing DerivedData:"
-            ls -la ~/Library/Developer/Xcode/DerivedData/ | grep Portico || ls -la ~/Library/Developer/Xcode/DerivedData/ | head -n 20
+          APP_PATH="$PWD/build/DerivedData/Build/Products/Debug-iphoneos/Portico.app"
+          if [ ! -d "$APP_PATH" ]; then
+            echo "ERROR: current Portico.app not found: $APP_PATH"
             exit 1
           fi
           echo "Found app at: $APP_PATH"

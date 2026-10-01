@@ -33,6 +33,7 @@
 		BCFD031D389F16B580D49FE3 /* MTKGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D5431D040CF61AF782570B /* MTKGameView.swift */; };
 		E2B00E79F8895815DFE0E7CD /* MetalGameRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DD48AC96FA9F67ED729C4E /* MetalGameRenderer.swift */; };
 		BB4564DB7DE721BC304790BA /* PorticoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396985C66686FE7C05565B71 /* PorticoApp.swift */; };
+            B1C2D3E4F5061728394A5B6C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B5C /* Assets.xcassets */; };
 		0C5236EB458F4B61027BBA10 /* MinimalPETestGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B0290126F141906599330A7 /* MinimalPETestGenerator.swift */; };
 		FF3F37C93A529CE1B7096DAB /* CapabilitiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD1806A43F747E635447776 /* CapabilitiesView.swift */; };
 		BCC3326DF7024F4E14F5BC77 /* ControlEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CB50AEDBB4A5DFCADFCA8D /* ControlEditorView.swift */; };
@@ -145,6 +146,7 @@
 		27D5431D040CF61AF782570B /* MTKGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTKGameView.swift; sourceTree = "<group>"; };
 		D1DD48AC96FA9F67ED729C4E /* MetalGameRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalGameRenderer.swift; sourceTree = "<group>"; };
 		396985C66686FE7C05565B71 /* PorticoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PorticoApp.swift; sourceTree = "<group>"; };
+            A1B2C3D4E5F60718293A4B5C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9B0290126F141906599330A7 /* MinimalPETestGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinimalPETestGenerator.swift; sourceTree = "<group>"; };
 		2CD1806A43F747E635447776 /* CapabilitiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilitiesView.swift; sourceTree = "<group>"; };
 		68CB50AEDBB4A5DFCADFCA8D /* ControlEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlEditorView.swift; sourceTree = "<group>"; };
@@ -263,6 +265,9 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
+/* Begin PBXResourcesBuildPhase section */
+		9A1B2C3D4E5F60718293A4B5 /* Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = ( B1C2D3E4F5061728394A5B6C /* Assets.xcassets in Resources */, ); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXGroup section */
 		0C3FEB8A801641067AE4C9AA /* PorticoCore */ = {
@@ -541,6 +546,7 @@
 			isa = PBXGroup;
 			children = (
 				2DFEB98B4C9F5E02691FC2C8 /* Metal */,
+                                A1B2C3D4E5F60718293A4B5C /* Assets.xcassets */,
 				2FAD037C3DD3AA2F20C33801 /* AppModel.swift */,
 				396985C66686FE7C05565B71 /* PorticoApp.swift */,
 				46EF375AE851C942730B27A6 /* Tools */,
@@ -633,6 +639,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8CF598ACC897FE8648893EB5 /* Build configuration list for PBXNativeTarget "Portico" */;
 			buildPhases = (
+                            9A1B2C3D4E5F60718293A4B5 /* Resources */,
 				D8E2B34C6803A5DAEDA2CB7E /* Sources */,
 				804DB52E2955449D2F091C7E /* Frameworks */,
 			);
@@ -839,6 +846,7 @@
 				OTHER_CFLAGS = (
 					"-DPR_ENABLE_ZLIB=1",
 				);
+                            ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				PRODUCT_BUNDLE_IDENTIFIER = io.portico.Portico;
 				PRODUCT_NAME = Portico;
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -868,6 +876,7 @@
 				OTHER_CFLAGS = (
 					"-DPR_ENABLE_ZLIB=1",
 				);
+                            ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				PRODUCT_BUNDLE_IDENTIFIER = io.portico.Portico;
 				PRODUCT_NAME = Portico;
 				SWIFT_EMIT_LOC_STRINGS = NO;
