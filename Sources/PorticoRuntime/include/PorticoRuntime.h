@@ -3,7 +3,6 @@
 #ifndef PORTICO_RUNTIME_H
 #define PORTICO_RUNTIME_H
 
-#import <Foundation/Foundation.h>
 
 // Tipos e status
 #include "portico/pr_types.h"
