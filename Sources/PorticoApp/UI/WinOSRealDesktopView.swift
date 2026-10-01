@@ -351,6 +351,7 @@ struct WinOSWindowView: View {
 
 /// File Manager REAL content — usa VFS/Sandbox REAL
 struct WinOSFileManagerRealContentView: View {
+    @EnvironmentObject private var model: AppModel
     @ObservedObject var shell: WinOSDesktopShell
     
     var body: some View {
