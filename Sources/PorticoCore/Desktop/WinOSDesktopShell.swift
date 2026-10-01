@@ -87,7 +87,7 @@ public final class WinOSDesktopShell: ObservableObject {
     }
     
     public func initialize(pcPath: String) {
-        guard state != .ready && state != .running && state != .initializing else {
+        guard state != .ready && state != .running else {
             NSLog("[WINOS-SHELL] initialize ignored state=%@ pc=%@", state.rawValue, pcPath)
             return
         }

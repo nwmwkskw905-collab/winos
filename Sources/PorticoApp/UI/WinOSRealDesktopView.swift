@@ -148,7 +148,10 @@ struct WinOSRealDesktopView: View {
         let height = Double(size.height)
         // Detecta orientação
         let orient: WinOSOrientation = width > height ? .landscapeLeft : .portrait
-        shell.handleDeviceScreenChange(width: width, height: height, scale: 3.0)
+        shell.handleDeviceScreenChange(width: width, height: height, scale: Double(UIScreen.main.scale))
+        let logicalWidth = 1280.0
+        let logicalHeight = logicalWidth * height / max(width, 1.0)
+        shell.displayManager.updateDesktopSize(width: logicalWidth, height: logicalHeight)
         shell.handleOrientationChange(orientation: orient, deviceWidth: width, deviceHeight: height)
         NSLog("[WINOS-DISPLAY] updateDisplayMetrics geo=%.0fx%.0f orient=%@ metrics=%@", width, height, orient.rawValue, shell.displayManager.metrics.description)
     }
@@ -180,6 +183,8 @@ struct WinOSRealDesktopView: View {
         }
     }
     
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+
     private func desktopIcon(icon: String, title: String, subtitle: String, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             VStack(spacing: 6) {
