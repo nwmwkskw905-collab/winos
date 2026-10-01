@@ -316,8 +316,6 @@ public final class WinOSDesktopShell: ObservableObject {
             break
         }
         
-        // Tambem chama handleTouch legado para compatibilidade (usa desktop coords)
-        handleTouch(x: desktop.x, y: desktop.y, phase: phase)
         
         NSLog("[WINOS-INPUT] message=%@ x=%d y=%d screen=%.0f,%.0f desktop=%.0f,%.0f orient=%@", phase, Int(desktop.x), Int(desktop.y), screenX, screenY, desktop.x, desktop.y, displayManager.orientation.rawValue)
     }
